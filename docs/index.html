@@ -54,6 +54,17 @@
   .wrap{max-width:760px; margin:0 auto; padding:0 20px;}
   .ui{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;}
 
+  /* Language switcher: fixed pill, top-right, same on both language
+     versions of the page — points at the sibling page (en/index.html from
+     here, ../index.html from the English translation). */
+  .lang-switch{
+    position:fixed; top:14px; right:14px; z-index:20;
+    font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; font-size:.78rem; font-weight:700;
+    background:rgba(0,0,0,.55); color:#fff; border:1px solid rgba(255,255,255,.3);
+    border-radius:20px; padding:6px 12px; text-decoration:none; letter-spacing:.04em;
+  }
+  .lang-switch:hover{background:rgba(0,0,0,.78);}
+
   /* Hero: a tall (3 viewport-heights) mosaic of only our highest-signal
      confirmed evidence crops — OCR-confirmed "БОЙЦЫ СВО РЕКОМЕНДУЮТ" /
      "ПРОВЕРЕН НА СВО" listing text, MoD gratitude certificates, munitions
@@ -96,6 +107,7 @@
      continuous rather than a hard break. */
   .hero-transition-wrap{
     position:absolute; left:0; right:0; bottom:50px; z-index:2;
+    border-top:4px solid var(--accent); padding-top:26px;
   }
 
   /* Fixed-dark card (not a page-theme token) reused from the old header
@@ -591,6 +603,8 @@
 </style>
 </head>
 <body>
+
+<a class="lang-switch" href="en/index.html">EN</a>
 
 <header class="top">
   <div class="hero-mosaic" aria-hidden="true">
@@ -1240,7 +1254,7 @@
         <img src="images/247808462_vybor.jpg" alt="Инфографика бронежилета Universal Armor с надписью «Выбор бойцов СВО»" loading="lazy">
         <div class="case-img-cap">Собственная рекламная инфографика продавца на странице товара: «ВЫБОР БОЙЦОВ СВО» крупным шрифтом, рядом с сертификатом соответствия РФ.</div>
       </div>
-      <p>Товар сам, в собственном описании, предлагает себя «для использования… в зоне СВО»: «Снаряжение выполнено из качественных тканей, что обуславливает эффективность и долговечность применения в полевых условиях, в зоне СВО и при военных учениях». Отзывы назначение:</p>
+      <p>Товар сам, в собственном описании, предлагает себя «для использования… в зоне СВО»: «Снаряжение выполнено из качественных тканей, что обуславливает эффективность и долговечность применения в полевых условиях, в зоне СВО и при военных учениях». Отзывы подтверждают назначение:</p>
       <div class="wb-review" style="--wb-pct:100%">
         <div class="wb-review-head"><span class="wb-avatar" aria-hidden="true"></span><span class="wb-verified">✓ Выкупили</span><span class="wb-stars" aria-label="Оценка 5 из 5"></span></div>
         <p class="wb-review-text">Ошалеть какие шикарные плиты, отстреливал на <mark>сво</mark>, 7.62 Свд. Запреградное минимум!!! Всем рекомендую</p>

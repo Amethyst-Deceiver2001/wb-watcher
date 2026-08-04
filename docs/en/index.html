@@ -1,0 +1,1446 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wildberries: The Marketplace With Its Own Warehouse for the Front</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="7,666 listings for goods with no civilian use on Wildberries — body armor, VOG grenade tailfins, combat FPV drones. 89% ship from the marketplace's own warehouses; 4,373 violate the platform's own list of banned goods.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230b0b0a'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Georgia,serif' fill='%23d21f2c' text-anchor='middle'%3EW%3C/text%3E%3C/svg%3E">
+<!-- og:url / og:image point at the GitHub Pages domain for
+     github.com/Amethyst-Deceiver2001/wb-watcher. Confirm Settings > Pages
+     is configured to serve from docs/ before relying on these. -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wildberries Sells Military Goods and Stores Them in Its Own Warehouses, Violating Its Own Ban">
+<meta property="og:description" content="Body armor, drone payload-release rigs, FPV drone electronics — shipped straight from WB's own warehouses">
+<meta property="og:image" content="https://amethyst-deceiver2001.github.io/wb-watcher/images/591122232_confirm.jpg">
+<meta property="og:url" content="https://amethyst-deceiver2001.github.io/wb-watcher/en/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wildberries Sells Military Goods and Stores Them in Its Own Warehouses, Violating Its Own Ban">
+<meta name="twitter:description" content="Body armor, drone payload-release rigs, FPV drone electronics — shipped straight from WB's own warehouses">
+<meta name="twitter:image" content="https://amethyst-deceiver2001.github.io/wb-watcher/images/591122232_confirm.jpg">
+<style>
+  :root{
+    --bg:#f7f5f0; --fg:#131210; --fg-dim:#514e46; --line:#ddd8cc;
+    --accent:#d21f2c; --accent-dim:#9c1620; --accent-bg:#fbe4e2; --card-bg:#fff; --mono-bg:#efece2;
+    --ink:#0b0b0a;
+    /* Wildberries' own brand purple/magenta — sampled directly (pdftoppm +
+       pixel sampling, not eyeballed) from their 2024 advertiser media kit
+       ("Коммерческие спецпроекты WB"). Used as a citation marker on
+       material that is WB's own voice or content — quote boxes
+       (.wb-source, .recap-tos-quote), and a thin top rule on every scraped-
+       from-WB image/review component (.gallery-pair, .case-img, .wb-review,
+       .ticker-viewport, .recap-cert-figure) — never as a page background.
+       See the comments on those rules. */
+    --wb-purple:#7830e0; --wb-violet:#a018e8; --wb-magenta:#e810b0;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#121110; --fg:#eeece3; --fg-dim:#aaa599; --line:#332f28;
+      --accent:#ff5b56; --accent-dim:#c23b3b; --accent-bg:#2c1616; --card-bg:#1b1a17; --mono-bg:#1f1d19;
+      --ink:#050505; }
+  }
+  :root[data-theme="dark"]{ --bg:#121110; --fg:#eeece3; --fg-dim:#aaa599; --line:#332f28;
+      --accent:#ff5b56; --accent-dim:#c23b3b; --accent-bg:#2c1616; --card-bg:#1b1a17; --mono-bg:#1f1d19;
+      --ink:#050505; }
+  :root[data-theme="light"]{ --bg:#f7f5f0; --fg:#131210; --fg-dim:#514e46; --line:#ddd8cc;
+      --accent:#d21f2c; --accent-dim:#9c1620; --accent-bg:#fbe4e2; --card-bg:#fff; --mono-bg:#efece2;
+      --ink:#0b0b0a; }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:Georgia,'Noto Serif','Times New Roman',serif;
+    line-height:1.65; font-size:18px;
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:0 20px;}
+  .ui{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;}
+
+  /* Language switcher: fixed pill, top-right, same on both language
+     versions of the page — points at the sibling page (../index.html from
+     here, en/index.html from the Russian original). */
+  .lang-switch{
+    position:fixed; top:14px; right:14px; z-index:20;
+    font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; font-size:.78rem; font-weight:700;
+    background:rgba(0,0,0,.55); color:#fff; border:1px solid rgba(255,255,255,.3);
+    border-radius:20px; padding:6px 12px; text-decoration:none; letter-spacing:.04em;
+  }
+  .lang-switch:hover{background:rgba(0,0,0,.78);}
+
+  /* English translation of a quote, with the verbatim Russian original kept
+     directly underneath — per this project's own rule that quoted material
+     must never be paraphrased away from the original. The translation is
+     for readability; the .orig-ru line is the actual record. */
+  .orig-ru{
+    display:block; font-style:normal; font-size:.82em; color:var(--fg-dim);
+    margin-top:.5em; line-height:1.5;
+  }
+  .orig-ru b{font-weight:700; text-transform:uppercase; font-size:.72em; letter-spacing:.05em; margin-right:.4em;}
+
+  /* Hero: a tall (3 viewport-heights) mosaic of only our highest-signal
+     confirmed evidence crops — OCR-confirmed "БОЙЦЫ СВО РЕКОМЕНДУЮТ" /
+     "ПРОВЕРЕН НА СВО" listing text, MoD gratitude certificates, munitions
+     mounted on drones — never a plain product photo, so every tile alone
+     stands as evidence. Tiles are sorted darkest-to-lightest (average
+     luminance) so the mosaic reads as a deliberate gradient, not a random
+     grid. The reader scrolls past just the headline card, then ~2 more
+     screens of mosaic, before the scrim fades it into the page background
+     and the article proper begins. No free-license photo of the actual
+     drone-strike fires exists at usable quality (checked Wikimedia Commons:
+     the only CC-licensed Wildberries fire images are three blurry
+     airplane-window night shots). */
+  header.top{position:relative; overflow:hidden; background:var(--ink); height:300vh;}
+  .hero-mosaic{
+    position:absolute; inset:0; z-index:0; display:grid;
+    grid-template-columns:repeat(6,1fr); grid-template-rows:repeat(10,1fr); gap:3px;
+    filter:saturate(1.05) contrast(1.05);
+  }
+  .hero-mosaic div{background-size:cover; background-position:center 15%;}
+  .hero-scrim{
+    position:absolute; inset:0; z-index:1;
+    background:
+      linear-gradient(180deg,
+        rgba(5,4,3,.90) 0%, rgba(5,4,3,.74) 14%, rgba(5,4,3,.5) 26%,
+        rgba(5,4,3,.28) 38%, rgba(5,4,3,.4) 50%, rgba(5,4,3,.6) 62%,
+        var(--bg) 90%, var(--bg) 100%);
+  }
+  /* Headline sits directly on the mosaic, in the zone where the scrim is
+     already near-opaque (rgba(5,4,3,.90) at 0%) — bright and oversized so
+     it reads as the loudest thing on the page, no card needed for contrast. */
+  .hero-headline-wrap{ position:relative; z-index:2; padding:70px 0 0; }
+  h1.headline{
+    font-size:clamp(2.6rem, 6vw, 4.4rem); line-height:1.08; margin:0; font-weight:800;
+    color:#fff; letter-spacing:-.01em; text-shadow:0 3px 24px rgba(0,0,0,.55);
+  }
+  /* The opening line of #recap is pulled up into the header's own bottom
+     30vh, where the scrim gradient has already resolved to solid var(--bg)
+     (see the 90%/100% stops above) — so it sits on a plain background, not
+     mosaic, and the cut into <section id="recap"> right after reads as
+     continuous rather than a hard break. */
+  .hero-transition-wrap{
+    position:absolute; left:0; right:0; bottom:50px; z-index:2;
+    border-top:4px solid var(--accent); padding-top:26px;
+  }
+
+  /* Fixed-dark card (not a page-theme token) reused from the old header
+     ticker — same "this is a live news feed, not page decoration" register
+     as .tg-post-card/.absurd-card-review use elsewhere: a deliberately
+     un-themed block that reads the same in light and dark mode. */
+  .newsbox{
+    margin:0 0 1.2em; padding:14px 16px; background:var(--ink); border-radius:8px;
+    border-bottom:3px solid var(--accent);
+  }
+  .newsbox-label{
+    font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--accent); font-weight:700; margin-bottom:9px;
+  }
+  .newsbox-list{list-style:none; margin:0; padding:0; font-size:13px; line-height:1.5;}
+  .newsbox-list li{padding:4px 0; border-top:1px solid rgba(255,255,255,.1);}
+  .newsbox-list li:first-child{border-top:none; padding-top:0;}
+  .news-outlet{display:inline-block; min-width:88px; font-weight:700; color:#ff8b86; margin-right:6px;}
+  .newsbox-list a{color:#e7e3d8; text-decoration:none; border-bottom:1px dotted #6b6558;}
+  .newsbox-list a:hover{color:#fff; border-color:var(--accent);}
+  .news-date{float:right; color:#948e7f; font-size:11px; white-space:nowrap; margin-left:8px;}
+
+  /* Scroll-progress wink between the "short version" (#recap) and the
+     full piece that follows — a literal cut line (rule—text—rule) rather
+     than a subtle pill, so it reads as a hard marker, not a footnote. */
+  .you-are-here{
+    display:flex; align-items:center; gap:16px; margin:2.2em 0; color:var(--accent);
+  }
+  .you-are-here::before, .you-are-here::after{
+    content:""; flex:1; border-top:2px dashed var(--accent);
+  }
+  .you-are-here span{
+    font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    font-size:1rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    white-space:nowrap;
+  }
+  .recap-transition{ text-align:center; font-style:italic; color:var(--fg-dim); }
+  .newsbox-big{ padding:20px 22px; }
+  .newsbox-big .newsbox-label{ font-size:12px; margin-bottom:12px; }
+  .newsbox-big .newsbox-list{ font-size:14.5px; }
+  .newsbox-big .newsbox-list li{ padding:8px 0; }
+
+  section{padding:40px 0; border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  h2{
+    font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    font-size:1.05rem; font-weight:800; text-transform:uppercase; letter-spacing:.04em;
+    margin:0 0 .9em; padding-top:14px; position:relative; color:var(--fg);
+  }
+  h2::before{content:""; position:absolute; top:0; left:0; width:46px; height:4px; background:var(--accent);}
+  h3{font-size:1.15rem; margin:1.6em 0 .5em;}
+  p{margin:0 0 1.1em;}
+  .drop::first-letter{
+    font-size:3.1em; float:left; line-height:.85; padding:.05em .08em 0 0; color:var(--accent);
+    font-weight:700;
+  }
+
+  .statgrid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:14px; margin:26px 0; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+  }
+  .stat{background:var(--card-bg); border:1px solid var(--line); border-radius:8px; padding:16px;}
+  .stat .n{font-size:1.7rem; font-weight:700; color:var(--accent); font-family:Georgia,serif;}
+  .stat .d{font-size:.85rem; color:var(--fg-dim); margin-top:4px;}
+
+  blockquote{
+    margin:1.2em 0; padding:2px 0 2px 18px; border-left:3px solid var(--accent);
+    color:var(--fg-dim); font-style:italic; font-size:.98rem;
+  }
+  blockquote cite{display:block; font-style:normal; font-size:.8rem; margin-top:4px; opacity:.75;}
+
+  table{width:100%; border-collapse:collapse; margin:1.2em 0; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; font-size:.92rem;}
+  th,td{text-align:left; padding:7px 10px; border-bottom:1px solid var(--line);}
+  th{font-weight:600; color:var(--fg-dim); font-size:.78rem; text-transform:uppercase; letter-spacing:.03em;}
+  td.num, th.num{text-align:right; font-variant-numeric:tabular-nums;}
+  tbody tr:hover{background:var(--mono-bg);}
+
+  .bars{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; font-size:.85rem; margin:1.4em 0;}
+  .bar-row{display:flex; align-items:center; gap:10px; margin:6px 0;}
+  .bar-label{width:190px; flex-shrink:0; color:var(--fg-dim); text-align:right;}
+  .bar-track{flex:1; background:var(--mono-bg); border-radius:3px; height:16px; position:relative;}
+  .bar-fill{background:var(--accent); height:100%; border-radius:3px;}
+  .bar-val{width:52px; flex-shrink:0; font-variant-numeric:tabular-nums;}
+
+  .quarter-chart{display:flex; align-items:flex-end; gap:4px; height:150px; margin:1.6em 0 .4em;
+    font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;}
+  .qbar{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%;}
+  .qbar .fill{width:100%; background:var(--accent); border-radius:2px 2px 0 0; min-height:2px;}
+  .qbar .fill.recent{background:var(--fg); opacity:.85;}
+  .qbar .n{font-size:.68rem; color:var(--fg-dim); margin-bottom:3px;}
+  .qlabels{display:flex; gap:4px; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; font-size:.62rem; color:var(--fg-dim);}
+  .qlabels span{flex:1; text-align:center;}
+
+  .case{background:var(--card-bg); border:1px solid var(--line); border-radius:10px; padding:22px 24px; margin:1.6em 0;}
+  .case h3{margin-top:0;}
+  .case .meta{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; font-size:.82rem; color:var(--fg-dim); margin-bottom:.8em;}
+  .case .meta span{margin-right:14px;}
+  .case-note{font-size:.86rem; color:var(--fg-dim); background:var(--mono-bg); border-radius:6px; padding:8px 12px; margin:.6em 0 1.1em;}
+
+  /* Case-card evidence photos: seller's own gallery images, shown at
+     readable size (not cropped thumbnails) since the point is the text
+     printed on them. */
+  .case-img{margin:.8em 0 1.2em;}
+  .case-img img{width:100%; max-width:340px; display:block; border-radius:8px; border:1px solid var(--line); border-top:3px solid var(--wb-purple);}
+  .case-img.side{display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start;}
+  .case-img.side img{max-width:260px; flex:1 1 220px;}
+  .case-img-cap{font-size:.8rem; color:var(--fg-dim); margin-top:6px; max-width:340px;}
+
+  /* Deliberately empty visual slot — used where no image survives (delisted
+     items), so the absence itself reads as evidence rather than a broken page. */
+  .no-image{
+    border:1px dashed var(--line); border-radius:8px; padding:18px; margin:.8em 0 1.2em;
+    font-size:.85rem; color:var(--fg-dim); text-align:center; max-width:340px;
+  }
+
+  /* Standalone pull-quote: distinct from .callout (contract text) and
+     blockquote (attributed review lists) — used sparingly for single,
+     high-impact lines that should break the reading flow. RESERVED for
+     material someone else actually said/wrote (a seller, a channel, a
+     document) — italic serif is the typographic convention for reported
+     speech, and using it for our own analysis reads as a fabricated quote.
+     Our own restated findings use .finding instead (below). */
+  .pull-quote{
+    font-family:Georgia,serif; font-style:italic; font-size:1.4rem; line-height:1.4;
+    color:var(--accent); margin:1.4em 0; padding:0 6%;
+  }
+  .pull-quote cite{display:block; font-style:normal; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    font-size:.78rem; color:var(--fg-dim); margin-top:.5em;}
+
+  /* Our own voice, restated for emphasis — same visual weight/rhythm as
+     .pull-quote (a reading-flow break) but deliberately NOT italic serif, so
+     it never reads as something someone else said. Upright sans-serif is the
+     tell: this is the investigation talking, not a citation. */
+  .finding{
+    font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; font-weight:700; font-size:1.2rem; line-height:1.4;
+    color:var(--accent); margin:1.4em 0; padding:0 6%;
+  }
+  .finding .ref{display:block; font-weight:400; font-size:.78rem; color:var(--fg-dim); margin-top:.5em;}
+
+  /* Recap: a fast digest ahead of the full technical read below — three
+     headline claims, each followed by a curated grid of real evidence
+     (product images, buyer reviews, then WB's own contract clause) —
+     this is now the page's only image/review gallery (the old standalone
+     #visual-gallery and #review-ticker sections were retired in favor of
+     this reshuffleable, curated version), so components are self-contained
+     rather than reused from elsewhere. */
+  section#recap{padding-top:8px;}
+  .recap-intro{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; font-size:.98rem; color:var(--fg-dim); margin:0 0 1.4em;}
+
+  /* Two standalone headline statements bracketing the proof grids below —
+     "here's what's sold" then "here's buyers confirming it". */
+  .recap-lead{
+    font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; font-weight:700;
+    font-size:1.48rem; line-height:1.4; color:var(--fg); margin:0 0 18px; text-wrap:balance;
+  }
+  .recap-lead + .recap-lead, .recap-proof-grid + .recap-lead{margin-top:2.4em;}
+
+  /* Static grid built from the gallery-pair / wb-review components — same
+     visual language as #cases, laid out as a fixed grid rather than an
+     auto-scroll track. */
+  .recap-proof-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:18px; margin:0 0 1.6em;
+  }
+  .recap-proof-grid .gallery-pair{width:auto;}
+  .recap-proof-grid .wb-review{margin:0;}
+
+  /* Blown-up citation of WB's own contract clause — same --wb-purple
+     citation-marker convention as .wb-source, just larger since this is
+     the load-bearing quote for the whole third act, not a side callout. */
+  .recap-tos-quote{
+    font-family:Georgia,serif; font-style:italic; font-size:1.32rem; line-height:1.5;
+    color:var(--fg); border-left:4px solid var(--wb-purple); padding:6px 0 6px 26px; margin:0 0 1.6em;
+  }
+  .recap-tos-quote cite{
+    display:block; font-style:normal; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    font-size:.8rem; color:var(--fg-dim); margin-top:12px;
+  }
+
+  /* Single-image evidence card (no product/confirm pairing needed — the
+     violation is the whole point of the shot) for the "WB already knew"
+     screenshots. */
+  .recap-violation{margin:0; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:var(--card-bg);}
+  .recap-violation img{width:100%; height:220px; object-fit:cover; display:block;}
+  .recap-violation figcaption{
+    padding:10px 12px; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    font-size:.82rem; color:var(--fg-dim); line-height:1.4;
+  }
+
+  /* Seller photos (promo still, storefront, factory floor) — plain
+     documentary strip, no captions needed beyond the alt text. */
+  .recap-seller-media{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px;
+    margin:0 0 1.6em;
+  }
+  .recap-seller-media img{
+    width:100%; height:220px; object-fit:cover; border-radius:10px;
+    border:1px solid var(--line); display:block;
+  }
+
+  /* Seller's own promotional copy — same blown-up-citation convention as
+     .recap-tos-quote, but the accent reads as a different voice (the
+     seller's, not WB's contract) via --wb-magenta instead of --wb-purple. */
+  .recap-seller-quote{
+    font-family:Georgia,serif; font-style:italic; font-size:1.18rem; line-height:1.55;
+    color:var(--fg); border-left:4px solid var(--wb-magenta); padding:6px 0 6px 26px; margin:0 0 1.6em;
+  }
+  .recap-seller-quote cite{
+    display:block; font-style:normal; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    font-size:.8rem; color:var(--fg-dim); margin-top:12px;
+  }
+
+  /* Two product cards styled after WB's own catalog-card look: plain white
+     card, image on top, name below, brand accent as a thin top rule. */
+  .recap-seller-products{ grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); }
+  .recap-seller-products .gallery-pair{
+    border-radius:8px; overflow:hidden;
+  }
+  .recap-seller-products .gallery-imgs img{ width:100%; height:320px; object-fit:cover; }
+
+  /* Single blown-up evidence photo (certificates montage) — centered,
+     capped width so a tall portrait scan doesn't dominate the column. Same
+     wb-purple top rule as every other scraped-from-WB image on this page. */
+  .recap-cert-figure{ margin:0 0 1.4em; text-align:center; }
+  .recap-cert-figure img{
+    max-width:360px; width:100%; border-radius:10px; border:1px solid var(--line);
+    border-top:3px solid var(--wb-purple); display:inline-block;
+  }
+  .recap-cert-figure figcaption{
+    text-align:left; max-width:560px; margin:14px auto 0;
+    font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    font-size:.86rem; color:var(--fg-dim); line-height:1.5;
+  }
+
+  /* Three small pull-quote boxes from a product description. */
+  .recap-quote-boxes{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px;
+    margin:0 0 .8em;
+  }
+  .recap-quote-box{
+    display:block; font-family:Georgia,serif; font-style:italic; font-size:.98rem; line-height:1.5;
+    color:var(--fg); background:var(--card-bg); border:1px solid var(--line);
+    border-radius:8px; padding:14px 16px; text-decoration:none;
+  }
+  .recap-quote-box:hover{ border-color:var(--wb-magenta); }
+  .recap-quote-box cite{
+    display:block; font-style:normal; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    font-size:.76rem; color:var(--fg-dim); margin-top:10px;
+  }
+
+  /* Schematic Telegram-post card — same avatar/verified-badge convention
+     as .wb-review, adapted for a channel post instead of a WB review. */
+  .tg-post-card{
+    max-width:480px; border:1px solid var(--line); border-radius:10px;
+    background:var(--card-bg); padding:14px 16px; margin:0 0 .8em;
+    font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+  }
+  .tg-post-head{ display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .tg-post-avatar{
+    width:28px; height:28px; border-radius:50%; flex:none;
+    object-fit:cover; display:block; background:#000;
+  }
+  .tg-post-channel{ font-weight:600; font-size:.92rem; }
+  .tg-post-date{ margin-left:auto; font-size:.76rem; color:var(--fg-dim); }
+  .tg-post-text{ font-size:.9rem; line-height:1.55; margin:0 0 8px; color:var(--fg); }
+  .tg-post-text a{ color:var(--accent); word-break:break-all; }
+  .tg-post-foot{ font-size:.76rem; color:var(--fg-dim); }
+
+  /* "Innocuous category vs. real purpose" card — the whole point is a
+     visible clash: a cheerful WB-style catalog-breadcrumb pill up top,
+     a flat dark strip with the reviewer's own words directly under it.
+     Fixed (non-token) colors on both strips so the clash reads the same
+     in light and dark mode — neither strip should look "correct" for
+     the page's own theme, that's the joke. */
+  .absurd-card{
+    display:block; margin:0; border-radius:10px; overflow:hidden; border:1px solid var(--line);
+    text-decoration:none; color:inherit; transition:border-color .15s;
+  }
+  .absurd-card:hover{ border-color:var(--wb-purple); }
+  .absurd-card img{ width:100%; height:190px; object-fit:cover; display:block; }
+  .absurd-card-category{
+    background:#f0e6fb; color:#3a1d63; padding:10px 12px 12px;
+    font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+  }
+  .absurd-card-category span{
+    display:block; font-size:.68rem; text-transform:uppercase; letter-spacing:.05em;
+    color:#7a4fb5; margin-bottom:2px;
+  }
+  .absurd-card-category b{ display:block; font-size:1.05rem; font-weight:700; }
+  .absurd-card-review{ background:#191919; color:#eee; padding:10px 12px 14px; }
+  .absurd-card-review span{
+    display:block; font-size:.68rem; text-transform:uppercase; letter-spacing:.05em;
+    color:#999; margin-bottom:4px; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+  }
+  .absurd-card-review p{
+    margin:0; font-family:Georgia,serif; font-style:italic; font-size:.94rem; line-height:1.45;
+  }
+
+  /* Reshuffle control for the image proof grid — progressive enhancement:
+     hidden by default, shown by JS once it confirms it can wire the click
+     handler, so a no-JS reader just sees the static first-load 8 cards. */
+  .recap-shuffle-bar{display:flex; align-items:center; gap:14px; margin:0 0 1.6em;}
+  .recap-shuffle-btn{
+    font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; font-size:.86rem; font-weight:600;
+    color:var(--accent); background:var(--accent-bg); border:1px solid var(--accent); border-radius:20px;
+    padding:7px 16px; cursor:pointer;
+  }
+  .recap-shuffle-btn:hover{background:var(--accent); color:var(--bg);}
+  .recap-shuffle-count{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; font-size:.8rem; color:var(--fg-dim);}
+
+  mark{background:var(--accent-bg); color:var(--accent); padding:0 3px; border-radius:3px; font-style:normal;}
+
+  /* Schematic emulation of Wildberries' own review-card chrome — avatar
+     placeholder, star row, verified-purchase check, seller-reply box — used
+     in place of review screenshots. Deliberately schematic, not a pixel
+     clone: no fabricated reviewer name/photo (WB shows a first name; we
+     don't store one, so we don't invent one). Every value shown (stars,
+     date, "helpful" count, seller reply text) is real data from our own
+     reviews table, not decoration. Body stays neutral grey/amber — WB's
+     actual review-page colors — but carries the same wb-purple top rule as
+     every other scraped-from-WB element on this page, marking it as their
+     content, not our restated finding. */
+  .wb-review{
+    border:1px solid var(--line); border-top:3px solid var(--wb-purple); border-radius:10px; padding:16px 18px; margin:14px 0;
+    background:var(--card-bg); font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+  }
+  .wb-review-head{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+  .wb-avatar{
+    width:30px; height:30px; border-radius:50%; background:var(--mono-bg); flex-shrink:0;
+    background-image:radial-gradient(circle at 50% 38%, var(--fg-dim) 0 20%, transparent 21%),
+      radial-gradient(ellipse 40% 26% at 50% 88%, var(--fg-dim) 0 100%, transparent 100%);
+    opacity:.55;
+  }
+  .wb-verified{font-size:.78rem; color:var(--fg-dim);}
+  .wb-stars{position:relative; display:inline-block; letter-spacing:2px; font-size:.85rem; margin-left:auto; color:var(--line);}
+  .wb-stars::before{content:"★★★★★";}
+  .wb-stars::after{
+    content:"★★★★★"; position:absolute; top:0; left:0; color:#f5a623; overflow:hidden;
+    width:var(--wb-pct,100%);
+  }
+  .wb-review-text{margin:0 0 8px; font-size:.95rem; color:var(--fg); font-family:Georgia,serif;}
+  .wb-review-foot{display:flex; justify-content:space-between; font-size:.76rem; color:var(--fg-dim);}
+  .wb-seller-reply{
+    margin-top:12px; padding:12px 14px; background:var(--mono-bg); border-radius:8px;
+  }
+  .wb-seller-reply-label{font-size:.74rem; font-weight:700; color:var(--fg-dim); margin-bottom:5px;}
+  .wb-seller-reply p{margin:0; font-size:.86rem; color:var(--fg);}
+
+  /* "Wildberries in its own words": a distinct register for WB's own promotional/
+     corporate materials — separate from .callout (archived seller/contract
+     quotes) and .pull-quote (this investigation's own voice). The purple
+     left-rule marks "this is the platform talking about itself." Verbatim
+     source: cmp.wildberries.ru/cmpf/Special%20project%20kit%20WB.pdf ("Про
+     аудиторию"/"Варианты реализации спецпроектов" slides) — the box leads
+     with the deck's actual headline in guillemets, then the MAU/buyer/price
+     figures straight off those same slides, not paraphrased. */
+  .wb-source{
+    position:relative; margin:1.6em 0; padding:18px 20px 18px 22px;
+    background:var(--card-bg); border:1px solid var(--line); border-left:4px solid var(--wb-purple);
+    border-radius:0 8px 8px 0;
+  }
+  .wb-source::before{
+    content:"WILDBERRIES, IN ITS OWN WORDS"; position:absolute; top:-9px; left:16px;
+    background:var(--bg); padding:0 8px; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    font-size:10px; font-weight:800; letter-spacing:.09em; color:var(--wb-purple);
+  }
+  .wb-source p{margin:0 0 .6em; font-size:.95rem;}
+  .wb-source p:last-child{margin-bottom:0;}
+  .wb-source .wb-fig{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; font-weight:700; color:var(--wb-purple);}
+  .wb-source cite{
+    display:block; font-style:normal; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    font-size:.74rem; color:var(--fg-dim); margin-top:.7em;
+  }
+
+  /* Collapsible secondary evidence (full tables/charts behind the headline
+     finding) — keeps the narrative reading at full speed for a skimming
+     reader while the underlying breakdown stays one click away, not cut. */
+  details.datablock{margin:1.2em 0; border:1px solid var(--line); border-radius:8px; background:var(--card-bg); padding:2px 16px;}
+  details.datablock > summary{
+    cursor:pointer; padding:12px 0; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    font-weight:700; font-size:.92rem; list-style:none; color:var(--fg);
+  }
+  details.datablock > summary::-webkit-details-marker{display:none;}
+  details.datablock > summary::before{content:"▸ "; color:var(--accent); display:inline-block; transition:transform .15s ease;}
+  details.datablock[open] > summary::before{transform:rotate(90deg);}
+  details.datablock > summary:hover{color:var(--accent);}
+  details.datablock > *:not(summary):first-of-type{margin-top:0;}
+  details.datablock > *:last-child{margin-bottom:16px;}
+
+  .callout{background:var(--accent-bg); border-radius:8px; padding:16px 20px; margin:1.4em 0; font-size:.98rem;}
+
+  .dl{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; font-size:.9rem;}
+  .dl a{color:var(--accent);}
+
+  .kicker-close{font-size:1.15rem; font-weight:600; margin-top:1.4em;}
+  footer.bottom{padding:30px 0 60px; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; font-size:.82rem; color:var(--fg-dim);}
+  footer.bottom a{color:var(--fg-dim);}
+
+  /* Support block: deliberately the one part of the dim, small-print footer
+     that reads at full contrast/size — a card, not another muted line, so
+     it doesn't get skimmed past with the boilerplate around it. */
+  .support-box{
+    margin:1.6em 0 0; padding:18px 20px; border:1px solid var(--line); border-radius:10px;
+    background:var(--card-bg); font-size:.92rem; color:var(--fg);
+  }
+  .support-box-label{
+    font-weight:800; text-transform:uppercase; letter-spacing:.04em; font-size:.8rem;
+    margin-bottom:8px; color:var(--fg);
+  }
+  .support-box p{margin:0 0 .8em;}
+  .support-list{list-style:none; margin:0; padding:0;}
+  .support-list li{
+    display:flex; flex-wrap:wrap; gap:8px; align-items:baseline;
+    padding:8px 0; border-top:1px solid var(--line);
+  }
+  .support-list li:first-child{border-top:none; padding-top:0;}
+  .support-method{font-weight:700; flex-shrink:0; min-width:110px;}
+  .support-box code{font-size:.82em; word-break:break-all;}
+  code{background:var(--mono-bg); padding:1px 5px; border-radius:3px; font-size:.85em;}
+
+  /* Horizontally auto-rotating product/confirmation image gallery. */
+  .gallery-viewport{overflow:hidden; margin:1.4em 0;}
+  .gallery-track{display:flex; gap:18px; width:max-content; animation:scroll-x 36s linear infinite;}
+  .gallery-viewport:hover .gallery-track{animation-play-state:paused;}
+  .gallery-pair{
+    display:block; width:280px; flex-shrink:0; text-decoration:none; color:inherit;
+    border:1px solid var(--line); border-top:3px solid var(--wb-purple); border-radius:10px; overflow:hidden; background:var(--card-bg);
+  }
+  .gallery-imgs{display:flex;}
+  .gallery-imgs img{width:50%; height:180px; object-fit:cover; display:block;}
+  .gallery-cap{
+    padding:10px 12px; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+    font-size:.82rem; color:var(--fg-dim); line-height:1.4;
+  }
+  @keyframes scroll-x{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+  /* Vertically auto-scrolling ticker of military-coded review excerpts.
+     Rows carry the FULL review text (not a truncated "…" fragment) plus, for
+     the subset where WB stored one, the seller's own reply — a real
+     buyer↔seller exchange, not just a one-sided quote. Taller/longer content
+     than before, so height and scroll duration are both bumped to keep the
+     same reading pace (was 260px/50s for 37 short single-line rows; now
+     300px/150s for 33 rows, several 2-3 lines with a reply). */
+  .ticker-viewport{
+    height:300px; overflow:hidden; margin:1.4em 0; position:relative;
+    border:1px solid var(--line); border-top:3px solid var(--wb-purple); border-radius:8px; background:var(--mono-bg);
+    mask-image:linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  }
+  .ticker-track{display:flex; flex-direction:column; animation:scroll-y 150s linear infinite;}
+  .ticker-viewport:hover .ticker-track{animation-play-state:paused;}
+  .ticker-row{
+    display:flex; flex-direction:column; gap:3px; padding:12px 16px; text-decoration:none; color:inherit;
+    border-bottom:1px solid var(--line); font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;
+  }
+  .ticker-row:hover{background:var(--card-bg);}
+  .ticker-item{font-size:.82rem; color:var(--fg-dim);}
+  .ticker-quote{font-size:.9rem; font-style:italic;}
+  /* Real seller reply, when WB stored one — set apart with a left rule so
+     it reads as a second voice answering the first, not more of the review. */
+  .ticker-reply{
+    font-size:.78rem; font-style:normal; color:var(--fg-dim); opacity:.9;
+    padding-left:10px; border-left:2px solid var(--line); margin-top:1px;
+  }
+  @keyframes scroll-y{ from{transform:translateY(0);} to{transform:translateY(-50%);} }
+
+  @media (prefers-reduced-motion: reduce){
+    .gallery-track, .ticker-track{animation:none;}
+    .gallery-viewport{overflow-x:auto;}
+    .ticker-viewport{height:auto; max-height:400px; overflow-y:auto; mask-image:none;}
+  }
+
+  /* Scroll-reveal for charts: fade + slight rise on first scroll-into-view.
+     JS adds .in when the element crosses the viewport; without JS (or with
+     prefers-reduced-motion) .reveal is never applied via the class below, so
+     the chart just renders at full opacity — no dependency, no broken state. */
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal, .reveal.in{opacity:1; transform:none; transition:none;}
+  }
+
+  /* Category and timeline charts (inline SVG, generated by site/build_assets.py). */
+  .cat-chart, .timeline-chart{width:100%; height:auto; margin:1.4em 0; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;}
+  .cat-chart .cat-label{font-size:11px; fill:var(--fg-dim); text-anchor:end;}
+  .cat-chart .cat-val{font-size:11px; fill:var(--fg); font-variant-numeric:tabular-nums;}
+  .cat-chart .cat-strict{fill:var(--accent);}
+  .cat-chart .cat-dual{fill:var(--fg-dim); opacity:.6;}
+  .cat-chart .cat-other{fill:var(--line);}
+  .timeline-chart .tl-bar{fill:var(--accent);}
+  .chart-legend{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; font-size:.78rem; color:var(--fg-dim); margin:.4em 0 1.2em;}
+  .chart-legend span{margin-right:16px;}
+  .chart-legend i{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:5px; vertical-align:middle;}
+</style>
+</head>
+<body>
+
+<a class="lang-switch" href="../index.html">RU</a>
+
+<header class="top">
+  <div class="hero-mosaic" aria-hidden="true">
+    <div style="background-image:url('../images/557275222_confirm.jpg')"></div>
+    <div style="background-image:url('../images/283047236_confirm.jpg')"></div>
+    <div style="background-image:url('../images/280655834_confirm.jpg')"></div>
+    <div style="background-image:url('../images/ganza_promo_combat.jpg')"></div>
+    <div style="background-image:url('../images/480882548_vog.jpg')"></div>
+    <div style="background-image:url('../images/215070113_confirm.jpg')"></div>
+    <div style="background-image:url('../images/450816289_confirm.jpg')"></div>
+    <div style="background-image:url('../images/133601677_confirm.jpg')"></div>
+    <div style="background-image:url('../images/271682215_confirm.jpg')"></div>
+    <div style="background-image:url('../images/379555527_confirm.jpg')"></div>
+    <div style="background-image:url('../images/247808462_vybor.jpg')"></div>
+    <div style="background-image:url('../images/346165329_confirm.jpg')"></div>
+    <div style="background-image:url('../images/229951388_confirm.jpg')"></div>
+    <div style="background-image:url('../images/326298293_confirm.jpg')"></div>
+    <div style="background-image:url('../images/228496327_confirm.jpg')"></div>
+    <div style="background-image:url('../images/846399511_confirm.jpg')"></div>
+    <div style="background-image:url('../images/604244329_confirm.jpg')"></div>
+    <div style="background-image:url('../images/482855859_confirm.jpg')"></div>
+    <div style="background-image:url('../images/239623431_confirm.jpg')"></div>
+    <div style="background-image:url('../images/287345219_confirm.jpg')"></div>
+    <div style="background-image:url('../images/797500540_confirm.jpg')"></div>
+    <div style="background-image:url('../images/62010384_confirm.jpg')"></div>
+    <div style="background-image:url('../images/591122232_confirm.jpg')"></div>
+    <div style="background-image:url('../images/210767188_confirm.jpg')"></div>
+    <div style="background-image:url('../images/321011002_confirm.jpg')"></div>
+    <div style="background-image:url('../images/276341835_confirm.jpg')"></div>
+    <div style="background-image:url('../images/819725159_confirm.jpg')"></div>
+    <div style="background-image:url('../images/949232819_confirm.jpg')"></div>
+    <div style="background-image:url('../images/293051745_certificates.jpg')"></div>
+    <div style="background-image:url('../images/318340889_confirm.jpg')"></div>
+    <div style="background-image:url('../images/698859142_confirm.jpg')"></div>
+    <div style="background-image:url('../images/422685389_confirm.jpg')"></div>
+    <div style="background-image:url('../images/143128680_confirm.jpg')"></div>
+    <div style="background-image:url('../images/617837131_confirm.jpg')"></div>
+    <div style="background-image:url('../images/149128985_confirm.jpg')"></div>
+    <div style="background-image:url('../images/898708889_confirm.jpg')"></div>
+    <div style="background-image:url('../images/168181429_confirm.jpg')"></div>
+    <div style="background-image:url('../images/248904672_confirm.jpg')"></div>
+    <div style="background-image:url('../images/400306276_confirm.jpg')"></div>
+    <div style="background-image:url('../images/327612688_confirm.jpg')"></div>
+    <div style="background-image:url('../images/543831218_confirm.jpg')"></div>
+    <div style="background-image:url('../images/918230226_confirm.jpg')"></div>
+    <div style="background-image:url('../images/918230228_confirm.jpg')"></div>
+    <div style="background-image:url('../images/482699353_confirm.jpg')"></div>
+    <div style="background-image:url('../images/918264582_confirm.jpg')"></div>
+    <div style="background-image:url('../images/488928364_confirm.jpg')"></div>
+    <div style="background-image:url('../images/134099002_confirm.jpg')"></div>
+    <div style="background-image:url('../images/557275222_confirm.jpg')"></div>
+    <div style="background-image:url('../images/283047236_confirm.jpg')"></div>
+    <div style="background-image:url('../images/280655834_confirm.jpg')"></div>
+    <div style="background-image:url('../images/ganza_promo_combat.jpg')"></div>
+    <div style="background-image:url('../images/480882548_vog.jpg')"></div>
+    <div style="background-image:url('../images/215070113_confirm.jpg')"></div>
+    <div style="background-image:url('../images/450816289_confirm.jpg')"></div>
+    <div style="background-image:url('../images/133601677_confirm.jpg')"></div>
+    <div style="background-image:url('../images/271682215_confirm.jpg')"></div>
+    <div style="background-image:url('../images/379555527_confirm.jpg')"></div>
+    <div style="background-image:url('../images/247808462_vybor.jpg')"></div>
+    <div style="background-image:url('../images/346165329_confirm.jpg')"></div>
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="wrap hero-headline-wrap">
+    <h1 class="headline">THE RUSSIAN ARMY IS SHOPPING ON WILDBERRIES</h1>
+  </div>
+  <div class="wrap hero-transition-wrap">
+    <h2>The Short Version</h2>
+    <p class="recap-lead">Yes — Wildberries sells plenty of goods in demand at the front, both dual-use and outright military. Here are just a few:</p>
+  </div>
+</header>
+
+<article class="wrap">
+
+  <section id="recap">
+    <div class="recap-proof-grid" id="recap-gallery-grid">
+      <a class="gallery-pair" href="https://www.wildberries.ru/catalog/591122232/detail.aspx" target="_blank" rel="noopener">
+        <div class="gallery-imgs">
+          <img src="../images/591122232_product.jpg" alt="Tactical assault vest 1115, multicam" loading="lazy">
+          <img src="../images/591122232_confirm.jpg" alt="Confirmation image" loading="lazy">
+        </div>
+        <div class="gallery-cap">Body armor: «Бойцы СВО рекомендуют» ("our SVO troops recommend it")</div>
+      </a>
+      <a class="gallery-pair" href="https://www.wildberries.ru/catalog/228496327/detail.aspx" target="_blank" rel="noopener">
+        <div class="gallery-imgs">
+          <img src="../images/228496327_product.jpg" alt="Tactical assault body armor with BR5 plates" loading="lazy">
+          <img src="../images/228496327_confirm.jpg" alt="Confirmation image" loading="lazy">
+        </div>
+        <div class="gallery-cap">The same «Бойцы СВО рекомендуют» ("our SVO troops recommend it") line, again</div>
+      </a>
+      <a class="gallery-pair" href="https://www.wildberries.ru/catalog/318340889/detail.aspx" target="_blank" rel="noopener">
+        <div class="gallery-imgs">
+          <img src="../images/318340889_product.jpg" alt="Tactical UHMWPE helmet with ears, cover, multicam" loading="lazy">
+          <img src="../images/318340889_confirm.jpg" alt="Confirmation image" loading="lazy">
+        </div>
+        <div class="gallery-cap">A helmet: «ПРОВЕРЕН НА СВО» ("field-tested in the SVO").</div>
+      </a>
+      <a class="gallery-pair" href="https://www.wildberries.ru/catalog/482855859/detail.aspx" target="_blank" rel="noopener">
+        <div class="gallery-imgs">
+          <img src="../images/482855859_product.jpg" alt="Winter sleeping bag, -20°" loading="lazy">
+          <img src="../images/482855859_confirm.jpg" alt="Confirmation image" loading="lazy">
+        </div>
+        <div class="gallery-cap">A sleeping bag, also «проверен на СВО» ("field-tested in the SVO").</div>
+      </a>
+      <a class="gallery-pair" href="https://www.wildberries.ru/catalog/62010384/detail.aspx" target="_blank" rel="noopener">
+        <div class="gallery-imgs">
+          <img src="../images/62010384_product.jpg" alt="Water-purification tablets" loading="lazy">
+          <img src="../images/62010384_confirm.jpg" alt="Confirmation image" loading="lazy">
+        </div>
+        <div class="gallery-cap">Water-purification tablets: «на СВО» ("for the SVO")</div>
+      </a>
+      <a class="gallery-pair" href="https://www.wildberries.ru/catalog/215070113/detail.aspx" target="_blank" rel="noopener">
+        <div class="gallery-imgs">
+          <img src="../images/215070113_product.jpg" alt="Rough-surface hemostatic tourniquet, Dry Land, EMS, 1m" loading="lazy">
+          <img src="../images/215070113_confirm.jpg" alt="Confirmation image" loading="lazy">
+        </div>
+        <div class="gallery-cap">A tourniquet: «зарекомендовал себя на СВО» ("has proven itself in the SVO")</div>
+      </a>
+      <a class="gallery-pair" href="https://www.wildberries.ru/catalog/346165329/detail.aspx" target="_blank" rel="noopener">
+        <div class="gallery-imgs">
+          <img src="../images/346165329_product.jpg" alt="Tactical anti-drone thermal-camouflage invisibility poncho" loading="lazy">
+          <img src="../images/346165329_confirm.jpg" alt="Confirmation image" loading="lazy">
+        </div>
+        <div class="gallery-cap">An anti-thermal-imaging poncho: «проверен штурмовиками!» ("tested by assault troops!")</div>
+      </a>
+      <a class="gallery-pair" href="https://www.wildberries.ru/catalog/271682215/detail.aspx" target="_blank" rel="noopener">
+        <div class="gallery-imgs">
+          <img src="../images/271682215_product.jpg" alt="Anti-drone thermal-camouflage cape" loading="lazy">
+          <img src="../images/271682215_confirm.jpg" alt="Confirmation image" loading="lazy">
+        </div>
+        <div class="gallery-cap">An anti-thermal-imaging cape: «Многократно проверено на ЛБС» ("repeatedly tested on the line of contact")</div>
+      </a>
+    </div>
+
+    <div class="recap-shuffle-bar" id="recap-shuffle-bar" hidden>
+      <button type="button" class="recap-shuffle-btn" id="recap-shuffle-btn">Show more listings</button>
+      <span class="recap-shuffle-count" id="recap-shuffle-count"></span>
+    </div>
+    <script type="application/json" id="recap-gallery-pool">[{"href":"https://www.wildberries.ru/catalog/604244329/detail.aspx","img1":"../images/604244329_product.jpg","alt1":"P-274-M1 field-telephone wire, black, 1000m","img2":"../images/604244329_confirm.jpg","cap":"«Выбор наших героев» (\"Our heroes' choice\")"},{"href":"https://www.wildberries.ru/catalog/482699353/detail.aspx","img1":"../images/482699353_product.jpg","alt1":"Utility waist bag &quot;Labyrinth&quot; (Moss)","img2":"../images/482699353_confirm.jpg","cap":"IR-Remission: pouch fabric that reduces how visible a soldier is to night-vision devices"},{"href":"https://www.wildberries.ru/catalog/591122232/detail.aspx","img1":"../images/591122232_product.jpg","alt1":"Tactical assault vest 1115, multicam","img2":"../images/591122232_confirm.jpg","cap":"«Бойцы СВО рекомендуют» (\"Our SVO troops recommend it\")"},{"href":"https://www.wildberries.ru/catalog/228496327/detail.aspx","img1":"../images/228496327_product.jpg","alt1":"Tactical assault body armor with BR5 plates","img2":"../images/228496327_confirm.jpg","cap":"The same slogan — «Бойцы СВО рекомендуют» (\"our SVO troops recommend it\") — on another seller's listing."},{"href":"https://www.wildberries.ru/catalog/62010384/detail.aspx","img1":"../images/62010384_product.jpg","alt1":"Water-purification tablets","img2":"../images/62010384_confirm.jpg","cap":"Water-purification tablets «на СВО» (\"for the SVO\")."},{"href":"https://www.wildberries.ru/catalog/143128680/detail.aspx","img1":"../images/143128680_product.jpg","alt1":"Folding sapper grappling hook, 2 pcs","img2":"../images/143128680_confirm.jpg","cap":"A folding sapper grappling hook, sold as camping gear for gathering firewood — yet the listing itself says «для разминирования, для эвакуации» (\"for mine clearance, for evacuation\")."},{"href":"https://www.wildberries.ru/catalog/133601677/detail.aspx","img1":"../images/133601677_product.jpg","alt1":"Wound-healing powder, 15g","img2":"../images/133601677_confirm.jpg","cap":"A wound-healing powder — for «боевых ран», «осколочных ранений» (\"combat wounds,\" \"shrapnel wounds\")."},{"href":"https://www.wildberries.ru/catalog/149128985/detail.aspx","img1":"../images/149128985_product.jpg","alt1":"Fully stocked tactical military first-aid kit","img2":"../images/149128985_confirm.jpg","cap":"The first-aid kit's own instructions: «применим при ранениях грудной клетки» (\"suitable for chest wounds\")."},{"href":"https://www.wildberries.ru/catalog/215070113/detail.aspx","img1":"../images/215070113_product.jpg","alt1":"Rough-surface hemostatic tourniquet, Dry Land, EMS, 1m","img2":"../images/215070113_confirm.jpg","cap":"A hemostatic tourniquet «зарекомендовал себя на СВО» (\"has proven itself in the SVO\")."},{"href":"https://www.wildberries.ru/catalog/210767188/detail.aspx","img1":"../images/210767188_product.jpg","alt1":"Body armor cover, combat plate carrier, \"Nevsky 2.0\", digital camo","img2":"../images/210767188_confirm.jpg","cap":"A body-armor cover, \"Nevsky 2.0\": the same IR-Remission fabric, plus «стропа эвакуационная» (\"an evacuation strap\")."},{"href":"https://www.wildberries.ru/catalog/318340889/detail.aspx","img1":"../images/318340889_product.jpg","alt1":"Tactical UHMWPE helmet with ears, cover, multicam","img2":"../images/318340889_confirm.jpg","cap":"A military tactical helmet: «ПРОВЕРЕН НА СВО» (\"field-tested in the SVO\")."},{"href":"https://www.wildberries.ru/catalog/271682215/detail.aspx","img1":"../images/271682215_product.jpg","alt1":"Anti-drone thermal-camouflage cape","img2":"../images/271682215_confirm.jpg","cap":"An anti-thermal-imaging cape: «Многократно проверено на ЛБС» (\"repeatedly tested on the line of contact\")."},{"href":"https://www.wildberries.ru/catalog/276341835/detail.aspx","img1":"../images/276341835_product.jpg","alt1":"Body armor 8301, tactical military plate carrier, multicam","img2":"../images/276341835_confirm.jpg","cap":"The same type of body armor, in \"IR-Remission\" fabric, which «рассеивает инфракрасное излучение, делая бойца невидимым для приборов ночного видения» (\"scatters infrared radiation, making the soldier invisible to night-vision devices\")."},{"href":"https://www.wildberries.ru/catalog/918230226/detail.aspx","img1":"../images/918230226_product.jpg","alt1":"Payload-release rig \"Kolosnik\" for the DJI Mavic 3","img2":"../images/918230226_confirm.jpg","cap":"A payload-release rig, \"Kolosnik,\" for the civilian DJI Mavic 3 drone: one gallery photo already shows a munition mounted in its holder."},{"href":"https://www.wildberries.ru/catalog/287345219/detail.aspx","img1":"../images/287345219_product.jpg","alt1":"Hemostatic tourniquet set for a military first-aid kit","img2":"../images/287345219_confirm.jpg","cap":"A hemostatic tourniquet: «применяется военными в реальных боевых условиях» (\"used by the military in real combat conditions\"), «подходит для аптечек 1-го и 2-го эшелона» (\"fits first- and second-echelon medical kits\") — a military-medical term for casualty evacuation."},{"href":"https://www.wildberries.ru/catalog/422685389/detail.aspx","img1":"../images/422685389_product.jpg","alt1":"Portable drone detector, Yastreb S12 Skydroid","img2":"../images/422685389_confirm.jpg","cap":"A portable drone detector that saves «жизни наших бойцов» (\"the lives of our troops\")."},{"href":"https://www.wildberries.ru/catalog/819725159/detail.aspx","img1":"../images/819725159_product.jpg","alt1":"Camouflage net, 2x2m, green-brown","img2":"../images/819725159_confirm.jpg","cap":"A camouflage net: the seller's own infographic lists «боевые сценарии» (\"combat scenarios\") of use, not just hunting or fishing."},{"href":"https://www.wildberries.ru/catalog/557275222/detail.aspx","img1":"../images/557275222_product.jpg","alt1":"Anti-thermal-imaging blanket-cape","img2":"../images/557275222_confirm.jpg","cap":"An anti-thermal-imaging blanket-cape: «для блиндажей и огневых позиций, для укрытия техники и личного состава» (\"for dugouts and firing positions, for concealing vehicles and personnel\")."},{"href":"https://www.wildberries.ru/catalog/482855859/detail.aspx","img1":"../images/482855859_product.jpg","alt1":"Winter sleeping bag, -20°","img2":"../images/482855859_confirm.jpg","cap":"A sleeping bag «проверен на СВО» (\"field-tested in the SVO\"), right next to specs on water resistance and insulation layering."},{"href":"https://www.wildberries.ru/catalog/346165329/detail.aspx","img1":"../images/346165329_product.jpg","alt1":"Tactical anti-drone thermal-camouflage invisibility poncho","img2":"../images/346165329_confirm.jpg","cap":"An anti-thermal-imaging poncho: «проверен штурмовиками!» (\"tested by assault troops!\")."},{"href":"https://www.wildberries.ru/catalog/918230228/detail.aspx","img1":"../images/918230228_product.jpg","alt1":"Payload-release rig \"MRAK\" for the DJI Mavic 3/3T/PRO","img2":"../images/918230228_confirm.jpg","cap":"A payload-release rig, \"MRAK,\" for the DJI Mavic 3: one gallery photo already shows munitions mounted on the drone, captioned «сход боеприпасов строго вертикально» (\"munition release, strictly vertical\")."},{"href":"https://www.wildberries.ru/catalog/918264582/detail.aspx","img1":"../images/918264582_product.jpg","alt1":"Payload-release rig \"Morzhomi4T\" for the DJI Matrice 4 Thermal","img2":"../images/918264582_confirm.jpg","cap":"Another payload-release rig, \"Morzhomi4T,\" for the thermal-imaging DJI Matrice 4T drone: the same claims as \"Kolosnik's\" — «работает без GPS» (\"works without GPS\"), «перпендикулярное расположение боеприпаса» (\"munition mounted perpendicular\")."},{"href":"https://www.wildberries.ru/catalog/846399511/detail.aspx","img1":"../images/846399511_product.jpg","alt1":"Tactical quick-release system","img2":"../images/846399511_confirm.jpg","cap":"A quick-release rig for body armor, «при ранении — когда дыхание затруднено» (\"for when you're wounded and breathing is difficult\")."},{"href":"https://www.wildberries.ru/catalog/327612688/detail.aspx","img1":"../images/327612688_product.jpg","alt1":"Seryogin hemostatic tourniquet","img2":"../images/327612688_confirm.jpg","cap":"A hemostatic tourniquet, \"Seryogin\": «наши фронтовые медики рекомендуют» (\"recommended by our front-line medics\")."},{"href":"https://www.wildberries.ru/catalog/949232819/detail.aspx","img1":"../images/949232819_product.jpg","alt1":"Assault tactical tourniquet ZMEY","img2":"../images/949232819_confirm.jpg","cap":"The tourniquet's own name says it all — «Штурмовой тактический турникет ZМЕЙ» (\"Assault Tactical Tourniquet ZMEY\")."},{"href":"https://www.wildberries.ru/catalog/248904672/detail.aspx","img1":"../images/248904672_product.jpg","alt1":"Rubber hemostatic tourniquet 3","img2":"../images/248904672_confirm.jpg","cap":"A hemostatic tourniquet: «применяется военными в реальных боевых условиях» (\"used by the military in real combat conditions\")."},{"href":"https://www.wildberries.ru/catalog/543831218/detail.aspx","img1":"../images/543831218_product.jpg","alt1":"Fully stocked first-echelon med pouch, moss","img2":"../images/543831218_confirm.jpg","cap":"A fully stocked \"first-echelon\" med pouch from the brand \"Combat Style\": a tourniquet, tactical shears, and a marker for noting tourniquet application time."},{"href":"https://www.wildberries.ru/catalog/239623431/detail.aspx","img1":"../images/239623431_product.jpg","alt1":"Tactical military helmet, Team Wendy, with BR2 cover","img2":"../images/239623431_confirm.jpg","cap":"A tactical helmet: «проверено на СВО» (\"tested in the SVO\"), bundled with a Russian certificate and a helmet ballistic-test video."},{"href":"https://www.wildberries.ru/catalog/321011002/detail.aspx","img1":"../images/321011002_product.jpg","alt1":"UHMWPE tactical helmet, no ears","img2":"../images/321011002_confirm.jpg","cap":"Another military helmet with the same line — «проверен на СВО» (\"field-tested in the SVO\") — plus a \"Z\" symbol and an illustration of an armed soldier."},{"href":"https://www.wildberries.ru/catalog/698859142/detail.aspx","img1":"../images/698859142_product.jpg","alt1":"Tactical hemostatic tourniquet 5 Shturmovik","img2":"../images/698859142_confirm.jpg","cap":"A hemostatic tourniquet, \"Leningradets 5 Shturmovik\": «разработано совместно с действующими специалистами Министерства обороны РФ» (\"developed together with active specialists of Russia's Defense Ministry\")."},{"href":"https://www.wildberries.ru/catalog/450816289/detail.aspx","img1":"../images/450816289_product.jpg","alt1":"Camping sleeping bag for trips, down to -30°C, khaki","img2":"../images/450816289_confirm.jpg","cap":"A sleeping bag whose stated use cases are «СВО», рыбаки, охотники, туристы» (\"the SVO, anglers, hunters, campers\")."},{"href":"https://www.wildberries.ru/catalog/898708889/detail.aspx","img1":"../images/898708889_product.jpg","alt1":"Army sleeping bag VKPO","img2":"../images/898708889_confirm.jpg","cap":"«Армейский спальный мешок ВКПО» (\"Army VKPO sleeping bag\") — the product's own name leaves no room for a \"camping\" reading."},{"href":"https://www.wildberries.ru/catalog/488928364/detail.aspx","img1":"../images/488928364_product.jpg","alt1":"RPG-7 gunner's backpack for 6 rounds, pixel camo","img2":"../images/488928364_confirm.jpg","cap":"«Рюкзак гранатомётчика на 6 выстрелов РПГ-7» (\"RPG-7 gunner's backpack, 6 rounds\"): the manufacturer's own warranty explicitly distinguishes «окопные условия» from «гражданские условия» (\"trench conditions\" vs. \"civilian conditions\") of use."},{"href":"https://www.wildberries.ru/catalog/797500540/detail.aspx","img1":"../images/797500540_product.jpg","alt1":"Anti-thermal-imaging cape MOROK, dirty snow","img2":"../images/797500540_confirm.jpg","cap":"An anti-thermal-imaging cape, \"MOROK\": the listing includes correspondence with real-world testers («ребята из Курска протестили накидки» — \"guys from Kursk field-tested the capes\")."},{"href":"https://www.wildberries.ru/catalog/326298293/detail.aspx","img1":"../images/326298293_product.jpg","alt1":"Anti-drone camouflage net blanket, plastic base","img2":"../images/326298293_confirm.jpg","cap":"An anti-thermal-imaging camouflage net: «для блиндажей, для огневых позиций, для укрытия техники и личного состава» (\"for dugouts, for firing positions, for concealing vehicles and personnel\")."}]</script>
+    <script>
+    (function(){
+      var grid = document.getElementById('recap-gallery-grid');
+      var bar = document.getElementById('recap-shuffle-bar');
+      var btn = document.getElementById('recap-shuffle-btn');
+      var countEl = document.getElementById('recap-shuffle-count');
+      var dataEl = document.getElementById('recap-gallery-pool');
+      if(!grid || !bar || !btn || !countEl || !dataEl) return;
+      var pool;
+      try{ pool = JSON.parse(dataEl.textContent); }catch(e){ return; }
+      if(!pool || pool.length < 8) return;
+
+      var MAX_SHUFFLES = 5;
+      var shuffleCount = 0;
+      var lastHrefs = Array.prototype.map.call(grid.querySelectorAll('.gallery-pair'), function(a){ return a.getAttribute('href'); });
+
+      function pickSet(){
+        var shuffled = pool.slice();
+        for(var i = shuffled.length - 1; i > 0; i--){
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = shuffled[i]; shuffled[i] = shuffled[j]; shuffled[j] = tmp;
+        }
+        var picked = shuffled.slice(0, 8);
+        var pickedHrefs = picked.map(function(it){ return it.href; });
+        if(pickedHrefs.slice().sort().join('|') === lastHrefs.slice().sort().join('|')){
+          return pickSet();
+        }
+        return picked;
+      }
+
+      function cardHtml(item){
+        return '<a class="gallery-pair" href="' + item.href + '" target="_blank" rel="noopener">' +
+          '<div class="gallery-imgs">' +
+          '<img src="' + item.img1 + '" alt="' + item.alt1 + '" loading="lazy">' +
+          '<img src="' + item.img2 + '" alt="Confirmation image" loading="lazy">' +
+          '</div>' +
+          '<div class="gallery-cap">' + item.cap + '</div>' +
+          '</a>';
+      }
+
+      function render(items){
+        grid.innerHTML = items.map(cardHtml).join('');
+        lastHrefs = items.map(function(it){ return it.href; });
+      }
+
+      btn.addEventListener('click', function(){
+        shuffleCount = shuffleCount >= MAX_SHUFFLES ? 1 : shuffleCount + 1;
+        render(pickSet());
+        countEl.textContent = 'Showing ' + shuffleCount + ' of ' + MAX_SHUFFLES;
+      });
+
+      bar.hidden = false;
+    })();
+    </script>
+
+    <p class="recap-lead">Consumers themselves confirm the front-line demand for military and dual-use goods:</p>
+    <p class="recap-intro">Here and throughout, review quotes preserve the original author's spelling and punctuation.</p>
+
+    <div class="recap-proof-grid" id="recap-reviews-grid">
+      <div class="wb-review" style="--wb-pct:100%">
+        <div class="wb-review-head"><span class="wb-avatar" aria-hidden="true"></span><span class="wb-verified">✓ Verified purchase</span><span class="wb-stars" aria-label="Rated 5 out of 5"></span></div>
+        <p class="wb-review-text">Two of these tourniquets saved my life at the front. With a shattered arm I couldn't secure a regular tourniquet on myself, but with this one it was no problem. Though what works best is individual. Recommend<span class="orig-ru"><b>RU</b>На фронте два таких турникета спасли мне жизнь. С перебитой рукой не смог зафиксировать на себе жгут, а с турникетом без проблем. Хотя кому, что больше подходит, тут все индивидуально. Рекомендую</span></p>
+        <div class="wb-review-foot"><span>June 4, 2024</span><span>41 found this helpful</span></div>
+        <div class="wb-seller-reply"><div class="wb-seller-reply-label">Seller's reply</div><p>Thanks for the review, 🤙good luck to you.<span class="orig-ru"><b>RU</b>Спасибо за отзыв, 🤙удачи вам.</span></p></div>
+      </div>
+      <div class="wb-review" style="--wb-pct:100%">
+        <div class="wb-review-head"><span class="wb-avatar" aria-hidden="true"></span><span class="wb-verified">✓ Verified purchase</span><span class="wb-stars" aria-label="Rated 5 out of 5"></span></div>
+        <p class="wb-review-text">Very good device, my husband was very pleased, since he's at the SVO he needed it!!!! but unfortunately we had to return it, he packed up too fast and forgot the device<span class="orig-ru"><b>RU</b>Очень хороший прибор муж был очень доволен и так как находиться в сво он ему был нужен!!!!но к сожалению вынуждены отказаться очень быстро собирался и забыл прибор</span></p>
+        <div class="wb-review-foot"><span>May 14, 2024</span><span>16 found this helpful</span></div>
+        <div class="wb-seller-reply"><div class="wb-seller-reply-label">Seller's reply</div><p>Natalya, good day! We thank you for the high rating of the NVG 10 night-vision device! It's a shame your husband didn't get to use the device in the SVO — good luck to him! Sincerely, the "Shturm-M!" store team<span class="orig-ru"><b>RU</b>Наталья, добрый день! Мы благодарим Вас за высокую оценку прибора ночного видения NVG 10! Жаль, что ваш муж не воспользовался прибором на СВО, пусть ему сопутствует удача! С уважением, команда магазина "Штурм-М!"</span></p></div>
+      </div>
+      <div class="wb-review" style="--wb-pct:100%">
+        <div class="wb-review-head"><span class="wb-avatar" aria-hidden="true"></span><span class="wb-verified">✓ Verified purchase</span><span class="wb-stars" aria-label="Rated 5 out of 5"></span></div>
+        <p class="wb-review-text">Bought it for the front, hope it saves someone's life<span class="orig-ru"><b>RU</b>Брала для фронта, надеюсь спасёт чью-то жизнь</span></p>
+        <div class="wb-review-foot"><span>February 16, 2024</span><span>13 found this helpful</span></div>
+        <div class="wb-seller-reply"><div class="wb-seller-reply-label">Seller's reply</div><p>Good day! Thank you for the high rating of our product! We're getting positive feedback from the guys at the SVO, the blanket does its job well<span class="orig-ru"><b>RU</b>Добрый день! Спасибо вам за высокую оценку нашего товара! Мы получаем положительную обратную связь от ребят с СВО, покрывало отлично выполняют свою функцию</span></p></div>
+      </div>
+      <div class="wb-review" style="--wb-pct:100%">
+        <div class="wb-review-head"><span class="wb-avatar" aria-hidden="true"></span><span class="wb-verified">✓ Verified purchase</span><span class="wb-stars" aria-label="Rated 5 out of 5"></span></div>
+        <p class="wb-review-text">Great for the SVO<span class="orig-ru"><b>RU</b>Для сво отличный</span></p>
+        <div class="wb-review-foot"><span>July 4, 2024</span><span>10 found this helpful</span></div>
+        <div class="wb-seller-reply"><div class="wb-seller-reply-label">Seller's reply</div><p>Thank you for choosing our product!<span class="orig-ru"><b>RU</b>Спасибо Вам, что выбрали нашу продукцию!</span></p></div>
+      </div>
+    </div>
+
+    <div class="recap-shuffle-bar" id="recap-reviews-shuffle-bar" hidden>
+      <button type="button" class="recap-shuffle-btn" id="recap-reviews-shuffle-btn">Show more reviews</button>
+      <span class="recap-shuffle-count" id="recap-reviews-shuffle-count"></span>
+    </div>
+    <script type="application/json" id="recap-reviews-pool">[{"href":"https://www.wildberries.ru/catalog/223488745/detail.aspx","text":"Two of these tourniquets saved my life at the front. With a shattered arm I couldn't secure a regular tourniquet on myself, but with this one it was no problem. Though what works best is individual. Recommend","text_ru":"На фронте два таких турникета спасли мне жизнь. С перебитой рукой не смог зафиксировать на себе жгут, а с турникетом без проблем. Хотя кому, что больше подходит, тут все индивидуально. Рекомендую","stars":5,"votes":41,"date":"June 4, 2024","reply":"Thanks for the review, 🤙good luck to you.","reply_ru":"Спасибо за отзыв, 🤙удачи вам."},{"href":"https://www.wildberries.ru/catalog/176698676/detail.aspx","text":"Very good device, my husband was very pleased, since he's at the SVO he needed it!!!! but unfortunately we had to return it, he packed up too fast and forgot the device","text_ru":"Очень хороший прибор муж был очень доволен и так как находиться в сво он ему был нужен!!!!но к сожалению вынуждены отказаться очень быстро собирался и забыл прибор","stars":5,"votes":16,"date":"May 14, 2024","reply":"Natalya, good day! We thank you for the high rating of the NVG 10 night-vision device! It's a shame your husband didn't get to use the device in the SVO — good luck to him! Sincerely, the \"Shturm-M!\" store team","reply_ru":"Наталья, добрый день! Мы благодарим Вас за высокую оценку прибора ночного видения NVG 10! Жаль, что ваш муж не воспользовался прибором на СВО, пусть ему сопутствует удача! С уважением, команда магазина \"Штурм-М!\""},{"href":"https://www.wildberries.ru/catalog/157408248/detail.aspx","text":"Bought it for the front, hope it saves someone's life","text_ru":"Брала для фронта, надеюсь спасёт чью-то жизнь","stars":5,"votes":13,"date":"February 16, 2024","reply":"Good day! Thank you for the high rating of our product! We're getting positive feedback from the guys at the SVO, the blanket does its job well","reply_ru":"Добрый день! Спасибо вам за высокую оценку нашего товара! Мы получаем положительную обратную связь от ребят с СВО, покрывало отлично выполняют свою функцию"},{"href":"https://www.wildberries.ru/catalog/219547192/detail.aspx","text":"Great for the SVO","text_ru":"Для сво отличный","stars":5,"votes":10,"date":"July 4, 2024","reply":"Thank you for choosing our product!","reply_ru":"Спасибо Вам, что выбрали нашу продукцию!"},{"href":"https://www.wildberries.ru/catalog/496459835/detail.aspx","text":"Bought it for SVO servicemen","text_ru":"Купила для участников СВО","stars":5,"votes":0,"date":"July 29, 2026","reply":"","reply_ru":""},{"href":"https://www.wildberries.ru/catalog/980752014/detail.aspx","text":"Ordered it for the guys at the SVO, looks sturdy","text_ru":"Заказывала ребятам на сво, на вид прочный","stars":5,"votes":0,"date":"July 27, 2026","reply":"Hello! Thank you for choosing our product.\nWe appreciate the positive review.\nBest wishes, the Territory of Health store!","reply_ru":"Здравствуйте! Спасибо за Выбор нашего товара.\nБлагодарим за положительный отзыв на наш продукт.\nС наилучшими пожеланиями, магазин Территория здоровья!"},{"href":"https://www.wildberries.ru/catalog/422685389/detail.aspx","text":"Works. Bought it at the SVO","text_ru":"Работает. Купили в СВО","stars":5,"votes":0,"date":"July 26, 2026","reply":"Hello, Anna! Thank you for the feedback. This is currently the best solution for timely awareness of the situation in the sky.","reply_ru":"Здравствуйте, Анна! Благодарим за обратную связь. Это лучшее решение на данный момент для обеспечения своевременного информирования о ситуации в небе. "},{"href":"https://www.wildberries.ru/catalog/244019482/detail.aspx","text":"Bought it for the guys at the SVO. They say it's a good product","text_ru":"Покупала для ребят на СВО. Говорят, что хороший товар","stars":5,"votes":0,"date":"July 25, 2026","reply":"","reply_ru":""},{"href":"https://www.wildberries.ru/catalog/230725240/detail.aspx","text":"Take the SVO out of the ads so you don't mislead people. And throw in more wet wipes while you're at it)","text_ru":"СВО уберите из рекламы, чтобы не вводить в заблуждение людей. И салфеток ещё больше положите)","stars":2,"votes":0,"date":"July 25, 2026","reply":"Yuri, hello, we'll definitely add more wipes per your suggestion. And we'd advise you to actually read the product listing before buying.","reply_ru":"Юрий, Здравствуйте, обязательно положим еще салфеток по вашему совету. А вам советуем все же изучать товар перед покупкой. "},{"href":"https://www.wildberries.ru/catalog/132606169/detail.aspx","text":"Sent it to the troops. They were happy with it. Thanks!","text_ru":"Отправляли бойцам. Остались довольны. Спасибо!","stars":5,"votes":0,"date":"July 24, 2026","reply":"","reply_ru":""},{"href":"https://www.wildberries.ru/catalog/665254861/detail.aspx","text":"Ordered this for my brother at the SVO.. He's happy, everything works as it should. Already came in handy","text_ru":"Заказ был сделан для брата на СВО.. Брат доволен, всё работает как надо. Уже выручил","stars":5,"votes":0,"date":"July 24, 2026","reply":"Thank you for your review. Glad the device is working properly and proving useful. Great that it's already helped out. Wishing you luck. Sincerely, the madro team.","reply_ru":"Спасибо за ваш отзыв. Рады, что прибор работает исправно и приносит пользу. Здорово, что он уже помог в деле. Желаем удачи. С уважением.  Команда madro."},{"href":"https://www.wildberries.ru/catalog/961394108/detail.aspx","text":"Great product, recommend it for summer","text_ru":"Отличный товар, рекомендую на лето","stars":5,"votes":0,"date":"July 19, 2026","reply":"Thanks for taking the time to leave a review. We're glad we met your expectations!","reply_ru":"Спасибо, что нашли время оставить отзыв. Мы рады, что оправдали ваши ожидания!"},{"href":"https://www.wildberries.ru/catalog/247362512/detail.aspx","text":"Terrible body armor, it fell apart at the seams, and that's just training-range drills — imagine if that happened on the line of contact. Think about what you write, these are not assault-grade, not trench-grade, not anything. Awful, we threw 300,000 rubles in the trash.","text_ru":"Бронежилет отвратительный, все разлетелось по швам, а это только тренировки на полигоне, а если бы это произошло на лбс,вы думайте что пишите, они не штурмовые не окопные вообще никакие, все отвратительно деньги выкинули 300тыс на помойку.","stars":1,"votes":0,"date":"July 24, 2026","reply":"","reply_ru":""},{"href":"https://www.wildberries.ru/catalog/657089840/detail.aspx","text":"Sent the net to the SVO, it really came through for the guys, because right before shipping a truck was burned and we lost 100 nets we'd woven — thanks for the affordable prices","text_ru":"Сетка отправлена на СВО,отлично смогла выручить ребят,т к перед отправкой,накануне была сожжена фура и мы потерчли 100 сетей,что плели,спасибо,за доступные цены","stars":5,"votes":0,"date":"July 23, 2026","reply":"Hello! Thank you so much for approving of our product. Your satisfaction is our biggest motivation 🥰🥰🥰. Wishing you happy shopping ❤️❤️❤️","reply_ru":"Здравствуйте! Большое спасибо за одобрение нашей продукции. Ваше удовлетворение - наша самая большая мотивация🥰🥰🥰. Желаем вам счастливых покупок ❤️❤️❤️"},{"href":"https://www.wildberries.ru/catalog/231989638/detail.aspx","text":"Ordered it for the guys at the front, they specifically asked for this kind. Thanks!","text_ru":"Заказывала ребятам на фронт, просили именно такие. Спасибо!","stars":5,"votes":0,"date":"October 21, 2024","reply":"Hello, thank you for the feedback and the high rating of our product. Add our brand to your favorites and watch for new stock. Wishing you happy shopping, the company \"BerGuz\"","reply_ru":"Здравствуйте , спасибо за обратную связь и за высокую оценку нашего продукта. Добавляйте наш бренд в избранное и ожидайте поставку нового товара. Желаем вам удачных покупок, компания «BerGuz»"},{"href":"https://www.wildberries.ru/catalog/178135078/detail.aspx","text":"I constantly order this for SVO troops. The price isn't always reasonable. Well, what can you do, demand sets the supply(((","text_ru":"Постоянно заказываю для бойцов СВО. Цена не всегда адекватная. Ну, что делать, спрос определяет предложение(((","stars":5,"votes":1,"date":"July 22, 2026","reply":"Good day! Thank you for the purchase and the positive review of our product. Sincerely, the team at Avangard LLC","reply_ru":"Добрый день! Благодарим за покупку и положительный отзыв о нашей продукции.  С уважением, команда ООО \"Авангард\""},{"href":"https://www.wildberries.ru/catalog/706397806/detail.aspx","text":"Ordered it for humanitarian aid. Feedback from our medics on the line of contact has been very positive","text_ru":"Заказывал для гуманитарной помощи. Отзывы от наших медиков на лбс очень положительные","stars":5,"votes":0,"date":"July 22, 2026","reply":"","reply_ru":""},{"href":"https://www.wildberries.ru/catalog/104506337/detail.aspx","text":"The socks are great, bought them for my husband, he liked them.","text_ru":"Носки отличные, брала мужу, понравились.","stars":5,"votes":0,"date":"February 16, 2024","reply":"Good day, Natalia. Thank you for the review of the warm socks. We invite you to check out the rest of our range, for example the women's thermal sock set (item 139809115). We'd be glad to see you as a regular customer. Sincerely, a representative of the BAIWEI brand.","reply_ru":"Добрый день, Наталия. Благодарим за отзыв к теплым носкам. Предлагаем ознакомиться с другим ассортиментом нашего магазина, например, комплект женских термоносков (арт. 139809115). Будем рады Вас видеть среди постоянных покупателей. С уважением, представитель бренда БАЙВЭЙ."},{"href":"https://www.wildberries.ru/catalog/241885303/detail.aspx","text":"Getting this for the troops, very expensive","text_ru":"Берем для бойцов, очень дорого","stars":5,"votes":0,"date":"July 21, 2026","reply":"","reply_ru":""},{"href":"https://www.wildberries.ru/catalog/219547192/detail.aspx","text":"Great for the SVO","text_ru":"Для сво отличный","stars":5,"votes":10,"date":"July 4, 2024","reply":"Thank you for choosing our product!","reply_ru":"Спасибо Вам, что выбрали нашу продукцию!"},{"href":"https://www.wildberries.ru/catalog/223488745/detail.aspx","text":"Our soldiers will be the ones to judge it. Would be nice if it were cheaper. Everything for the front, everything for victory!","text_ru":"Оценивать будут наши солдаты. Хотелось бы подешевле. Всё для фронта, все для победы!","stars":1,"votes":22,"date":"February 8, 2025","reply":"Thank you for taking the time to leave a rating","reply_ru":"Спасибо что уделили время и оставили оценку"},{"href":"https://www.wildberries.ru/catalog/231378180/detail.aspx","text":"Bought it for the SVO. Recommend","text_ru":"Брали на СВО. Рекомендую","stars":5,"votes":30,"date":"September 18, 2024","reply":"We appreciate your kind words! Your review helps us understand what we're doing right. Thank you for your support. Sincerely, the \"V Pokhod\" team.","reply_ru":"Мы ценим ваше доброе слово! Ваш отзыв помогает нам понять, что мы делаем правильно. Спасибо за вашу поддержку. С уважением, команда \"В ПОХОД\"."},{"href":"https://www.wildberries.ru/catalog/176698676/detail.aspx","text":"Very good device, my husband was very pleased, since he's at the SVO he needed it!!!! but unfortunately we had to return it, he packed up too fast and forgot the device","text_ru":"Очень хороший прибор муж был очень доволен и так как находиться в сво он ему был нужен!!!!но к сожалению вынуждены отказаться очень быстро собирался и забыл прибор","stars":5,"votes":16,"date":"May 14, 2024","reply":"Natalya, good day! We thank you for the high rating of the NVG 10 night-vision device! It's a shame your husband didn't get to use the device in the SVO — good luck to him!  Sincerely, the \"Shturm-M!\" store team","reply_ru":"Наталья, добрый день! Мы благодарим Вас за высокую оценку прибора ночного видения NVG 10! Жаль, что ваш муж не воспользовался прибором на СВО, пусть ему сопутствует удача!  С уважением, команда магазина \"Штурм-М! \""},{"href":"https://www.wildberries.ru/catalog/156047794/detail.aspx","text":"The sleeping bag is just fire. My hairless cats were the first to approve, they wrapped themselves in it and didn't want to come out. Sure it'll do well at the SVO too","text_ru":"Спальник просто огонь. Первыми это заценили мои лысые кошки, которые завернулись в него и не хотели вылезать. Уверен, что и на СВО покажет себя хорошо","stars":5,"votes":44,"date":"March 26, 2025","reply":"Good day, Evgeny! Thank you for the video review and the high rating! Also check out other items in our range, for example the balaclava liner, item 154412467, and men's winter mittens, item 264633393. Sincerely, the PRAGMAT team!","reply_ru":"Добрый день, Евгений! Спасибо вам за видео отзыв и высокую оценку! Также обратите внимание на другие позиции нашего ассортимента, например Балаклава-подшлемник артикул 154412467 и Рукавицы зимние мужские, артикул 264633393. С уважением, команда ПРАГМАТ!"},{"href":"https://www.wildberries.ru/catalog/481904054/detail.aspx","text":"We got warm feedback from troops on the front line about the e-Corner heater-generator. The guys are very happy with how it performs and its features! Thanks for the quality product.","text_ru":"От бойцов с передовой получен теплый отзыв на отопитель-генератор фирмы e-corner. Парни очень довольны его работой и функционалом! Спасибо за качественный товар.","stars":5,"votes":25,"date":"October 22, 2025","reply":"Good day! Thank you for your review! We're glad you're happy with our e-Corner standalone heater. Your support inspires us to keep improving our products.","reply_ru":"Добрый день! Спасибо за ваш отзыв! Мы рады, что вы довольны нашим автономным отопителем e-Corner. Ваша поддержка вдохновляет нас на дальнейшую работу и улучшение наших продуктов."},{"href":"https://www.wildberries.ru/catalog/180215199/detail.aspx","text":"Good quality, ordered it for the guys at the SVO","text_ru":"Качество хорошее, заказывали для ребят на СВО","stars":5,"votes":13,"date":"September 4, 2024","reply":"Thank you for the high rating of our product!","reply_ru":"Благодарим Вас за высокую оценку нашего товара!"},{"href":"https://www.wildberries.ru/catalog/184102802/detail.aspx","text":"My husband rated it well at the SVO","text_ru":"Муж оценил на сво","stars":5,"votes":29,"date":"April 13, 2025","reply":"Good day! Thank you very much for the feedback, the customer's opinion matters a lot to us! We're very glad you're satisfied with the quality of our product. We invite you to check out other items in our store too. Wishing you happy shopping.","reply_ru":"Добрый день! Большое спасибо за обратную связь, мнение покупателя очень важно для нас! Очень приятно, что Вы удовлетворены качеством нашей продукции. Предлагаем Вам ознакомиться также с другими товарами в нашем магазине. Желаем вам приятных покупок."},{"href":"https://www.wildberries.ru/catalog/184342767/detail.aspx","text":"Liked it a lot, sent it to my husband at the SVO, hope it keeps him warm in the frost, thanks","text_ru":"Очень понравился, отправила мужу на сво, надеюсь будет согревать в морозы, спасибо","stars":5,"votes":13,"date":"October 19, 2025","reply":"Hello! Thank you for the review of the sleeping bag! Glad you liked it! Enjoy using it! Follow us and stay tuned for updates! The Almighty Angler team!","reply_ru":"Здравствуйте! Благодарим вас за отзыв на спальный мешок! Рады, что вам понравилось! Приятного использования! Подписывайтесь на нас и следите за новостями! Команда Рыбак Всемогущий!"},{"href":"https://www.wildberries.ru/catalog/157408248/detail.aspx","text":"Bought it for the front, hope it saves someone's life","text_ru":"Брала для фронта, надеюсь спасёт чью-то жизнь","stars":5,"votes":13,"date":"February 16, 2024","reply":"Good day! Thank you for the high rating of our product! We're getting positive feedback from the guys at the SVO, the blanket does its job well","reply_ru":"Добрый день! Спасибо вам за высокую оценку нашего товара! Мы получаем положительную обратную связь от ребят с СВО, покрывало отлично выполняют свою функцию"},{"href":"https://www.wildberries.ru/catalog/402725428/detail.aspx","text":"This flag is for my son, who died at the SVO","text_ru":"Это флаг моему сыну, погибшему на СВО","stars":5,"votes":0,"date":"May 19, 2026","reply":"Good day! Thank you for the purchase and the high rating.  Have a good day!","reply_ru":"Добрый день! Благодарим Вас за покупку и за высокую оценку.  Хорошего дня!"}]</script>
+    <script>
+    (function(){
+      var grid = document.getElementById('recap-reviews-grid');
+      var bar = document.getElementById('recap-reviews-shuffle-bar');
+      var btn = document.getElementById('recap-reviews-shuffle-btn');
+      var countEl = document.getElementById('recap-reviews-shuffle-count');
+      var dataEl = document.getElementById('recap-reviews-pool');
+      if(!grid || !bar || !btn || !countEl || !dataEl) return;
+      var pool;
+      try{ pool = JSON.parse(dataEl.textContent); }catch(e){ return; }
+      if(!pool || pool.length < 4) return;
+
+      var MAX_SHUFFLES = 5;
+      var shuffleCount = 0;
+      var lastHrefs = [];
+
+      function pickSet(){
+        var shuffled = pool.slice();
+        for(var i = shuffled.length - 1; i > 0; i--){
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = shuffled[i]; shuffled[i] = shuffled[j]; shuffled[j] = tmp;
+        }
+        var picked = shuffled.slice(0, 4);
+        var pickedHrefs = picked.map(function(it){ return it.href; });
+        if(pickedHrefs.slice().sort().join('|') === lastHrefs.slice().sort().join('|')){
+          return pickSet();
+        }
+        return picked;
+      }
+
+      function cardHtml(item){
+        var pct = (item.stars * 20) + '%';
+        var replyHtml = item.reply ? (
+          '<div class="wb-seller-reply"><div class="wb-seller-reply-label">Seller\'s reply</div><p>' + item.reply +
+          '<span class="orig-ru"><b>RU</b>' + item.reply_ru + '</span></p></div>'
+        ) : '';
+        var votesHtml = item.votes > 0 ? ('<span>' + item.votes + ' found this helpful</span>') : '';
+        return '<div class="wb-review" style="--wb-pct:' + pct + '">' +
+          '<div class="wb-review-head"><span class="wb-avatar" aria-hidden="true"></span><span class="wb-verified">✓ Verified purchase</span><span class="wb-stars" aria-label="Rated ' + item.stars + ' out of 5"></span></div>' +
+          '<p class="wb-review-text">' + item.text + '<span class="orig-ru"><b>RU</b>' + item.text_ru + '</span></p>' +
+          '<div class="wb-review-foot"><span>' + item.date + '</span>' + votesHtml + '</div>' +
+          replyHtml +
+          '</div>';
+      }
+
+      function render(items){
+        grid.innerHTML = items.map(cardHtml).join('');
+        lastHrefs = items.map(function(it){ return it.href; });
+      }
+
+      btn.addEventListener('click', function(){
+        shuffleCount = shuffleCount >= MAX_SHUFFLES ? 1 : shuffleCount + 1;
+        render(pickSet());
+        countEl.textContent = 'Showing ' + shuffleCount + ' of ' + MAX_SHUFFLES;
+      });
+
+      bar.hidden = false;
+    })();
+    </script>
+
+    <p class="recap-lead">WB couldn't not have known about these products — they banned selling them themselves, in a new seller agreement dated <b>July 10, 2026</b>, eight days before the first strike on their warehouses.</p>
+
+    <div class="recap-tos-quote">
+      <p>"Finished army gear, as well as fabrics used to make it, other goods of a military assortment, uniform clothing, underwear stamped with the mark of institutions, organizations, and enterprises, special equipment and gear used by internal affairs bodies…"<span class="orig-ru"><b>RU</b>«Готовое армейское снаряжение, а также ткани, используемые для его изготовления, другие товары военного ассортимента, форменное обмундирование, бельё со штампом учреждений, организаций и предприятий, спецсредства и спецснаряжение, применяемые в органах внутренних дел…»</span></p>
+      <cite>Clause 39 of Wildberries' "List of Banned Goods," edition dated July 10, 2026</cite>
+    </div>
+
+    <div class="recap-proof-grid">
+      <figure class="recap-violation">
+        <img src="../images/591122232_confirm.jpg" alt="&quot;Our SVO troops recommend it&quot; — tactical vest" loading="lazy" style="object-position:top">
+        <figcaption>«Бойцы СВО рекомендуют» ("our SVO troops recommend it") tactical vest</figcaption>
+      </figure>
+      <figure class="recap-violation">
+        <img src="../images/918230228_confirm.jpg" alt="Payload-release rig &quot;MRAK&quot; with munitions mounted on the drone" loading="lazy">
+        <figcaption>The "MRAK" payload-release rig, with grenades already mounted on the drone.</figcaption>
+      </figure>
+      <figure class="recap-violation">
+        <img src="../images/318340889_confirm.jpg" alt="Military tactical helmet &quot;field-tested in the SVO&quot;" loading="lazy" style="object-position:top">
+        <figcaption>A helmet «проверен на СВО» ("field-tested in the SVO")</figcaption>
+      </figure>
+      <figure class="recap-violation">
+        <img src="../images/617837131_confirm.jpg" alt="VKPO winter suit 3.1 — uniform clothing" loading="lazy" style="object-position:top">
+        <figcaption>VKPO is standard-issue army uniform clothing — selling it on WB is banned</figcaption>
+      </figure>
+    </div>
+    <p class="recap-intro">All four are among the 4,373 listings that violate clause 39 of that same agreement.</p>
+
+    <p class="recap-lead">The sellers aren't hiding either — alongside the usual Chinese dropshippers, Wildberries has specialized sellers actively trading here. They appeared after Russia's invasion of Ukraine began, and openly support it — including through the goods they sell to plug gaps in the Russian Defense Ministry's own supply chain.</p>
+
+    <div class="recap-seller-media">
+      <img src="../images/ganza_promo_combat.jpg" alt="Still from Ganza's promo video: a soldier in the brand's tactical gear" loading="lazy">
+      <img src="../images/ganza_storefront.jpg" alt="&quot;Ganza — Sewing Manufactory&quot; sign on a building facade in Stavropol" loading="lazy">
+      <img src="../images/ganza_factory_floor.jpg" alt="Ganza's sewing workshop in Stavropol" loading="lazy">
+    </div>
+
+    <div class="recap-seller-quote">
+      <p>"'Ataman' is a line of tactical gear developed specifically for the SVO by our designers together with combat commanders. Dozens of airsoft teams buy our products for tactical games, and thousands of servicemen buy them for their service and other tasks. 'Ganza' — tactical gear that won't let you down."<span class="orig-ru"><b>RU</b>«"Атаман" — серия тактического снаряжения, разработанная специально для СВО нашими модельерами-конструкторами совместно с боевыми командирами. Десятки страйкбольных команд приобретают нашу продукцию для тактических игр, а тысячи военнослужащих — для прохождения службы и иных задач. "Ганза" — тактическое снаряжение, которое не подведёт.»</span></p>
+      <cite>From seller "Ganza's" (Stavropol sewing manufactory) product description on the "Ataman" body-armor listing, Wildberries</cite>
+    </div>
+
+    <div class="recap-proof-grid recap-seller-products">
+      <a class="gallery-pair" href="https://www.wildberries.ru/catalog/280655834/detail.aspx" target="_blank" rel="noopener">
+        <div class="gallery-imgs">
+          <img src="../images/280655834_confirm.jpg" alt="&quot;Ataman&quot; Br1 S2 armor set, made in Russia" loading="lazy">
+        </div>
+        <div class="gallery-cap">Tactical assault body armor "Ataman" Br1 S2 — with quick-release, "Kordon" fabric, «собственное производство в России» ("made in-house in Russia").</div>
+      </a>
+      <a class="gallery-pair" href="https://www.wildberries.ru/catalog/283047236/detail.aspx" target="_blank" rel="noopener">
+        <div class="gallery-imgs">
+          <img src="../images/283047236_confirm.jpg" alt="&quot;Ataman&quot; Br2 armor set, evacuation-strap mount" loading="lazy">
+        </div>
+        <div class="gallery-cap">The same "Ataman," in the Br2 version — the seller's own infographic shows an evacuation-strap mount and enlarged cummerbunds.</div>
+      </a>
+    </div>
+    <p class="recap-intro">Both are from the "Ataman" line by the brand "Ganza," which, per the seller's own description, developed it «совместно с боевыми командирами» ("together with combat commanders").</p>
+
+    <p class="recap-lead">Yes, the Defense Ministry has no contract with WB — but sellers of military goods brag about certificates of gratitude from the units they supply with uniforms, armor, and so on.</p>
+
+    <figure class="recap-cert-figure">
+      <img src="../images/293051745_certificates.jpg" alt="Certificate of honor from a Russian Defense Ministry military unit, and a letter of thanks from the Black Sea Fleet, to the seller of an anti-drone blanket" loading="lazy">
+      <figcaption>The seller of an anti-drone blanket (item 293051745) posts, in their own product gallery on Wildberries, a certificate of honor from a Russian Defense Ministry military unit and a letter of thanks from Black Sea Fleet command. Both documents reference the "special military operation."</figcaption>
+    </figure>
+
+    <div class="recap-quote-boxes">
+      <a class="recap-quote-box" href="https://www.wildberries.ru/catalog/861209946/detail.aspx" target="_blank" rel="noopener">"Modular design lets it work with two different types of munitions — VOG-17, RGD-5, F-1... Developed and proudly made in Russia. <b>Part of our team are SVO veterans!</b>"<span class="orig-ru"><b>RU</b>«Модульная конструкция позволяет работать двумя разными боеприпасами — ВОГ-17, РГД-5, Ф-1... Разработано и с гордостью производится в России. Часть команды — ветераны СВО!»</span><cite>Drone payload-release rig "Uzhas" for UCO/Autel, nm 861209946</cite></a>
+      <a class="recap-quote-box" href="https://www.wildberries.ru/catalog/422685389/detail.aspx" target="_blank" rel="noopener">"USE: protection against airborne threats in a combat zone... <b>protecting military forces and the lives of SVO troops</b>."<span class="orig-ru"><b>RU</b>«ПРИМЕНЕНИЕ: защита от угроз с воздуха в зоне боевых действий... защита военных сил и жизни бойцов СВО.»</span><cite>Drone detector "Yastreb" Skydroid S-12, nm 422685389</cite></a>
+      <a class="recap-quote-box" href="https://www.wildberries.ru/catalog/346621543/detail.aspx" target="_blank" rel="noopener">"1000D Cordura with IR-Remission. <b>An indispensable piece of gear for servicemen carrying out combat tasks in the SVO zone</b>."<span class="orig-ru"><b>RU</b>«Кордура 1000D с ИК-ремиссией. Незаменимый элемент экипировки военнослужащих, выполняющих боевые задачи в зоне СВО.»</span><cite>Tourniquet pouch with IR-Remission fabric, nm 346621543</cite></a>
+    </div>
+    <p class="recap-intro">Three products with no civilian use whatsoever — a drone munitions-release rig, a UAV detector for defense against airborne attacks, and a pouch made from thermal-camouflaging fabric. In every listing, the seller themselves, in plain text, mentions the "SVO" zone.</p>
+
+
+    <p class="recap-lead">The seller of a hemostatic tourniquet claims on the product listing that it was developed together with the Defense Ministry:</p>
+
+    <figure class="recap-cert-figure">
+      <img src="../images/lenigradets_5_confirm.jpg" alt="Infographic for the &quot;Leningradets 5 Shturmovik&quot; tourniquet: &quot;Developed together with active specialists of Russia's Defense Ministry&quot;" loading="lazy" style="max-width:420px">
+      <figcaption>The listing for the "Leningradets 5 'Shturmovik'" tourniquet (nm 698695481, at least 8 listings in the same line) — on the seller's own infographic: «Рекомендован МО РФ» ("Recommended by Russia's Defense Ministry") and «Разработано совместно с действующими специалистами Министерства обороны РФ» ("Developed together with active specialists of Russia's Defense Ministry").</figcaption>
+    </figure>
+    <p class="recap-intro">A tourniquet is a dual-use good: both campers and hunters buy them. But the claim of joint development with «действующими специалистами» ("active specialists") of the Defense Ministry — if true — directly contradicts Wildberries' official position that it has no contract whatsoever with the military department.</p>
+
+    <p class="recap-lead">And the seller of an anti-drone poncho posts, in the product gallery, their own correspondence with field testers:</p>
+
+    <figure class="recap-cert-figure">
+      <img src="../images/antidrone_poncho_confirm.jpg" alt="Screenshots from the anti-drone poncho seller: a photo of a soldier wearing the cape near Donetsk, correspondence about field tests near Kursk" loading="lazy" style="max-width:420px">
+    </figure>
+    <p class="recap-intro">Here the seller doesn't just describe the product with the words "for the SVO" — they also publish, as proof of effectiveness, a field report on testing the thermal-camouflage in a front-line zone.</p>
+
+
+    <p class="recap-lead">After the first strikes on its own warehouses, Wildberries appeared to start covering its most obvious tracks — for instance, deleting catalog pages titled things like "Everything for the SVO." But the products themselves never disappeared: they're simply sold under "innocent" trade categories like "Sporting Goods." Even though both the listings themselves and the reviews on them make it obvious what they're actually meant for.</p>
+
+    <div class="recap-proof-grid recap-absurd-grid">
+      <a class="absurd-card" href="https://www.wildberries.ru/catalog/168181429/detail.aspx" target="_blank" rel="noopener">
+        <img src="../images/168181429_confirm.jpg" alt="Tactical combat helmet, Kevlar-Aramid, category &quot;Sports helmets&quot;" loading="lazy" style="object-position:center 30%">
+        <div class="absurd-card-category"><span>Category on Wildberries</span><b>Sports helmets</b></div>
+        <div class="absurd-card-review"><span>From a review</span><p>"Thanks, the helmet passed the test at the SVO"<span class="orig-ru"><b>RU</b>«Спасибо, шлем прошел испытание на сво»</span></p></div>
+      </a>
+      <a class="absurd-card" href="https://www.wildberries.ru/catalog/379555527/detail.aspx" target="_blank" rel="noopener">
+        <img src="../images/379555527_confirm.jpg" alt="NV-8000 night-vision device mounted on a soldier's helmet, category &quot;Sports helmets&quot;" loading="lazy" style="object-position:center 25%">
+        <div class="absurd-card-category"><span>Category on Wildberries</span><b>Sports helmets</b></div>
+        <div class="absurd-card-review"><span>From a review</span><p>"Off to the SVO! Used it in action — all good"<span class="orig-ru"><b>RU</b>«Отправился на СВО! Применили в деле — всё чётко»</span></p></div>
+      </a>
+      <a class="absurd-card" href="https://www.wildberries.ru/catalog/134099002/detail.aspx" target="_blank" rel="noopener">
+        <img src="../images/134099002_confirm.jpg" alt="Tactical magazine-dump pouch, category &quot;Sports bags&quot;" loading="lazy">
+        <div class="absurd-card-category"><span>Category on Wildberries</span><b>Sports bags</b></div>
+        <div class="absurd-card-review"><span>From a review</span><p>"What can I say? Bought for the SVO"<span class="orig-ru"><b>RU</b>«А что сказать? Для СВО приобретены»</span></p></div>
+      </a>
+      <a class="absurd-card" href="https://www.wildberries.ru/catalog/133601677/detail.aspx" target="_blank" rel="noopener">
+        <img src="../images/133601677_product.jpg" alt="&quot;Tseloform&quot; wound-healing powder, category &quot;Health &amp; Wellness Cosmetics&quot;" loading="lazy" style="object-position:center 70%">
+        <div class="absurd-card-category"><span>Category on Wildberries</span><b>Health &amp; Wellness Cosmetics</b></div>
+        <div class="absurd-card-review"><span>From a review</span><p>"I read in the description that it's used for treating combat WOUNDS... Decided to buy it right away"<span class="orig-ru"><b>RU</b>«По описанию товара прочитала, что используется при обработке боевых РАН... Решила немедленно взять»</span></p></div>
+      </a>
+    </div>
+    <p class="recap-intro">Four random examples — a combat helmet, a night-vision device, a magazine-dump pouch, a wound-healing powder "for combat wounds" filed under cosmetics.</p>
+
+    <p class="recap-lead">Now, in numbers:</p>
+    <div class="statgrid">
+      <div class="stat"><div class="n">7,666</div><div class="d">listings with no civilian use (3,290 distinct products, not counting color/size variants)</div></div>
+      <div class="stat"><div class="n">89%</div><div class="d">ship from Wildberries' own warehouse, not the seller's</div></div>
+      <div class="stat"><div class="n">4,373</div><div class="d">listings violate the "List of Banned Goods" — Wildberries' own appendix to its seller agreement</div></div>
+      <div class="stat"><div class="n">1,307</div><div class="d">reviews on these listings explicitly say "for the SVO" / "for the front" / "for the line of contact"</div></div>
+      <div class="stat"><div class="n">802</div><div class="d">different sellers are trading this right now</div></div>
+      <div class="stat"><div class="n">×3.1</div><div class="d">growth in the number of such listings from 2023 to 2025, by creation date (759 → 2,368)</div></div>
+      <div class="stat"><div class="n">0</div><div class="d">of the 7,666 listings had been taken down as of publication</div></div>
+      <div class="stat"><div class="n">1,041</div><div class="d">listings where the image itself confirms military use</div></div>
+    </div>
+
+    <div class="you-are-here"><span>You are here</span></div>
+
+    <div class="newsbox newsbox-big ui">
+      <div class="newsbox-label">Wildberries and Tatyana Kim in the press — right now</div>
+      <ul class="newsbox-list">
+        <li><span class="news-outlet">NGS</span> <a href="https://ngs.ru/text/business/2026/08/01/76565691/" target="_blank" rel="noopener">"These losses aren't legally subject to compensation": Wildberries' chief on panic, compensation, and new warehouses</a> <span class="news-date">August 1, 2026</span></li>
+        <li><span class="news-outlet">V1.ru</span> <a href="https://v1.ru/text/business/2026/08/01/76566298/" target="_blank" rel="noopener">Tatyana Kim releases statement after mass strike on Wildberries warehouse in Volgograd — video</a> <span class="news-date">August 1, 2026</span></li>
+        <li><span class="news-outlet">Minval Politika</span> <a href="https://minval.az/news/124546878" target="_blank" rel="noopener">Wildberries founder added to Ukraine's "Myrotvorets" database</a> <span class="news-date">August 2, 2026</span></li>
+        <li><span class="news-outlet">The Moscow Times</span> <a href="https://www.themoscowtimes.com/2026/08/02/ukrainian-drones-kill-8-in-russia-and-strike-wildberries-warehouse-a93396" target="_blank" rel="noopener">Ukrainian Drones Kill 8 in Russia and Strike Wildberries Warehouse</a> <span class="news-date">August 2, 2026</span></li>
+        <li><span class="news-outlet">ABN Agency</span> <a href="https://abn.agency/2026/07/31/tatyana-kim-zayavila-ob-ugroze-uchastnikam-ekosistemy-wildberries/" target="_blank" rel="noopener">Tatyana Kim says Wildberries' ecosystem participants are under threat</a> <span class="news-date">July 31, 2026</span></li>
+      </ul>
+    </div>
+
+    <blockquote class="recap-quote-box" style="display:block; margin-top:14px;">
+      <p>"By striking us, the terrorists are covering up their real motives and accusing us of allegedly selling goods of a military purpose. But you can open any global marketplace — Amazon or Alibaba — and see whether we have anything they don't."<span class="orig-ru"><b>RU</b>«Совершая удары по нам, террористы прикрывают истинные причины и обвиняют нас в том, что мы якобы продаём товары военного назначения. Но вы можете открыть любой мировой маркетплейс Amazon или Alibaba и посмотреть, есть ли у нас то, чего нет у них.»</span></p>
+      <cite>Tatyana Kim, founder of Wildberries — <a href="https://t.me/kimtatyana2024/793" target="_blank" rel="noopener">video address, July 31, 2026</a></cite>
+    </blockquote>
+
+    <p class="recap-intro recap-transition">Now the same thing again, but longer.</p>
+  </section>
+
+  <section id="method">
+    <h2>How I Checked This</h2>
+    <p>Every Wildberries product link looks like this: <code>wildberries.ru/catalog/…/detail.aspx</code>. I started by scanning Telegram channels that run fundraisers for specific military units with links to Wildberries products, then began searching by keyword ("body armor," "plate carrier," "night-vision device," etc.). A Python script (see the repository) then scraped each listing's product name, description, price/stock history, customer reviews, and the seller's legal entity — INN, sole-proprietor registration number, region of registration. Any visitor to the site sees the same data.</p>
+
+    <p>Every product is tagged along two independent axes. The first is functional purpose (body armor, first-aid kit, FPV drone, power bank, and so on). The second is military status: <em>"unambiguously military"</em> — items with no civilian use whatsoever in principle (a signal jammer, a VOG grenade tailfin, a BR5-class armor plate); <em>"dual-use, elevated demand"</em> — items sold to civilians too, but bought up mainly by the front (sleeping bags rated to −30°C, combat boots, radios); and everything else. The tagging is built on a dictionary of regular expressions, so it makes mistakes on edge cases. For example, a batch of souvenir pins for the "Krasukha-4" electronic-warfare complex — a metal token unrelated to the actual jamming station — got tagged "unambiguously military" under the first version of the rules purely because it repeated the real equipment's name verbatim; the same kind of mistake also happened in reverse — a "plastic mock armor plate, airsoft plate" was counted as a real BR-class armor plate for a while, simply because the word "armor plate" appeared in the title. Both errors have been fixed.</p>
+
+  </section>
+
+  <section id="dynamics">
+    <p>Breakdown by product type among these 7,666 listings — <mark>armor plates and combat FPV drones account for about 66%</mark>.</p>
+    <details class="datablock">
+      <summary>Full breakdown across all 13 product types</summary>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-label">BR-class armor plates and body armor</div><div class="bar-track"><div class="bar-fill" style="width:100.0%"></div></div><div class="bar-val">3,267</div></div>
+        <div class="bar-row"><div class="bar-label">combat FPV drones</div><div class="bar-track"><div class="bar-fill" style="width:47.8%"></div></div><div class="bar-val">1,562</div></div>
+        <div class="bar-row"><div class="bar-label">tactical uniforms and clothing</div><div class="bar-track"><div class="bar-fill" style="width:34.6%"></div></div><div class="bar-val">1,130</div></div>
+        <div class="bar-row"><div class="bar-label">combat helmets</div><div class="bar-track"><div class="bar-fill" style="width:12.7%"></div></div><div class="bar-val">415</div></div>
+        <div class="bar-row"><div class="bar-label">thermal-imaging optics</div><div class="bar-track"><div class="bar-fill" style="width:10.0%"></div></div><div class="bar-val">326</div></div>
+        <div class="bar-row"><div class="bar-label">EW systems and field communications</div><div class="bar-track"><div class="bar-fill" style="width:7.7%"></div></div><div class="bar-val">253</div></div>
+        <div class="bar-row"><div class="bar-label">first-aid kits, tourniquets, medical</div><div class="bar-track"><div class="bar-fill" style="width:5.7%"></div></div><div class="bar-val">185</div></div>
+        <div class="bar-row"><div class="bar-label">release systems (mines, grenades, payloads)</div><div class="bar-track"><div class="bar-fill" style="width:5.4%"></div></div><div class="bar-val">178</div></div>
+        <div class="bar-row"><div class="bar-label">doesn't fit any main category</div><div class="bar-track"><div class="bar-fill" style="width:4.6%"></div></div><div class="bar-val">151</div></div>
+        <div class="bar-row"><div class="bar-label">anti-drone systems</div><div class="bar-track"><div class="bar-fill" style="width:1.5%"></div></div><div class="bar-val">49</div></div>
+        <div class="bar-row"><div class="bar-label">grenade components (VOG tailfins)</div><div class="bar-track"><div class="bar-fill" style="width:0.5%"></div></div><div class="bar-val">16</div></div>
+        <div class="bar-row"><div class="bar-label">sleeping bags, thermal underwear, field gear</div><div class="bar-track"><div class="bar-fill" style="width:0.5%"></div></div><div class="bar-val">15</div></div>
+        <div class="bar-row"><div class="bar-label">night-vision devices</div><div class="bar-track"><div class="bar-fill" style="width:0.2%"></div></div><div class="bar-val">5</div></div>
+      </div>
+    </details>
+
+    <p>And here's what type of warehouse these listings are physically shipped to buyers from:</p>
+    <div class="bars">
+      <div class="bar-row"><div class="bar-label">Wildberries' own warehouse network</div><div class="bar-track"><div class="bar-fill" style="width:89%"></div></div><div class="bar-val">6,809</div></div>
+      <div class="bar-row"><div class="bar-label">ambiguous</div><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><div class="bar-val">668</div></div>
+      <div class="bar-row"><div class="bar-label">no warehouse data</div><div class="bar-track"><div class="bar-fill" style="width:1%"></div></div><div class="bar-val">106</div></div>
+      <div class="bar-row"><div class="bar-label">likely the seller's own warehouse</div><div class="bar-track"><div class="bar-fill" style="width:1%"></div></div><div class="bar-val">78</div></div>
+      <div class="bar-row"><div class="bar-label">mixed</div><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><div class="bar-val">5</div></div>
+    </div>
+    <p>In other words, in the overwhelming majority of cases, it's not the seller but the marketplace's own logistics that handles storing and physically moving the product to the buyer.</p>
+  </section>
+
+  <section id="taxonomy">
+    <h2>What's Actually Sold in This Segment</h2>
+    <p>This statistic covers not just the 7,666 "unambiguously military" listings, but the entire tracked corpus — 19,972 product listings found through Telegram fundraisers and keyword search. Breakdown by functional category, with each category's split by military status (the 12 largest categories; another 1,259 listings across 10 smaller categories aren't shown):</p>
+    <svg class="cat-chart" data-reveal viewBox="0 0 700 384" role="img" aria-label="Number of listings by functional category, broken down by military status"><g transform="translate(0,0)"><text x="290" y="15.0" class="cat-label">FPV drones &amp; components</text><g transform="translate(300,0)"><rect x="0.0" y="0" width="124.7" height="22" class="cat-strict"/><rect x="124.7" y="0" width="213.6" height="22" class="cat-dual"/><rect x="338.2" y="0" width="1.8" height="22" class="cat-other"/></g><text x="648" y="15.0" class="cat-val">4260</text></g><g transform="translate(0,32)"><text x="290" y="15.0" class="cat-label">body armor &amp; armor plates</text><g transform="translate(300,0)"><rect x="0.0" y="0" width="277.3" height="22" class="cat-strict"/><rect x="277.3" y="0" width="0.6" height="22" class="cat-dual"/><rect x="277.9" y="0" width="5.3" height="22" class="cat-other"/></g><text x="648" y="15.0" class="cat-val">3548</text></g><g transform="translate(0,64)"><text x="290" y="15.0" class="cat-label">power banks, generators, charging stations</text><g transform="translate(300,0)"><rect x="0.0" y="0" width="127.0" height="22" class="cat-dual"/><rect x="127.0" y="0" width="30.6" height="22" class="cat-other"/></g><text x="648" y="15.0" class="cat-val">1974</text></g><g transform="translate(0,96)"><text x="290" y="15.0" class="cat-label">tactical uniforms &amp; clothing</text><g transform="translate(300,0)"><rect x="0.0" y="0" width="89.9" height="22" class="cat-strict"/><rect x="89.9" y="0" width="31.1" height="22" class="cat-dual"/><rect x="121.1" y="0" width="27.3" height="22" class="cat-other"/></g><text x="648" y="15.0" class="cat-val">1859</text></g><g transform="translate(0,128)"><text x="290" y="15.0" class="cat-label">radios, EW, field comms</text><g transform="translate(300,0)"><rect x="0.0" y="0" width="20.2" height="22" class="cat-strict"/><rect x="20.2" y="0" width="112.3" height="22" class="cat-dual"/><rect x="132.5" y="0" width="3.5" height="22" class="cat-other"/></g><text x="648" y="15.0" class="cat-val">1704</text></g><g transform="translate(0,160)"><text x="290" y="15.0" class="cat-label">first-aid kits, tourniquets, medical</text><g transform="translate(300,0)"><rect x="0.0" y="0" width="14.8" height="22" class="cat-strict"/><rect x="14.8" y="0" width="115.2" height="22" class="cat-dual"/><rect x="129.9" y="0" width="0.6" height="22" class="cat-other"/></g><text x="648" y="15.0" class="cat-val">1635</text></g><g transform="translate(0,192)"><text x="290" y="15.0" class="cat-label">sleeping bags, thermal wear, field gear</text><g transform="translate(300,0)"><rect x="0.0" y="0" width="1.2" height="22" class="cat-strict"/><rect x="1.2" y="0" width="66.7" height="22" class="cat-dual"/><rect x="67.9" y="0" width="11.8" height="22" class="cat-other"/></g><text x="648" y="15.0" class="cat-val">999</text></g><g transform="translate(0,224)"><text x="290" y="15.0" class="cat-label">doesn't fit any category</text><g transform="translate(300,0)"><rect x="0.0" y="0" width="4.9" height="22" class="cat-strict"/><rect x="4.9" y="0" width="12.0" height="22" class="cat-dual"/><rect x="16.8" y="0" width="49.8" height="22" class="cat-other"/></g><text x="648" y="15.0" class="cat-val">835</text></g><g transform="translate(0,256)"><text x="290" y="15.0" class="cat-label">thermal-imaging optics</text><g transform="translate(300,0)"><rect x="0.0" y="0" width="26.0" height="22" class="cat-strict"/><rect x="26.0" y="0" width="23.2" height="22" class="cat-dual"/><rect x="49.2" y="0" width="1.0" height="22" class="cat-other"/></g><text x="648" y="15.0" class="cat-val">629</text></g><g transform="translate(0,288)"><text x="290" y="15.0" class="cat-label">camouflage nets</text><g transform="translate(300,0)"><rect x="0.0" y="0" width="34.1" height="22" class="cat-dual"/><rect x="34.1" y="0" width="0.9" height="22" class="cat-other"/></g><text x="648" y="15.0" class="cat-val">438</text></g><g transform="translate(0,320)"><text x="290" y="15.0" class="cat-label">combat helmets</text><g transform="translate(300,0)"><rect x="0.0" y="0" width="33.1" height="22" class="cat-strict"/><rect x="33.1" y="0" width="0.4" height="22" class="cat-other"/></g><text x="648" y="15.0" class="cat-val">420</text></g><g transform="translate(0,352)"><text x="290" y="15.0" class="cat-label">night-vision devices</text><g transform="translate(300,0)"><rect x="0.0" y="0" width="0.4" height="22" class="cat-strict"/><rect x="0.4" y="0" width="32.4" height="22" class="cat-dual"/><rect x="32.8" y="0" width="0.1" height="22" class="cat-other"/></g><text x="648" y="15.0" class="cat-val">412</text></g></svg>
+    <div class="chart-legend">
+      <span><i style="background:var(--accent)"></i>unambiguously military</span>
+      <span><i style="background:var(--fg-dim); opacity:.6"></i>dual-use, elevated demand</span>
+      <span><i style="background:var(--line)"></i>other / unclassified</span>
+    </div>
+  </section>
+
+  <section id="wb-policy">
+    <h2>Wildberries Itself Bans Selling These Goods on Its Own Platform</h2>
+    <p>Wildberries' seller agreement has an appendix called the "List of Banned Goods." The current edition took effect on <b>July 10, 2026</b>, eight days before the first attack. I saved a copy so it can still be cited after the edition changes.</p>
+
+    <p>Clause 39 of that list reads:</p>
+    <div class="callout">"Finished army gear, as well as fabrics used to make it, other goods of a military assortment, uniform clothing, underwear stamped with the mark of institutions, organizations, and enterprises, special equipment and gear used by internal affairs bodies…"<span class="orig-ru"><b>RU</b>«Готовое армейское снаряжение, а также ткани, используемые для его изготовления, другие товары военного ассортимента, форменное обмундирование, бельё со штампом учреждений, организаций и предприятий, спецсредства и спецснаряжение, применяемые в органах внутренних дел…»</span></div>
+
+    <p>Clause 2.5 — on munitions and their parts:</p>
+    <div class="callout">"The sale of any mockups of munitions (cartridges, grenades, mines, etc.) is prohibited."<span class="orig-ru"><b>RU</b>«Запрещена продажа любых макетов боеприпасов (патронов, гранат, мин и т.д)».</span> <span class="dl">And separately, in the same section: live ammunition is banned «не только целиком, но и в виде составных частей» ("not only whole, but also as component parts"), «даже если там нет капсюля или пороха» ("even if there's no primer or powder in it").</span></div>
+
+    <p>Clause 17 — on signal jammers:</p>
+    <div class="callout">"Suppressors (jammers) of GPS/GLONASS/Platon/cellular (GSM, LTE, etc.)/Wi-Fi network signals."<span class="orig-ru"><b>RU</b>«Подавители (глушилки) сигнала GPS/Глонасс/Платон/Сотовой связи (GSM, LTE, пр.)/Сети Wi-Fi».</span></div>
+
+    <p>We checked the entire tracked corpus against these three clauses. The result:</p>
+    <table>
+      <thead><tr><th>List clause</th><th>What's banned</th><th class="num">Listings in our database</th></tr></thead>
+      <tbody>
+        <tr><td>39</td><td>Finished army gear, goods of a military assortment, uniform clothing</td><td class="num">4,356</td></tr>
+        <tr><td>2.5</td><td>Munitions mockups and live-ammunition component parts</td><td class="num">16</td></tr>
+        <tr><td>17</td><td>Signal suppressors (jammers) for GPS/GLONASS/cellular/Wi-Fi</td><td class="num">1</td></tr>
+        <tr><td colspan="2"><strong>Total</strong></td><td class="num"><strong>4,373</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>In total, at least <mark>4,373 listings</mark> violate the specific, verbatim-quoted-above clause of the agreement Wildberries requires every seller to sign. And of those, <mark>3,910 — about 89%</mark> — ship to the buyer from the marketplace's own warehouses. So Wildberries isn't just allowing goods banned by its own contract into the catalog — it's servicing them with its own logistics.</p>
+
+
+    <p class="dl">How I counted this, and what this count does <em>not</em> claim. I applied clause 39 of the seller agreement to a given listing only where the product is both, by functional category — body armor, helmet, uniform clothing — and by military status unambiguously "unambiguously military," with no civilian use. Camouflage clothing marketed "for hunting," tactical accessories, and merch didn't make it into this count, even though the wording "goods of a military assortment" may well cover them too.</p>
+  </section>
+
+  <section id="sellers">
+    <h2>Who's Selling</h2>
+    <p>802 different sellers on Wildberries sell at least one "unambiguously military" item. 27 active ones account for <mark>4,225 listings — about half</mark> the entire segment; the leaders are "A&amp;R Group LLC" (931), sole proprietor Voeikov A.I. (594), and sole proprietor Yaitsky K.D. (590).</p>
+    <details class="datablock">
+      <summary>Full top-20 list — with legal entity and INN</summary>
+      <table>
+        <thead><tr><th>Seller</th><th>Form</th><th>INN</th><th class="num">Listings</th></tr></thead>
+        <tbody>
+          <tr><td>"A&amp;R Group" LLC</td><td>legal entity</td><td>5903126613</td><td class="num">931</td></tr>
+          <tr><td>Sole prop. Voeikov A. I.</td><td>sole proprietor</td><td>402811093410</td><td class="num">594</td></tr>
+          <tr><td>Sole prop. Yaitsky K. D.</td><td>sole proprietor</td><td>263502227195</td><td class="num">590</td></tr>
+          <tr><td>"PRIZVANIE" LLC</td><td>legal entity</td><td>2635231438</td><td class="num">410</td></tr>
+          <tr><td>"Finds from China" (WB storefront)</td><td>AliExpress integration</td><td>—</td><td class="num">217</td></tr>
+          <tr><td>Sole prop. Golushko Yu. E.</td><td>sole proprietor</td><td>780516061416</td><td class="num">175</td></tr>
+          <tr><td>Sole prop. Kupreev V. V.</td><td>sole proprietor</td><td>773421921013</td><td class="num">153</td></tr>
+          <tr><td>Sole prop. Vasilenko E. S.</td><td>sole proprietor</td><td>931001028734</td><td class="num">136</td></tr>
+          <tr><td>"NPO ZASHCHITA" JSC</td><td>legal entity</td><td>5032392688</td><td class="num">114</td></tr>
+          <tr><td>Sole prop. Vtorygina E. A.</td><td>sole proprietor</td><td>290125492819</td><td class="num">105</td></tr>
+          <tr><td>Sole prop. Vilgelm V. S.</td><td>sole proprietor</td><td>462005674422</td><td class="num">102</td></tr>
+          <tr><td>Sole prop. Sergeev A. A.</td><td>sole proprietor</td><td>615428596358</td><td class="num">98</td></tr>
+          <tr><td>Sole prop. Ivanova D. V.</td><td>sole proprietor</td><td>773377836133</td><td class="num">92</td></tr>
+          <tr><td>Sole prop. Yaitskaya S. O.</td><td>sole proprietor</td><td>263506543561</td><td class="num">88</td></tr>
+          <tr><td>Sole prop. "Alekseev A.M."</td><td>sole proprietor</td><td>667100159176</td><td class="num">82</td></tr>
+          <tr><td>Sole prop. Minkevich E. M.</td><td>sole proprietor</td><td>101102523815</td><td class="num">80</td></tr>
+          <tr><td>Sole prop. Sergeev I. D.</td><td>sole proprietor</td><td>615421968751</td><td class="num">74</td></tr>
+          <tr><td>Sole prop. Grekhov K. Yu.</td><td>sole proprietor</td><td>560704512960</td><td class="num">63</td></tr>
+          <tr><td>Sole prop. Kadyrov M. B.</td><td>sole proprietor</td><td>201404906084</td><td class="num">62</td></tr>
+          <tr><td>"KB ATL" LLC</td><td>legal entity</td><td>7743459220</td><td class="num">59</td></tr>
+        </tbody>
+      </table>
+    </details>
+    <p>Among them are not just sole proprietors with one or two items, but legal entities like "A&amp;R Group LLC" and "KB ATL LLC," registered as ordinary marketplace suppliers on the same footing as sellers of phone cases.</p>
+    <p>But the top 20 by listing count is a poor guide to the sellers' geography overall. It shows who has the <em>most</em> product, not who's trading it at all. If you break down all 802 sellers who currently have at least one "unambiguously military" listing by place of registration, a different picture emerges: <mark>430 of these 802 (54%)</mark> are registered in China (they carry a Chinese Unified Social Credit Code instead of a Russian INN), versus 359 Russian ones (another 13 of undetermined origin). Chinese sellers simply almost never make the top 20: <mark>72% of them (311 of 430)</mark> hold only one or two "unambiguously military" listings — meaning this is broad-catalog dropshipping, not specialization — so by volume per seller they lose out to Russian monobrand specialists (see below), but by number of distinct legal entities trading this product, they dominate.</p>
+    <p>The same picture holds through the lens of brand, not seller entity: a handful of trademarks account for a disproportionate share of "unambiguously military" listings — sometimes it's the same brand represented by several different sellers at once (meaning it's a coordinated product line, not a naming coincidence):</p>
+    <details class="datablock">
+      <summary>Top 12 brands — led by "A&amp;R Group" (864) and TOGA UNIT (637)</summary>
+<svg class="cat-chart" viewBox="0 0 620 384" role="img" aria-label="Number of unambiguously-military listings by brand, top 12"><g transform="translate(0,0)"><text x="210" y="15.0" class="cat-label">A&amp;P Group (1 seller)</text><rect x="220" y="0" width="340.0" height="22" class="cat-strict"/><text x="568" y="15.0" class="cat-val">931</text></g><g transform="translate(0,32)"><text x="210" y="15.0" class="cat-label">TOGA UNIT (2 sellers)</text><rect x="220" y="0" width="234.5" height="22" class="cat-strict"/><text x="568" y="15.0" class="cat-val">642</text></g><g transform="translate(0,64)"><text x="210" y="15.0" class="cat-label">Stena (1 seller)</text><rect x="220" y="0" width="215.5" height="22" class="cat-strict"/><text x="568" y="15.0" class="cat-val">590</text></g><g transform="translate(0,96)"><text x="210" y="15.0" class="cat-label">OKP "Labyrinth" (1 seller)</text><rect x="220" y="0" width="149.7" height="22" class="cat-strict"/><text x="568" y="15.0" class="cat-val">410</text></g><g transform="translate(0,128)"><text x="210" y="15.0" class="cat-label">Boevoy Stil (2 sellers)</text><rect x="220" y="0" width="70.1" height="22" class="cat-strict"/><text x="568" y="15.0" class="cat-val">192</text></g><g transform="translate(0,160)"><text x="210" y="15.0" class="cat-label">RATNIKseif.ru (1 seller)</text><rect x="220" y="0" width="55.5" height="22" class="cat-strict"/><text x="568" y="15.0" class="cat-val">152</text></g><g transform="translate(0,192)"><text x="210" y="15.0" class="cat-label">AlliancZ (1 seller)</text><rect x="220" y="0" width="44.6" height="22" class="cat-strict"/><text x="568" y="15.0" class="cat-val">122</text></g><g transform="translate(0,224)"><text x="210" y="15.0" class="cat-label">Taktikx (1 seller)</text><rect x="220" y="0" width="41.6" height="22" class="cat-strict"/><text x="568" y="15.0" class="cat-val">114</text></g><g transform="translate(0,256)"><text x="210" y="15.0" class="cat-label">WZoR-Armor (1 seller)</text><rect x="220" y="0" width="38.3" height="22" class="cat-strict"/><text x="568" y="15.0" class="cat-val">105</text></g><g transform="translate(0,288)"><text x="210" y="15.0" class="cat-label">Atrox Tactical (1 seller)</text><rect x="220" y="0" width="36.5" height="22" class="cat-strict"/><text x="568" y="15.0" class="cat-val">100</text></g><g transform="translate(0,320)"><text x="210" y="15.0" class="cat-label">VoinZ (2 sellers)</text><rect x="220" y="0" width="35.8" height="22" class="cat-strict"/><text x="568" y="15.0" class="cat-val">98</text></g><g transform="translate(0,352)"><text x="210" y="15.0" class="cat-label">Ganza (1 seller)</text><rect x="220" y="0" width="32.1" height="22" class="cat-strict"/><text x="568" y="15.0" class="cat-val">88</text></g></svg>
+      <p class="dl">Top 12 brands by number of "unambiguously military" listings (excluding listings with no brand specified — those are spread across roughly 30 unrelated sellers).</p>
+    </details>
+  </section>
+
+  <section id="ganza-case">
+    <h2>The Ganza Case: From Two Sole Proprietors on Wildberries to an "Industry of Caring for the Military"</h2>
+    <div class="case">
+    <div class="meta"><span>Sole prop. Yaitskaya S. O. (88)</span><span>Sole prop. Yaitsky K. D. (590)</span><span>Sole prop. Yaitsky D. K. (own website)</span><span>Stavropol Krai</span></div>
+
+    <p>What a Wildberries seller trading exclusively in military goods looks like — an example</p>
+
+    <p>On Wildberries, this looks like two ordinary, formally unconnected sole proprietors: Svetlana Olegovna Yaitskaya (storefront "Ganza-Online," brand "Ganza," 100 listings, 88 "unambiguously military") and Konstantin Dmitrievich Yaitsky (brand "Stena," 854 listings, 590 "unambiguously military"). Both are registered in Stavropol Krai (their INNs start with 263…). But the description of one of "Stena's" products names the real brand it belongs to: <strong>«"Ганза" — тактическое снаряжение, которое не подведёт»</strong> ("'Ganza' — tactical gear that won't let you down").</p>
+
+    <div class="case-img">
+      <img src="../images/ganza_factory_floor.jpg" alt="Ganza's sewing workshop: workers sewing camouflage fabric on industrial machines" loading="lazy">
+      <div class="case-img-cap">The sewing workshop — a photo from Ganza's own gallery on Yandex Maps</div>
+    </div>
+
+    <p>The same product with the same description was also sold on a separate site, unrelated to Wildberries — <code>ganza-online.ru</code> (now defunct) — and its legal details name a <strong>third</strong> member of this family: "Sole proprietor DANIIL KONSTANTINOVICH YAITSKY." Judging by the patronymic, this is the son of Konstantin Dmitrievich, the "Stena" seller on Wildberries. Here's what "Ganza" said about itself on that site:</p>
+    <div class="callout">"The Ganza industrial sewing factory has been producing tactical gear and equipment since 2021. The company now includes a large staff, online stores with the best ratings on the marketplaces, over 1,000 orders a day, and products carried in 140 stores across Russia."<span class="orig-ru"><b>RU</b>«Промышленная швейная фабрика Ганза производит тактическое снаряжение и экипировку с 2021 года. Сейчас предприятие включает в себя большой коллектив сотрудников, онлайн-магазины с лучшим рейтингом на маркетплейсах, более 1000 заказов в день, продукция представлена в 140 магазинах по всей России».</span> <span class="dl">"Specifically for the SVO, our designers, together with combat commanders, developed the 'Ataman' line of tactical gear" — <a href="https://web.archive.org/web/20250210154511/https://ganza-online.ru/" target="_blank" rel="noopener">ganza-online.ru, archived February 10, 2025</a></span></div>
+
+    <p>The "Ganza" group of companies describes itself as more than just a factory. Another (also now-dead) site, <code>gk-ganza.ru</code>, names three lines of business for this group: a sewing factory, a rehabilitation center for servicemen, and a charitable fund for them as well:</p>
+    <div class="callout">"The Ganza group of companies is an industry of caring for the military. We unite related companies into a single infrastructure for servicemen. From developing quality, affordable domestic tactical gear, to rehabilitating combatants after stress disorders, to humanitarian aid for the front."<span class="orig-ru"><b>RU</b>«Группа компаний Ганза — это индустрия заботы о военных. Объединяем смежные компании в единую инфраструктуру для военнослужащих. От разработки качественного и доступного отечественного тактического снаряжения, до реабилитации комбатантов после стрессовых расстройств и гуманитарной помощи фронту».</span> <span class="dl">"The factory donates 5% of the profit from every order to the Charitable Fund" — <a href="https://web.archive.org/web/20250307070424/https://gk-ganza.ru/" target="_blank" rel="noopener">gk-ganza.ru, archived March 7, 2025</a></span></div>
+
+    <p>The "Ganza" charitable fund isn't just on paper. Its own site (also unreachable as of publication) gives its full name — the "Ganza Charitable Fund for Aiding SVO Participants and Civilians Affected by Military Actions" — and publishes named fundraisers for specific units: anti-drone blankets for troops on the Kherson axis (300 units), a Mavic 3T drone with a release mechanism and batteries for an artillery battalion, thermal-imaging scopes for snipers on the southern Donetsk axis, gear for a motorized-rifle company. All of this, incidentally, is also sold on Wildberries by other sellers. Here's more of what the Ganza fund says about itself:</p>
+    <div class="callout">"01. Supplies to the SVO zone — cooperation with combat commanders and delivery of humanitarian aid by Ganza volunteers to the military unit."<span class="orig-ru"><b>RU</b>«01. Поставки в зону СВО — Сотрудничество с боевыми командирами и доставка гуманитарной помощи волонтерами «Ганзы» в военную часть».</span> <span class="dl">News item, 06/26/2024: "The Ganza Charitable Fund handed over 10 fragmentation-protection body armor vests to assault troops in the SVO zone" — <a href="https://web.archive.org/web/20241224071311/https://charityfund.gk-ganza.ru/" target="_blank" rel="noopener">charityfund.gk-ganza.ru, archived December 24, 2024</a></span></div>
+
+    <div class="case-img">
+      <img src="../images/ganza_promo_combat.jpg" alt="Still from Ganza's promo video: armed soldiers on a wooden footbridge in dense brush" loading="lazy">
+      <div class="case-img-cap">A frame from Ganza's own promo video</div>
+    </div>
+    <p>The same story is told in the Ganza group's own promo video:</p>
+    <blockquote>The group of companies includes an industrial sewing factory, where hundreds of specialists work to create quality domestic military gear. We've created every opportunity for military units in the combat zone to receive additional support. For this, the GANZA charitable fund was registered — it not only runs fundraisers and buys what's needed, but personally delivers humanitarian aid to the front line.<span class="orig-ru"><b>RU</b>В группу компаний входит промышленная швейная фабрика, на которой работают сотни специалистов, создающие качественное отечественное военное снаряжение. Мы создали все возможности для того, чтобы военные подразделения в зоне боевых действий могли получать дополнительную помощь. Для этого был зарегистрирован благотворительный фонд ГАНЗА, который не только осуществляет сборы и покупку необходимого, но и лично доставляет гуманитарную помощь на линию фронта.</span><cite>Ganza promo video, audio-track transcript</cite></blockquote>
+
+  </section>
+
+  <section id="reseller-spectrum">
+    <h2>Who Most Often Sells Military Goods on Wildberries</h2>
+    <p>"Seller" in this piece sounds like a single category, but it covers at least two very different types of participants.</p>
+
+    <p><strong>Chinese cross-border resellers.</strong> <mark>430 of 802 (54%)</mark> legal entities currently trading at least one "unambiguously military" listing — <mark>more than half the entire group</mark> — are registered in China (a Chinese Unified Social Credit Code instead of a Russian INN). They're simply invisible in volume rankings: 72% of them (311 of 430) hold one or two "unambiguously military" items in a broad, mixed catalog (FPV components, power banks, thermal-imaging optics), so by volume per seller they lose out to Russian monobrand specialists, but by number of distinct legal entities, they form the single largest group of sellers in the whole sample. A single Chinese legal entity typically operates through several different Wildberries storefronts at once — that's not a naming coincidence, it's the same INN under different signs. For example, the company <strong>Quanzhou Yier Shunxing Trading Co., Ltd.</strong> (code <code>91350425MA338QHQ0A</code>) trades through 2 storefronts at once ("CYuniversal," "CY2universal") — 137 items, 65 of them "unambiguously military." The company <strong>Quanzhou Luojiang Paileihuo Trading Co., Ltd.</strong> (code <code>91350504MAERNYQU64</code>) — through 5 storefronts ("MagnitSC112," "ElstarSC16," "SashinSC115," "AvroraSC14," "BystryySC19") — 160 listings, 69 "unambiguously military."</p>
+
+    <p>The single widest catalog in the whole database doesn't belong to an individual seller at all — it runs under the name "Finds from China" (internal supplier IDs 250132124 and 250149024 — <mark>637 listings across 11 categories, 239 of them "unambiguously military"</mark>), but this isn't one seller's storefront, it's the platform's own curated selection. Wildberries integrated AliExpress product listings directly into it, keeping the original descriptions, photos, and accumulated reviews. That's why Wildberries' own <code>supplier-by-id</code> lookup publishes no INN, no legal name, no state registration number for these listings — there's simply no single identifiable seller behind the listing to name (for comparison, the exact same query for any of the Chinese sellers named above returns a full legal name and code).</p>
+
+    <p><strong>Monobrand military specialists.</strong> At the other pole are sellers whose catalog is almost entirely "unambiguously military" items under one brand: sole proprietor Voeikov A.I. (599 listings, 594 "unambiguously military" — 99%, brand TOGA UNIT), sole proprietor Sergeev A.A. (98 of 98 — 100%, brands VoinZ/Yakeda). And "AlliancZ" sells a product whose name is simply — <strong>"Body Armor for the SVO."</strong></p>
+
+    <h3>And Where in Russia Are the Other 356 Registered</h3>
+    <p>The first two digits of a Russian INN are the region code where the entrepreneur or legal entity is registered for tax purposes. Among the 356 Russian sellers of "unambiguously military" goods with a known region, <mark>the capital and the region around it account for almost a third</mark>.</p>
+    <details class="datablock">
+      <summary>Full breakdown across the 9 largest regions</summary>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-label">Moscow (77, 97, 99)</div><div class="bar-track"><div class="bar-fill" style="width:100.0%"></div></div><div class="bar-val">80</div></div>
+        <div class="bar-row"><div class="bar-label">Moscow Oblast (50)</div><div class="bar-track"><div class="bar-fill" style="width:36.3%"></div></div><div class="bar-val">29</div></div>
+        <div class="bar-row"><div class="bar-label">St. Petersburg (78)</div><div class="bar-track"><div class="bar-fill" style="width:31.3%"></div></div><div class="bar-val">25</div></div>
+        <div class="bar-row"><div class="bar-label">Sverdlovsk Oblast (66)</div><div class="bar-track"><div class="bar-fill" style="width:17.5%"></div></div><div class="bar-val">14</div></div>
+        <div class="bar-row"><div class="bar-label">Rostov Oblast (61)</div><div class="bar-track"><div class="bar-fill" style="width:17.5%"></div></div><div class="bar-val">14</div></div>
+        <div class="bar-row"><div class="bar-label">Nizhny Novgorod Oblast (52)</div><div class="bar-track"><div class="bar-fill" style="width:15.0%"></div></div><div class="bar-val">12</div></div>
+        <div class="bar-row"><div class="bar-label">Chelyabinsk Oblast (74)</div><div class="bar-track"><div class="bar-fill" style="width:12.5%"></div></div><div class="bar-val">10</div></div>
+        <div class="bar-row"><div class="bar-label">Bashkortostan (02)</div><div class="bar-track"><div class="bar-fill" style="width:12.5%"></div></div><div class="bar-val">10</div></div>
+        <div class="bar-row"><div class="bar-label">Krasnodar Krai (23)</div><div class="bar-track"><div class="bar-fill" style="width:10.0%"></div></div><div class="bar-val">8</div></div>
+      </div>
+      <p class="dl">Plus another 154 sellers scattered across 54 other regions — 1 to 6 per region. Among them is Stavropol Krai, home to the Yaitsky family ("Ganza," see the case above).</p>
+    </details>
+
+  </section>
+
+
+  <section id="telegram">
+    <h2>Where It's Headed</h2>
+    <p>I monitored 38 Telegram channels that run fundraisers for specific military units, and found 8,809 direct links to Wildberries products in their posts (and another 10,165 to Ozon) — including links hidden behind a clickable word or emoji (the link itself isn't visible in the post text, only in the message markup). Here are the most active fundraisers linking to Wildberries:</p>
+    <table>
+      <thead><tr><th>Channel</th><th class="num">WB listing mentions</th></tr></thead>
+      <tbody>
+        <tr><td>Crimean Fairies — Humanitarian Aid</td><td class="num">7,591</td></tr>
+        <tr><td>OPERATOR 13</td><td class="num">628</td></tr>
+        <tr><td>Everything for the Front, Everything for Victory!</td><td class="num">96</td></tr>
+        <tr><td>Two Majors</td><td class="num">78</td></tr>
+        <tr><td>Reserve Pioneer 🇷🇺</td><td class="num">64</td></tr>
+        <tr><td>HEALER l ХИЛЕР</td><td class="num">64</td></tr>
+        <tr><td>"Kuban" Battalion</td><td class="num">59</td></tr>
+        <tr><td>Roman Alekhin</td><td class="num">43</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="cases">
+    <h2>Three Examples</h2>
+
+    <div class="pull-quote">"We express our sincere gratitude and appreciation… for providing humanitarian aid to servicemen in the special military operation zone"<span class="orig-ru"><b>RU</b>«Выражаем искреннюю благодарность и признательность… за оказание гуманитарной помощи военнослужащим в зоне проведения специальной военной операции»</span><cite>Certificate of honor from Russia's Defense Ministry — published by the seller themselves as a promotional image in the product gallery on Wildberries (see below)</cite></div>
+
+    <div class="case">
+      <h3>"Tactical Body Armor Universal Armor with BR5 Plates" — 1,429 reviews</h3>
+      <div class="meta"><span>nm 247808462</span><span>Sole prop. Malchikova M. M., INN 501404415687</span><span>₽28,266</span><span>Wildberries warehouse network</span></div>
+      <div class="case-img">
+        <img src="../images/247808462_vybor.jpg" alt="Universal Armor body-armor infographic reading &quot;Choice of SVO Troops&quot;" loading="lazy">
+        <div class="case-img-cap">The seller's own promotional infographic on the product page: «ВЫБОР БОЙЦОВ СВО» ("CHOICE OF SVO TROOPS") in large type, next to a Russian compliance certificate.</div>
+      </div>
+      <p>The listing itself, in its own description, offers itself "for use… in the SVO zone": «Снаряжение выполнено из качественных тканей, что обуславливает эффективность и долговечность применения в полевых условиях, в зоне СВО и при военных учениях» ("The gear is made of quality fabrics, ensuring effective, durable use in field conditions, in the SVO zone, and during military exercises"). Reviews confirm what it's for:</p>
+      <div class="wb-review" style="--wb-pct:100%">
+        <div class="wb-review-head"><span class="wb-avatar" aria-hidden="true"></span><span class="wb-verified">✓ Verified purchase</span><span class="wb-stars" aria-label="Rated 5 out of 5"></span></div>
+        <p class="wb-review-text">Insane how great these plates are, tested them by shooting at the <mark>svo</mark>, 7.62 SVD. Behind-armor trauma minimal!!! Recommend to everyone<span class="orig-ru"><b>RU</b>Ошалеть какие шикарные плиты, отстреливал на <mark>сво</mark>, 7.62 Свд. Запреградное минимум!!! Всем рекомендую</span></p>
+        <div class="wb-review-foot"><span>August 9, 2023</span><span>40 found this helpful</span></div>
+        <div class="wb-seller-reply"><div class="wb-seller-reply-label">Seller's reply · "Tactical Ballistics"</div><p>Good day! Thank you for choosing a product from our brand "Tactical Ballistics." We're glad this item worked out for you…<span class="orig-ru"><b>RU</b>Добрый день! Благодарим, что Вы выбрали изделие нашего бренда «Тактическая баллистика». Мы рады, что данный товар Вам подошел…</span></p></div>
+      </div>
+      <div class="wb-review" style="--wb-pct:100%">
+        <div class="wb-review-head"><span class="wb-avatar" aria-hidden="true"></span><span class="wb-verified">✓ Verified purchase</span><span class="wb-stars" aria-label="Rated 5 out of 5"></span></div>
+        <p class="wb-review-text">Both plates arrived intact + a copy of the certificate was included. They're in service at the <mark>SVO</mark> now. Much lighter than standard-issue combined-arms plates.<span class="orig-ru"><b>RU</b>Пришли обе пластины целые+копия сертификата приложена.На <mark>СВО</mark> теперь работают.Намного легче общевойсковых плит.</span></p>
+        <div class="wb-review-foot"><span>August 21, 2023</span><span>10 found this helpful</span></div>
+      </div>
+      <div class="wb-review" style="--wb-pct:100%">
+        <div class="wb-review-head"><span class="wb-avatar" aria-hidden="true"></span><span class="wb-verified">✓ Verified purchase</span><span class="wb-stars" aria-label="Rated 5 out of 5"></span></div>
+        <p class="wb-review-text">ordered it for my husband at the <mark>svo</mark>, field-tested, matches the stated specs. Ordering a second time, for his fellow soldiers. The plates really are heavy<span class="orig-ru"><b>RU</b>заказывала мужу на <mark>сво</mark>, проверены в деле, соответствуют заявленным харпктеристикам. Беру второй раз, для его сослуживцев. Плиты действительно тяжелые</span></p>
+        <div class="wb-review-foot"><span>July 6, 2024</span><span>2 found this helpful</span></div>
+      </div>
+      <div class="wb-review" style="--wb-pct:100%">
+        <div class="wb-review-head"><span class="wb-avatar" aria-hidden="true"></span><span class="wb-verified">✓ Verified purchase</span><span class="wb-stars" aria-label="Rated 5 out of 5"></span></div>
+        <p class="wb-review-text">Recommend buying and using it in the <mark>SVO</mark> zone. Recommend this seller for buying these products from<span class="orig-ru"><b>RU</b>Рекомендую для приобретения и использовании в зоне, <mark>СВО</mark>. Рекомендую данного продавца для приобретения у него, данных товаров</span></p>
+        <div class="wb-review-foot"><span>October 15, 2024</span><span>10 found this helpful</span></div>
+      </div>
+      <div class="wb-review" style="--wb-pct:100%">
+        <div class="wb-review-head"><span class="wb-avatar" aria-hidden="true"></span><span class="wb-verified">✓ Verified purchase</span><span class="wb-stars" aria-label="Rated 5 out of 5"></span></div>
+        <p class="wb-review-text">The vest is great, adjusted everything, fits like it's molded on, good quality, recommend the seller, bought it for the <mark>SVO</mark>.<span class="orig-ru"><b>RU</b>Броник супер все отрегулировал сел как в литой качество хорошее продовца рекомендую брал на <mark>СВО</mark>.</span></p>
+        <div class="wb-review-foot"><span>November 20, 2025</span><span>1 found this helpful</span></div>
+      </div>
+    </div>
+
+    <div class="case">
+      <h3>An Anti-Drone Blanket With a Certificate of Honor From the Black Sea Fleet</h3>
+      <div class="meta"><span>nm 480882548 / 293051745</span><span>Sole prop. Kasatkina N. I., INN 370229813270</span><span>₽7,365 / ₽2,027</span><span>Wildberries warehouse network</span></div>
+      <div class="case-note">Both listings below are the same product ("Anti-Drone Blanket Against Thermal Imaging": shared <code>imt_id</code>, shared review pool) in different colors.</div>
+      <div class="case-img">
+        <img src="../images/293051745_certificates.jpg" alt="Collage of certificates of thanks from the People's Front, Russia's Defense Ministry, and the Black Sea Fleet, published by the seller in the product gallery" loading="lazy">
+        <div class="case-img-cap">Color "multicam," item 293051745: a letter of thanks from the "People's Front" movement (2023), a certificate of honor from Russia's Defense Ministry «за оказание гуманитарной помощи военнослужащим в зоне проведения специальной военной операции» ("for providing humanitarian aid to servicemen in the special military operation zone") (2024), and a certificate from Black Sea Fleet command «за поддержку Вооружённых сил Российской Федерации… в период проведения Специальной военной операции» ("for supporting the Armed Forces of the Russian Federation… during the special military operation") (2024, Sevastopol)</div>
+      </div>
+      <p>The name of a second listing in the same line, nm 480882548, reads verbatim: "Anti-Drone Blanket, 2 pcs, with tailfins for VOG17 25." It might pass as merely dual-use, if not for the bonus VOG grenade tailfins:</p>
+      <div class="case-img">
+        <img src="../images/480882548_vog.jpg" alt="Infographic of the blanket's included contents, with a VOG tailfin and firing pin" loading="lazy">
+        <div class="case-img-cap">"What's included": a carry bag, a cord, and «хвостик для ВОГ и накольник» ("a VOG tailfin and firing pin"), photographed separately as a bonus accessory.</div>
+      </div>
+      <div class="wb-review" style="--wb-pct:100%">
+        <div class="wb-review-head"><span class="wb-avatar" aria-hidden="true"></span><span class="wb-verified">✓ Verified purchase</span><span class="wb-stars" aria-label="Rated 5 out of 5"></span></div>
+        <p class="wb-review-text">Getting these for the guys at the <mark>SVO</mark>, sent 32 of them. Thanks, we're sending anti-drone blankets, maybe it'll save someone's life,<span class="orig-ru"><b>RU</b>Берём ребятам на <mark>СВО</mark> отправили 32 шт Спасибо, противодроновые одеяла отправляем может камуто жизнь сахранит,</span></p>
+        <div class="wb-review-foot"><span>February 8, 2026</span><span>5 found this helpful</span></div>
+        <div class="wb-seller-reply"><div class="wb-seller-reply-label">Seller's reply</div><p>Thank you so much for your review! We're very glad you're happy with your purchase. We carefully select materials and check the quality of every anti-drone blanket…<span class="orig-ru"><b>RU</b>Спасибо большое за ваш отзыв! Очень рады, что вы остались довольны покупкой. Мы тщательно подбираем материалы и проверяем качество каждого антидронового одеяла…</span></p></div>
+      </div>
+      <div class="wb-review" style="--wb-pct:100%">
+        <div class="wb-review-head"><span class="wb-avatar" aria-hidden="true"></span><span class="wb-verified">✓ Verified purchase</span><span class="wb-stars" aria-label="Rated 5 out of 5"></span></div>
+        <p class="wb-review-text">Sent it to the position in the seller's packaging, they'll report back after using it. That's when I'll be able to write something. But as for a plus — it's usable both summer and winter.<span class="orig-ru"><b>RU</b>Отправила на позицию в упаковке продавца, после применения сообщат.Вот тогда смогу и я что то написать.А,вот насчёт плюса- это, то что годен к применению и летом и зимой.</span></p>
+        <div class="wb-review-foot"><span>February 13, 2026</span><span></span></div>
+        <div class="wb-seller-reply"><div class="wb-seller-reply-label">Seller's reply</div><p>Thank you for the review and your trust. Glad you noted the packaging quality. Yes, the anti-drone blanket in the "moss winter" colorway is suitable for use in different seasons…<span class="orig-ru"><b>RU</b>Спасибо вам за отзыв и доверие. Рады, что отметили качество упаковки. Да, антидроновое одеяло в расцветке «мох зима» подходит для использования в разное время года…</span></p></div>
+      </div>
+      <div class="wb-review" style="--wb-pct:100%">
+        <div class="wb-review-head"><span class="wb-avatar" aria-hidden="true"></span><span class="wb-verified">✓ Verified purchase</span><span class="wb-stars" aria-label="Rated 5 out of 5"></span></div>
+        <p class="wb-review-text">Well packaged, bought it for my son at the <mark>SVO</mark>. Time will tell.<span class="orig-ru"><b>RU</b>Хорошо упакован, купила сыну на <mark>СВО</mark>. Время покажет.</span></p>
+        <div class="wb-review-foot"><span>December 19, 2025</span><span>2 found this helpful</span></div>
+        <div class="wb-seller-reply"><div class="wb-seller-reply-label">Seller's reply</div><p>Thank you so much for your review! We're very glad you're happy with your purchase. We carefully select materials and check the quality of every anti-drone blanket…<span class="orig-ru"><b>RU</b>Спасибо большое за ваш отзыв! Очень рады, что вы остались довольны покупкой. Мы тщательно подбираем материалы и проверяем качество каждого антидронового одеяла…</span></p></div>
+      </div>
+      <blockquote>The manufacturer said the blanket is silent. That's not true. It's impossible to use… I wanted to give one to my army buddy, but I won't be giving something like this as a gift, I took back 1 of the 2.<span class="orig-ru"><b>RU</b>Производитель указал, что покрывало бесшумное. Однако это не соответствует действительности. Пользоваться им невозможно… одно хотел подарить своему боевому товарищу, но не буду такое дарить, забрал 1 из 2.</span><cite>November 2, 2024 — nm 255165573</cite></blockquote>
+    </div>
+
+    <div class="case">
+      <h3>Deleted Listings That Aren't Even in the Internet Archive</h3>
+      <div class="meta"><span>nm 143706555, 272013880, 95682410</span><span>status: delisted</span></div>
+      <div class="no-image">No images of the listings themselves survive. The only remaining trace is the fundraiser-post screenshots below, from three different Telegram channels.</div>
+      <p>Wildberries has blocked itself entirely from the Wayback Machine crawler, so these products are known only from surviving fundraiser posts about them:</p>
+      <blockquote>An urgent request came in from the guys: 1. Radios, 40 units…<span class="orig-ru"><b>RU</b>Поступил срочный запрос от ребят: 1. Рации 40 шт…</span><cite>re: nm 143706555 — combat boots for a crew, "Crimean Fairies — Humanitarian Aid," <a href="https://t.me/GnqmDghzwl05ZTQy/2582" target="_blank" rel="noopener">post from March 5, 2023</a></cite></blockquote>
+      <div class="case-img">
+        <img src="../images/tg_krymfei_post.jpg" alt="Screenshot of a post from the &quot;Crimean Fairies — Humanitarian Aid&quot; channel fundraising for radios and boots, photo of a soldier with humanitarian-aid boxes" loading="lazy">
+        <div class="case-img-cap">Screenshot of the "Crimean Fairies — Humanitarian Aid" post — the very fundraiser the link to nm 143706555 belonged to.</div>
+      </div>
+      <blockquote>Friends, we're getting ready for a trip with humanitarian aid to our troops. Besides the main, important requests… the guys also appreciate getting our support<span class="orig-ru"><b>RU</b>Друзья, мы готовимся к поездке с гуманитарной помощью к нашим бойцам. Кроме основных, важных запросов… ребятам также приятно получать нашу поддержку</span><cite>re: nm 272013880 — a hooded sleeping bag rated to −30°, "Maksyuta — and that's it," <a href="https://t.me/slavamaxuta/25300" target="_blank" rel="noopener">post from January 31, 2026</a></cite></blockquote>
+      <div class="case-img">
+        <img src="../images/tg_maxyuta_post.jpg" alt="Screenshot of a post from the &quot;Maksyuta — and that's it&quot; channel with a list of needs for troops, including an EliSof sleeping bag" loading="lazy">
+        <div class="case-img-cap">Screenshot of the "Maksyuta — and that's it" post — a direct link to listing nm 272013880 in the needs list.</div>
+      </div>
+      <blockquote>A request came in for 10 tactical first-aid kits, can we manage it? We only have 3 days!<span class="orig-ru"><b>RU</b>Поступила заявка на 10 тактических аптечек, справимся? У нас всего 3 дня!</span><cite>re: nm 95682410 — individual dressing pack (IPP), "OPERATOR 13," <a href="https://t.me/operator13zov/32752" target="_blank" rel="noopener">post from September 7, 2024</a></cite></blockquote>
+      <div class="case-img">
+        <img src="../images/tg_operator13_post.jpg" alt="Screenshot of a post from the OPERATOR 13 channel, reposted from &quot;Gum Pomoshch Omsk,&quot; with a list of tactical first-aid kits and links to Wildberries listings" loading="lazy">
+        <div class="case-img-cap">Screenshot of the OPERATOR 13 post (reposted from "Gum Pomoshch Omsk") — a link to nm 95682410 ("Individual Dressing Pack IPP") in the list.</div>
+      </div>
+      <p>In total, I found 69 such listings.</p>
+    </div>
+  </section>
+
+
+  <section id="still-live">
+    <h2>"Everything for the SVO"</h2>
+    <p>After Ukrainian drone strikes on Wildberries' warehouses began on July 18, 2026, and continuing to this day, many news outlets reported that the platform removed the "Everything for the SVO" section from its site navigation. That's only half true: in Wildberries' public category tree (the file <code>main-menu-ru-ru-v3.json</code>), there is not, and never was, a section "for the SVO." But it's important to understand what this page actually was to begin with: not a standalone catalog section in the category tree, but a pre-built search query (a "preset") that Wildberries had served for years at a short tag URL. Removing such a page from the menu is not the same as removing it from the catalog — the pages themselves never went anywhere.</p>
+    <p>What this "preset" actually is, technically, is visible in the service file the platform itself returns before rendering the page:</p>
+    <div class="callout">"url": "/catalog/tags/svo-tovary", "name": "Svo tovary", "searchQuery": "svo tovary", "link": "/catalog/dom-i-dacha"<span class="orig-ru"><b>RU</b>«url»: «/catalog/tags/svo-tovary», «name»: «Сво товары», «searchQuery»: «сво товары», «link»: «/catalog/dom-i-dacha»</span></div>
+    <p>The <code>name</code> field is just <code>searchQuery</code> with its first letter capitalized, and <code>link</code> (for another tag we found, "kit for the svo," it's literally "/catalog/sport") points to an arbitrary, non-military parent category. In other words, this isn't a hand-built catalog section, it's a templated page the system builds around a literal search query — the very same one real buyers typed into the search bar. Technically, it's the same internal search (<code>u-search/exactmatch</code>, tagged <code>catalog_type: "preset"</code>) that serves any ordinary query.</p>
+    <p>On July 29, 2026 — after the stories about the "Everything for the SVO" section being removed had already been published — I opened a similar page, <code>wildberries.ru/catalog/tags/svo-tovary</code>, checked it, and logged which query hit the platform's server. It carries a relevance score of <code>rs: 100</code> — an exact match. At the time of checking, this catalog held <mark>9,995 products</mark>, including "Body Armor 8301, Tactical Military Plate Carrier, Multicam," an odor neutralizer "for the army, the SVO, Rosgvardiya" from the brand Helmetex, and a tactical first-aid kit "for the SVO."</p>
+
+    <p>But if not in a special "for the SVO" section, where in Wildberries' <em>actual</em>, human-built catalog does all this product actually live? I matched the <code>subject_id</code> of each of the 7,666 "unambiguously military" listings against the platform's full category tree (109 root sections, the file <code>subject-base.json</code>, which the platform itself serves from its own CDN). The result held for 100% of listings — and not one landed in a section with a military-sounding name, because no such section exists on Wildberries: <mark>48% sit in "Sporting Goods," another 18% in "Electronics Accessories"</mark>.</p>
+    <details class="datablock">
+      <summary>Full breakdown across all 8 catalog sections</summary>
+      <table>
+        <thead><tr><th>Wildberries root category</th><th class="num">Listings</th><th class="num">Share</th></tr></thead>
+        <tbody>
+          <tr><td>Sporting Goods</td><td class="num">3,702</td><td class="num">48%</td></tr>
+          <tr><td>Electronics Accessories</td><td class="num">1,412</td><td class="num">18%</td></tr>
+          <tr><td>Sports Accessories</td><td class="num">836</td><td class="num">11%</td></tr>
+          <tr><td>Hand Tools &amp; Equipment</td><td class="num">261</td><td class="num">3%</td></tr>
+          <tr><td>Headwear</td><td class="num">239</td><td class="num">3%</td></tr>
+          <tr><td>Electrical Goods</td><td class="num">220</td><td class="num">3%</td></tr>
+          <tr><td>Accessories</td><td class="num">208</td><td class="num">3%</td></tr>
+          <tr><td>All other sections (Sportswear, Workwear &amp; PPE, Health, Toys, etc.)</td><td class="num">788</td><td class="num">10%</td></tr>
+        </tbody>
+      </table>
+    </details>
+    <p>The single largest cluster — 2,240 armor-and-plate-carrier listings, sitting entirely in a subsection called "Body Armor" — sits inside <strong>"Sporting Goods"</strong>: the same section as hunting scopes and camping load-bearing vests. Combat FPV drone components — batteries, frames, antennas — sit in "Electronics Accessories," next to phone cases. Combat helmets share the "Sports Accessories" section (sports helmets) with "Workwear & PPE" (protective hard hats) — but never get a section of their own.</p>
+    <p>Sometimes this gets absurd: a payload-release mechanism for a combat FPV drone (nm 983152301, "Universal Cargo-Release System for Drones") is filed under the subsection <strong>"Sorters"</strong> in the section <strong>"For Toddlers."</strong> Motors and frames for combat drones sit in "Remote-Control Toys," one of them in "Doll Accessories."</p>
+
+  </section>
+
+  <section id="limits">
+    <p>This isn't an exhaustive sample: it doesn't include products that aren't mentioned in Telegram fundraisers and can't be found through basic keyword search. In other words, 7,666 doesn't mean "there are 7,666 different military-purpose products on Wildberries" — it's only what I was able to find through a surface-level search.</p>
+    <p>All figures in this piece are current as of August 3, 2026.</p>
+  </section>
+
+  <section id="data">
+    <h2>Data</h2>
+    <p class="dl">The data in raw form:</p>
+    <table class="dl">
+      <thead><tr><th>File</th><th>What's inside</th></tr></thead>
+      <tbody>
+        <tr><td><a href="../data/strict_military_items.csv">strict_military_items.csv</a></td><td>all 7,666 listings — category, classification reason, seller, link</td></tr>
+        <tr><td><a href="../data/wb_policy_violations.csv">wb_policy_violations.csv</a></td><td>listings that fall under clauses 39 / 2.5 / 17 of Wildberries' own "List of Banned Goods" — with the clause number and its wording</td></tr>
+        <tr><td><a href="../data/vendor_details.csv">vendor_details.csv</a></td><td>sellers' legal data — INN, sole-proprietor registration number, region</td></tr>
+        <tr><td><a href="../data/temporal_trends.csv">temporal_trends.csv</a></td><td>month-by-month mention trends by category</td></tr>
+        <tr><td><a href="../data/delivery_source_summary.csv">delivery_source_summary.csv</a></td><td>estimated delivery-warehouse source by category</td></tr>
+        <tr><td><a href="../data/recurring_campaigns.csv">recurring_campaigns.csv</a></td><td>recurring payment details across fundraiser posts</td></tr>
+        <tr><td><a href="../data/products_deduped.csv">products_deduped.csv</a></td><td>products collapsed to a single ID regardless of color/size</td></tr>
+        <tr><td><a href="../data/category_summary.csv">category_summary.csv</a></td><td>summary by functional category</td></tr>
+        <tr><td><a href="../data/military_class_summary.csv">military_class_summary.csv</a></td><td>summary by military status</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer class="bottom">
+    <p class="kicker-close" style="font-family:Georgia,serif; color:var(--fg);">As of publication, none of these 7,666 listings have been taken down.</p>
+    <p>This is the visual companion to <a href="https://foreignpolicy.com/2026/07/29/wildberries-russia-ukraine-war-drone-attacks-putin-military-supplies-logistics/" target="_blank" rel="noopener">"The Wildberries Theory of Russian Defeat"</a> in Foreign Policy — the full text of the investigation is there.</p>
+    <p>Technical details are in the <a href="https://github.com/Amethyst-Deceiver2001/wb-watcher" target="_blank" rel="noopener">project repository</a>. If you spot an error in the text or the data, write to the author at kovalever@gmail.com.</p>
+    <div class="support-box">
+      <div class="support-box-label">Support the author</div>
+      <p>If you'd like to support the author, here's how:</p>
+      <ul class="support-list">
+        <li><span class="support-method">PayPal</span> <span>kovalever@googlemail.com</span></li>
+        <li><span class="support-method">Revolut</span> <span>@alexeypklg</span></li>
+        <li><span class="support-method">USDC</span> <span>(Ethereum) <code>0x65a5Fd21ae4f4159F5530C8a54511d4A9DB7a995</code></span></li>
+        <li><span class="support-method">ETH</span> <span><code>0x8cfc0b75CDe024e519b2770B9EAEaC4B1539d03E</code></span></li>
+        <li><span class="support-method">Bitcoin</span> <span><code>3LAptCbJV8iLJSJcGLj9fe6XhRpBYAJHqj</code></span></li>
+      </ul>
+      <p style="margin-top:.8em;">If another cryptocurrency is more convenient for you, write to me.</p>
+    </div>
+  </footer>
+
+</article>
+<script>
+  // Progressive enhancement: the reveal/hidden state is applied by JS itself,
+  // not present in the static markup — a no-JS visitor never sees the
+  // elements hidden, they just render at full opacity as plain charts.
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    var targets = document.querySelectorAll('[data-reveal]');
+    targets.forEach(function(el) { el.classList.add('reveal'); });
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold: 0.15});
+    targets.forEach(function(el) { io.observe(el); });
+  }
+</script>
+</body>
+</html>
