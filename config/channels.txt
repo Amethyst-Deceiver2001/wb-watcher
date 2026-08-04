@@ -1,0 +1,103 @@
+# Telegram channel watchlist. One per line: @handle, t.me/handle, or numeric id.
+# Scraped by `wb-watch tg-scan` for WB/Ozon links and fundraising details.
+@Kuban_Z
+@vvedmina_izba
+@kanaldoBro33
+@dva_majors
+@slavamaxuta
+@operator13zov
+# --- expansion from the extended network (tg_network_channels), 2026-07-24 ---
+# unit-support / procurement / fundraising pattern, picked from top follow-up
+# candidates surfaced by the first crawl's forward + text-reference graph.
+# Excluded: @media_front_bot (submission bot, not a content channel) and the
+# ~9-channel "Рыбарь" regional news-aggregator family (rybar, rybar_pacific,
+# rybar_mena, rybar_africa, rybar_stan, rybar_latam, rybar_america, caucasar,
+# balkanar, evropar) — heavily cited but general geopolitical analysis, not
+# unit-specific procurement; a very large crawl for likely low WB-mention density.
+# Spot-checked 2026-07-25 (t.me/s/<handle> preview): initial read found no
+# direct wildberries.ru/ozon.ru links in sampled posts (bank card/SBP
+# transfers, own sites, or direct vendor contact instead). CAVEAT (2026-07-25,
+# later same day): the preview-based check is unreliable — Telegram hides
+# multi-item link lists behind styled text ("тут👈"), invisible to a plain
+# read and (until the scraper.py fix) invisible to our extraction too. Both
+# gefestwar and lpr1_treugolnik were wrongly cleared by this same method and
+# turned out to have real hidden links. Treat these as unverified, not
+# confirmed-negative — scan them properly rather than skipping.
+@arx_spn
+@vbrone31
+@mestb_dobroj_voli
+@medgr3320
+@pionergrupa
+@fronttyagach82
+@za_froht
+@healertacmed
+@oruzhejnyj_master
+@makers2fron
+@dva_mjors_kortizol
+@front_narod
+@warriorofnorth
+@foxandraven
+@filatovcorr
+@zapodiny
+@morpexrokot
+@alekhin_telega
+# Confirmed WB/Ozon links in sampled posts, 2026-07-25:
+@naukapobezhdatz
+@dnevnikdesantnika
+# @zhurnalistka_z: general channel summary looked bank-transfer-only, but a
+# specific post (t.me/zhurnalistka_z/4127) has 3 WB links for FPV drone
+# consumables — worth scanning despite the mismatched first impression.
+@zhurnalistka_z
+# Found via Telegram global search (SearchGlobalRequest), not the forward
+# graph — direct wildberries.ru/ozon.ru queries surfaced these independently
+# of anything already in the network. All 3 confirmed via real post content,
+# not just channel-level preview (which under-reports link usage since
+# Telegram hides multi-item link lists behind styled text — see the
+# scraper.py hidden-URL fix from this same check):
+# gefestwar: moved here from the "no wb links" block below — a post titled
+# "Секретная Лаборатория народного ВПК" has direct ozon.ru/t/ links for
+# servo/battery components, missed by the shallow channel-preview check.
+@gefestwar
+# lpr1_treugolnik: mostly an air-raid-alert channel, but has at least one
+# post with a direct WB seller-shop link (wildberries.ru/seller/1388490).
+@lpr1_treugolnik
+# GnqmDghzwl05ZTQy ("Крымские феи - гуманитарная помощь"): itemized
+# fundraising post had ~24 WB/Ozon links hidden behind styled link text
+# ("тут👈") — invisible to a plain-text read, only found via message
+# entities. Likely the richest single post found this session.
+@GnqmDghzwl05ZTQy
+# Removed 2026-07-25 (spot-check found zero war/fundraising content):
+# @zavialov_knife — commercial handmade-knife retailer, unrelated
+# @chemo_danchik — melanin health-supplement wellness channel, unrelated
+# --- confirmed by direct spot-check, 2026-07-25: WB product links for drone
+# battery fundraising (t.me/romanov_92/45682, DJI Mavic 3 batteries) ---
+@romanov_92
+# zonafpv: commercial FPV-component vendor (motors/VTX/antennas/LiPo, brands
+# GEPRC/Vant/PeakFPV/BeastFPV), sells via Avito + direct contact — channel-
+# level preview found no WB/Ozon links itself. Added anyway: several of its
+# exact brand/model names (GEPRC SOMA, Vant LiPo, PeakFPV THOR T67) traced
+# directly onto real WB listings when cross-referenced by hand, and this
+# same check is what surfaced the "bare FPV brand token" classifier gap
+# (military_class.py fpv_component). Worth a full scan in case later posts
+# do carry marketplace links even though the sampled preview didn't.
+@zonafpv
+# Vse_dly_fronta_vse_dly_Pobedu ("Everything for the Front, Everything for
+# Victory"): unit-support fundraiser, repeatedly cross-checked by hand this
+# session (posts 5120, 7892, 8238) — confirmed real WB links each time (DJI
+# Mavic motor/gimbal parts, RF connectors, ToolkitRC M6D chargers) plus a
+# large non-WB combat/medical wishlist (Arkon Alfa II LT35 thermal sight,
+# Skyzone SKY04X Pro, Юрка drone detector, tranexamic acid, CVCs). High hit
+# rate on manual spot-checks — worth a full scan.
+@Vse_dly_fronta_vse_dly_Pobedu
+# Major crowdfunding/unit-support channels, added 2026-07-28 at user request.
+# @ghost_of_novorossia already spot-checked earlier this session (post 27789,
+# confirmed WB booster-model link with combat-use confirmation) — adding the
+# full channel for a proper scan rather than one-off post checks.
+@ghost_of_novorossia
+@RVvoenkor
+@montyan2
+# ProectZhit ("Проект «Жить» — победа куётся в тылу"): confirmed real
+# logistics/crowdfunding channel, spot-checked 2026-07-29 (post 9999 —
+# explicit delivery of medicine, body bags, and assembled motorcycles to
+# front-line units, "парни пока на б.з.")
+@ProectZhit

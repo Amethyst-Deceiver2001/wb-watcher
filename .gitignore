@@ -1,0 +1,16 @@
+.env
+RESEARCH_BRIEF.md
+data/*.db
+data/*.db-shm
+data/*.db-wal
+data/*.db.bak-*
+data/media/*
+exports/*
+!data/media/.gitkeep
+!exports/.gitkeep
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+build/
+dist/

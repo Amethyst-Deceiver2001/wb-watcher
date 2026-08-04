@@ -1,0 +1,280 @@
+# Discovery search terms (Russian). One per line.
+# Used by `wb-watch discover` to sweep WB search for new military-coded listings.
+хвостовик вог
+накольник вог
+вог 17 25 сброс
+система сброса fpv
+сброс для дрона
+бронежилет мультикам
+бронежилет тактический
+тепловизор монокуляр
+кровоостанавливающий жгут турникет
+# narrowed 2026-07-29 (keyword-precision audit): "антидрон рэб" tracked 302
+# items of which 237 were РЭБ-branded MERCH (shot glasses, medals, mousepads,
+# flasks) — the "рэб" token matches the emblem-souvenir market. Bare "антидрон"
+# probes at 85% cat / 79% mil.
+антидрон
+# --- added from Telegram fundraising posts (vvedmina_izba, kanaldoBro33, dva_majors,
+#     slavamaxuta, operator13zov) — categories these units solicit but not yet swept ---
+# narrowed 2026-07-29: "powerbank для дрона" is a WB "merger" query — WB splits
+# it into separate _st0=powerbank / _st1=дрон searches and merges, so the
+# generic consumer-powerbank token dominates. 487 items tracked at 28% cat;
+# it is the direct source of the Tecno phone-case/cable/powerbank flood in the
+# `other` bucket. Replacement probes at 90% cat / 90% mil.
+аккумулятор для fpv дрона
+антидрон плащ пончо
+антидрон накидка тепловая
+спальный мешок армейский
+рация tyt
+генератор бензиновый портативный
+starlink комплект
+маскировочная сеть
+военная аптечка турникет жгут
+зарядная станция для аккумуляторов дрона
+оптоволокно катушка fpv дрон
+оптоволоконный дрон
+оптоволоконная катушка
+# --- added after broneodezhda category spot-check: bare "бронежилет" alone
+#     surfaced 106 untracked armor-carrier/plate listings in one search page,
+#     more than either of the narrower "бронежилет мультикам"/"тактический"
+#     queries above caught on their own ---
+бронежилет
+бронеплита
+плитник
+plate carrier
+
+# --- added 2026-07-29: found 3 untracked ballistic-insert listings
+#     ("Баллистика в камербанды...", "Комплект баллистики...") sold as
+#     standalone accessories rather than under "бронежилет" wording ---
+баллистика в камербанды
+комплект баллистики
+камербанд
+шлем военный тактический
+прибор ночного видения
+
+# --- added after "this?" check on nm 1201128090: bare "уставной" alone gets
+#     0 hits, but "уставной кепка" surfaced 50 results (mostly ВКПО caps/kepi)
+#     the military_uniform rule was missing entirely, since it only checked
+#     garment words, not headwear ---
+уставной кепка
+
+# --- added after "this?" check on nm 1201128090 area: "уставные берцы" query
+#     returned 100 results, only ~1/30 already tracked — generic "берцы" boots
+#     already classify correctly (dual_use_demand), this is a coverage gap ---
+уставные берцы
+
+# --- added after "this?" check on nm 1221721828: "детектор БПЛА" query
+#     surfaced whole Булат/Skydroid/МАРС product families with zero rule
+#     match — drone_detector was missing entirely, distinct from jamming ---
+детектор БПЛА
+
+# --- added after checking the 3mx/Булат brand page: accessory listings
+#     (antennas, dock stations, batteries) name only the model, not "детектор" ---
+# narrowed 2026-07-29: the generic "антенна" token pulled in TV/car aerial
+# cables, plugs and decorative antennas — 310 items tracked at 27% cat.
+булат детектор бпла
+
+# --- added after tracing fpvtechno.ru (Moscow RF-component maker, explicitly
+#     markets antennas/filters for UAV/FPV) onto WB: its exact model names
+#     ("FPV Антенна Яги Компакт 1700-2900 8дБи", "FPV Антенна Патч ... RHCP")
+#     turned up as near-identical listings scattered across many nominally
+#     unrelated Chinese cross-border (Quanzhou) seller accounts — either
+#     dropshipped or cloned. 17+ near-duplicate listings found for the Yagi
+#     antenna alone on one search ---
+антенна яги 1700-2900
+антенна патч rhcp fpv
+
+# --- added after noticing the whole raw FPV combat-drone build-component
+#     market (motors, propellers, LiPo batteries, cameras, frames, GPS
+#     modules) was essentially unswept — 0 tracked items besides 2 civilian
+#     DJI Mavic parts, despite deep active WB listings. The thermal-camera
+#     search alone surfaced Foxeer FT640L (a thermal sensor module marketed
+#     for FPV strike drones), which also exposed that categorize.py's
+#     thermal_optics rule only matched the noun "тепловизор", not the
+#     adjective "тепловизионная" — fixed in the same pass. ---
+fpv мотор
+fpv пропеллер
+fpv аккумулятор липо
+foxeer ft640l
+fpv рама
+fpv gps модуль
+
+# --- added after tracing several Telegram-cited product lines onto WB that
+#     were hand-tracked as bounded sets but never added here, so future
+#     discover runs would miss new listings of the same lines ---
+lira dp-2000v dmr
+lira dp-2600v dmr
+lira dm-1000v dmr
+skyzone sky04x pro
+липо аккумулятор 6s 6500mah
+toolkitrc m6d
+iflight chimera fpv
+rg-58 кабель для рации
+geprc soma антенна
+vant lipo аккумулятор
+
+# --- added after t.me/ProectZhit/12626: a whole Arkon thermal-sight/monocular
+#     product family (Arma SR/LR/HR weapon sights, Alfa weapon sights, Nevis/
+#     Fors monoculars) — 26+ distinct listings found on WB in one pass,
+#     almost none previously tracked ---
+arkon arma тепловизионный прицел
+arkon alfa тепловизионный прицел
+arkon nevis монокуляр
+arkon fors монокуляр
+
+# --- added after t.me/ghost_of_novorossia/27789: FPV signal boosters and
+#     Soviet/Russian field-telephone equipment (П-274М2 wire, ТА-57 phone),
+#     both entirely unswept — the latter exposed a total classifier gap
+#     (military_class.py field_telephone_wire, categorize.py comms_ew) ---
+# narrowed 2026-07-29: "alientech duo усилитель" wasn't AND-matched by WB
+# search — the generic "усилитель" (amplifier) token alone pulled in 8
+# car-audio amplifiers ranked by popularity, pure noise, no false military
+# tagging (all landed other/other) but bloated the DB. Brand+model is
+# specific enough on its own.
+alientech duo
+провод п 274 м2 полевой связи
+# REMOVED 2026-07-31 by the keyword-precision audit: "адаптер та-57 телефон
+# полевой" wasn't AND-matched either — the generic "адаптер" token alone
+# pulled in 100 items at 2% cat/mil, almost all USB/OTG cable adapters. Same
+# "alientech duo усилитель" merger failure as the line above it, just found
+# a session later. The ТА-57 phone itself stays covered by
+# "защищенный телефон для военнослужащих" below.
+
+# --- added after the TA-57/RPG-7/grenadier-bag/encrypted-phone check
+#     (nm 492410620, 466640219, 1298268868, 506390170) and seller/125595 —
+#     each exposed its own classifier gap this same session (military_phone
+#     rule inserted before the "power" rule so it stops mislabeling "Power
+#     Bank"-named army phones; weapon_optics extended for RPG-7; new
+#     grenadier_gear rule) ---
+# "пго-7в2 прицел" removed 2026-08-02: 99.2% noise (126/127 items), WB search
+# collapsed the specific scope model into generic "X7 Pro"/Poco smartphone
+# results — same fallback-to-generic-token failure as §8 item 15. See
+# RESEARCH_BRIEF.md §8 item 23.
+подсумок гранатометчика
+защищенный телефон для военнослужащих
+шифрованный телефон армия
+
+# --- added after tracing manufacturer sites (fpvtechno.ru, gagaring.ru) onto
+#     WB: their exact FPV component brand names turn up bare, without "fpv"
+#     or "дрон" in the title, across many cross-border seller accounts —
+#     military_class.py's fpv_component rule already treats these brands as
+#     unambiguous bare triggers, but discover never swept for them directly ---
+geprc антенна
+betafpv аккумулятор
+caddx камера fpv
+gemfan пропеллер
+walksnail vtx
+rushfpv антенна
+# REMOVED 2026-07-31 by the keyword-precision audit: neither brand token was
+# AND-matched by WB search, unlike the other bare-brand lines above/below —
+# "hqprop пропеллер" measured 340 items at ~0% cat/mil (acne/skincare
+# products — a total search mismatch, not even the adjacent commodity WB
+# usually falls back to), "peakfpv усилитель" measured 196 items at 0%
+# (car/TV audio amplifiers and antenna boosters — the same generic
+# "усилитель" collapse as "alientech duo усилитель" elsewhere in this file).
+# Neither brand appears to be reliably searchable on WB by this phrasing.
+
+# --- added after ghost_of_novorossia's "жгутники"/tourniquet-pouch
+#     crowdfunding item (nm 158671554 confirmed) — the existing "кровоостанав-
+#     ливающий жгут турникет" query didn't surface this pouch-only phrasing ---
+подсумок под жгут и турникет
+
+# --- added after full-history tg-scan (2026-07-28): "Vigor" (RC remote
+#     signal booster brand) turned up 673 times in romanov_92's post history
+#     alone — high recurring demand, but the brand itself isn't sold on WB.
+#     The functional category is, under other brands (EDUP, AOSIYANT,
+#     ALIENTECH already covered) — these generic queries catch that supply
+#     without chasing a brand name that doesn't exist on the marketplace ---
+# REMOVED 2026-07-29: unstable "merger" query — the audit measured total=574,
+# a re-probe minutes later measured total=14537 (25x swing) as WB re-resolved
+# it toward the generic signal-amplifier market. The functional category stays
+# covered by the brand terms below (edup / aosiyant / alientech duo) plus the
+# new frequency-scoped 2.4/5.8 GHz amplifier rule in both classifiers.
+edup усилитель wifi
+aosiyant fpv антенна
+
+# --- added 2026-07-29: confirmed via a front-line drop-ship channel's live
+#     shopping list (@operator13zov/39620) explicitly needing "Запчасти уаз,
+#     нива", batteries/tires for those vehicles, and a laptop "для
+#     управления дронами на оптоволокне" (for fiber-optic FPV drone control)
+#     — zero items currently tracked under any of these terms ---
+# REMOVED 2026-07-29 by the keyword-precision audit, before ever being swept:
+#   запчасти уаз      — 13,908 results, probes 0% cat / 0% mil
+#   запчасти нива     — 10,972 results, same
+#   покрышки уаз нива — same
+# The @operator13zov/39620 demand for these is real, but the WB supply side is
+# the undifferentiated civilian auto-parts market: a fuel filter or tyre for a
+# UAZ carries no signal distinguishing a unit's purchase from any other owner's.
+# Same commodity logic that retired the blanket hygiene rule in
+# military_class.py. Sweeping them would have added ~25k zero-signal rows —
+# more noise than the entire current corpus. Revisit only via a narrower term
+# (a specific military-spec part) or Telegram item_mentions corroboration.
+#
+# UPDATE 2026-07-31 by the keyword-precision audit: the two laptop lines below
+# were left in at the time (untested) despite the identical reasoning above —
+# now measured at 312 items / 15% cat/mil, mostly generic Huawei MagicBook
+# laptops with a handful of genuine CETUS FPV-kit hits buried in among them.
+# Same undifferentiated-commodity problem as запчасти уаз/нива; removed for
+# the same reason. Revisit only via a narrower term (e.g. a specific
+# ruggedized/fanless model actually marketed for field FPV-drone control).
+# REMOVED:
+#   ноутбук для fpv дрона
+#   игровой ноутбук для управления дроном
+
+# --- added after t.me/sev_blagochinie/9321: field-hospital shopping list
+#     naming specific trauma drugs/devices with zero tracked items under any
+#     of these terms — genuine discovery gap, not just a classifier gap ---
+транексам ампулы военный жгут
+торакальный катетер троакар
+воротник шанца
+игла спинальная
+
+# --- added after t.me/Vmeste71/8399: front-line hospital reanimation-ward
+#     supply list (Solidar), zero tracked items under any of these terms ---
+канюля мини-спайк
+набор для эпидуральной анестезии
+краник трехходовой медицинский
+центральный венозный катетер
+нутризон для энтерального питания
+модулен для энтерального питания
+
+# --- added after t.me/ghost_of_novorossia/27206: combat-engineer supply
+#     drop (masksети, generators, VIGOR already tracked) also named these
+#     three items with zero tracked listings under any of these terms ---
+табличка мины предупреждающая
+шпагат для кошки альпинистской
+масло для цепей бензопил
+
+# --- added after wildberries.ru/catalog/839241594: waterless "dry shower"
+#     gel explicitly marketed "для лежачих и полевых условий" / "СВО" in its
+#     own description, zero tracked listings under this term ---
+сухой душ для лежачих
+сухой душ армейский
+
+# --- added after checking 9 links re: dugout ("блиндаж") equipment,
+# 2026-07-29. 4 of 9 confirmed genuine dual-use, zero tracked listings:
+# anti-fragmentation blanket (СВМПЭ, covers dugout/trench entrances against
+# shrapnel — wildberries.ru/catalog/772976031), diesel heater and cellular
+# signal booster explicitly marketed for dugout/bunker use alongside home use
+# (598437797, 866024695), and Helmetex Army gear-odor neutralizer (8193649).
+# 2 of 9 checked and found to have ZERO blindage/military signal at all —
+# purely generic camping products (gas heater "Фотон" 889541475, emergency
+# flashlight 439113294) — deliberately NOT added. 1 (191040671, "Солярогаз"
+# kerosene heater) mentions blindage only once in a long civilian-context
+# list — weak signal, not added as a keyword, but its category/military_class
+# regex extension above will still catch it if genuinely worded that way.
+одеяло противоосколочное для блиндажа
+дизельный отопитель для блиндажа
+усилитель сигнала для блиндажа
+helmetex army нейтрализатор запаха
+
+# --- added after inspecting seller 125595 (ОКП «Лабиринт» / ООО «Призвание»,
+# already seed-swept via seed_sellers.txt): its own listing copy explicitly
+# names an IR-defeat fabric treatment ("Ткань с инфракрасной ремиссией (IRR)
+# ... улучшает маскировочные свойства при попытке обнаружения бойца с помощью
+# приборов ночного видения") and a trench-vs-civilian warranty split
+# ("гарантии... при эксплуатации в окопных условиях"). Speculative: added to
+# see if other sellers use the same distinctive marketing vocabulary, not
+# confirmed elsewhere yet — revisit if either probes noisy.
+ик-ремиссия ткань
+гарантия окопных условиях

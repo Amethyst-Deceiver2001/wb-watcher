@@ -1,0 +1,37 @@
+# Sellers to always sweep in full, independent of whether they have a tracked item.
+# One per line: full WB seller URL (wildberries.ru/seller/ID) or bare supplier id.
+https://www.wildberries.ru/seller/1388490
+https://www.wildberries.ru/seller/563369
+https://www.wildberries.ru/seller/4184067
+https://www.wildberries.ru/seller/250056394
+https://www.wildberries.ru/seller/4061708
+https://www.wildberries.ru/seller/16052
+https://www.wildberries.ru/seller/125595
+# added 2026-07-29: found via 3 untracked ballistic-insert listings (Br1/Br2
+# armor panel inserts) — both are legit armor-component suppliers
+https://www.wildberries.ru/seller/198927
+https://www.wildberries.ru/seller/1221134
+# added 2026-07-29: WZoR-Armor (brand id 311323912) — major armor-insert
+# seller, ~100+ SKUs, only 1 was tracked before this
+https://www.wildberries.ru/seller/4085023
+# added 2026-07-29: "Боевой Стиль" (Боевой Стиль) — tactical gear seller
+https://www.wildberries.ru/seller/557268
+# added 2026-07-29: "Армада ТАКТИКА" (ИП Катаева Е.А.) — full-line armor
+# seller (bronejilety, ballistic inserts, load belts), 56+ SKUs, only 7 tracked
+https://www.wildberries.ru/seller/1176379
+# added 2026-07-29: "ТОЧКА ПРИЦЕЛА" (ИП Минкевич Е.М.) — full-spectrum
+# seller (helmets, body armor, ballistic plates, tourniquets, IPP dressings),
+# 100+ SKUs on page 1 alone, only 23 tracked
+https://www.wildberries.ru/seller/1279020
+# added 2026-07-29: АО "НПО ЗАЩИТА" (brand Taktikx) — legal-entity defense
+# manufacturer, full armor line (ceramic plates Br3-5, vests, med kits,
+# load belts), 100+ SKUs on page 1 alone, only 13 tracked
+https://www.wildberries.ru/seller/250125970
+# added 2026-07-29: Atrox Tactical (ИП Вильгельм В.С.) — sells "Universal
+# Armor" brand, the same brand as our featured case-study item nm 247808462;
+# 58/100+ tracked
+https://www.wildberries.ru/seller/250127503
+# added 2026-07-29: "Стена" (ИП Яицкий К.Д.) — ballistic panel inserts,
+# shares surname with Ganza-Online's ИП Яицкая С.О. (likely related);
+# 19/100+ tracked
+https://www.wildberries.ru/seller/4399824

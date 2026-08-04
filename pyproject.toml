@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wb-watch"
+version = "0.1.0"
+description = "Tracker for dual-use / military-coded goods on Wildberries.ru and linked Telegram crowdfunding"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "httpx>=0.27",
+    "tenacity>=8.2",
+    "telethon>=1.36",
+    "python-dotenv>=1.0",
+    "openpyxl>=3.1",
+    "rich>=13.7",
+    "typer>=0.12",
+    "pytesseract>=0.3.10",
+    "pillow>=10.0",
+]
+
+[project.scripts]
+wb-watch = "wb_watch.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["wb_watch*"]

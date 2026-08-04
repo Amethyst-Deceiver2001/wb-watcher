@@ -1,0 +1,42 @@
+# Seed items to always track. One per line: full WB URL or bare nm-id.
+# Lines starting with # and blank lines are ignored.
+https://www.wildberries.ru/catalog/390000854/detail.aspx
+https://www.wildberries.ru/catalog/302047067/detail.aspx
+https://www.wildberries.ru/catalog/502836530/detail.aspx
+https://www.wildberries.ru/catalog/549339350/detail.aspx
+# --- cited directly in Telegram fundraising posts (vvedmina_izba, slavamaxuta) ---
+https://www.wildberries.ru/catalog/702532408/detail.aspx
+https://www.wildberries.ru/catalog/266455381/detail.aspx
+https://www.wildberries.ru/catalog/272013880/detail.aspx
+https://www.wildberries.ru/catalog/459135629/detail.aspx
+# --- user-supplied additions ---
+https://www.wildberries.ru/catalog/1263556080/detail.aspx
+https://www.wildberries.ru/catalog/918230228/detail.aspx?targetUrl=MI
+https://www.wildberries.ru/catalog/268558548/detail.aspx
+https://www.wildberries.ru/catalog/1289587941/detail.aspx
+https://www.wildberries.ru/catalog/617837131/detail.aspx
+https://www.wildberries.ru/catalog/1201128090/detail.aspx
+https://www.wildberries.ru/catalog/1221721828/detail.aspx
+https://www.wildberries.ru/catalog/949889001/detail.aspx
+https://www.wildberries.ru/catalog/978708672/detail.aspx
+https://www.wildberries.ru/catalog/792990080/detail.aspx
+https://www.wildberries.ru/catalog/798405484/detail.aspx
+https://www.wildberries.ru/catalog/787167504/detail.aspx
+https://www.wildberries.ru/catalog/786935152/detail.aspx
+https://www.wildberries.ru/catalog/671176178/detail.aspx
+https://www.wildberries.ru/catalog/343333970/detail.aspx
+https://www.wildberries.ru/catalog/804848026/detail.aspx
+https://www.wildberries.ru/catalog/824986161/detail.aspx
+https://www.wildberries.ru/catalog/669219221/detail.aspx
+https://www.wildberries.ru/catalog/895945504/detail.aspx
+https://www.wildberries.ru/catalog/880038104/detail.aspx
+https://www.wildberries.ru/catalog/798369949/detail.aspx
+https://www.wildberries.ru/catalog/1279863477/detail.aspx
+https://www.wildberries.ru/catalog/1221905216/detail.aspx
+https://www.wildberries.ru/catalog/1279863483/detail.aspx
+https://www.wildberries.ru/catalog/786921923/detail.aspx
+https://www.wildberries.ru/catalog/825014936/detail.aspx
+https://www.wildberries.ru/catalog/368913239/detail.aspx
+https://www.wildberries.ru/catalog/389016358/detail.aspx
+https://www.wildberries.ru/catalog/326298293/detail.aspx
+https://www.wildberries.ru/catalog/1199609858/detail.aspx
