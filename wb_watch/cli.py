@@ -1,6 +1,8 @@
 """wb-watch command-line interface."""
 from __future__ import annotations
 
+from pathlib import Path
+
 import typer
 from rich.console import Console
 from rich.table import Table
@@ -13,6 +15,7 @@ from .pipeline import match as match_mod
 from .analysis import patterns as patterns_mod
 from .pipeline import lookup_vendors as lookup_vendors_mod
 from .pipeline import resolve_ozon as resolve_ozon_mod
+from .pipeline import import_ozon_har as import_ozon_har_mod
 from .pipeline import scan_telegram, track_items
 from .pipeline import news_scan as news_scan_mod
 from .site import update_news_ticker
@@ -189,6 +192,71 @@ def resolve_ozon(
     res = resolve_ozon_mod.run(conn, limit=limit)
     console.print(f"[green]resolve-ozon:[/] {res['resolved']}/{res['total']} resolved, "
                   f"{res['failed']} failed")
+
+
+@app.command("import-ozon-har")
+def import_ozon_har(
+    path: str = typer.Argument(..., help="Path to a HAR file exported from DevTools"),
+):
+    """Parse a user-captured Ozon HAR (product page / category / seller /
+    reviews) into the DB. No network calls — reads a file already on disk —
+    so unlike resolve-ozon this isn't a crawl job and is safe to run directly."""
+    conn = _conn()
+    import_ozon_har_mod.import_har(conn, path)
+
+
+@app.command("crawl-ozon")
+def crawl_ozon(
+    urls_file: str = typer.Argument(
+        ..., help="Text file, one Ozon URL per line (product/category/seller pages)"
+    ),
+    out: str = typer.Option(
+        None, help="HAR output path (default: exports/ozon_crawl_<timestamp>.har)"
+    ),
+    headless: bool = typer.Option(
+        False, "--headless/--headed",
+        help="Headless is more likely to be fingerprinted as automation — default headed",
+    ),
+    auto_import: bool = typer.Option(
+        True, help="Run import-ozon-har on the resulting HAR immediately after"
+    ),
+):
+    """CRAWL JOB — do not run this unattended. Drives a real Chromium session
+    (Playwright) across the URLs in urls_file, recording its own traffic as a
+    HAR. UNTESTED whether this clears Ozon's bot wall at all (see ozon/crawl.py
+    docstring) — watch the browser window on first run and be ready to solve a
+    challenge manually if one appears. Requires:
+        pip install wb-watch[ozon-crawl] && playwright install chromium
+    """
+    try:
+        from .ozon import crawl as ozon_crawl
+    except ImportError:
+        console.print(
+            "[red]playwright not installed.[/] Run: "
+            "pip install wb-watch[ozon-crawl] && playwright install chromium"
+        )
+        raise typer.Exit(1)
+
+    with open(urls_file, encoding="utf-8") as fh:
+        urls = [line.strip() for line in fh if line.strip() and not line.startswith("#")]
+    if not urls:
+        console.print(f"[yellow]no URLs found in {urls_file}[/]")
+        raise typer.Exit(1)
+
+    har_path = out or str(config.EXPORT_DIR / f"ozon_crawl_{db.now().replace(':', '-')}.har")
+    profile_dir = config.EXPORT_DIR / ".ozon_profile"
+
+    console.print(f"[cyan]crawl-ozon:[/] visiting {len(urls)} URLs, recording to {har_path}")
+    ozon_crawl.crawl(
+        urls,
+        har_out=Path(har_path),
+        profile_dir=profile_dir,
+        headless=headless,
+    )
+
+    if auto_import:
+        conn = _conn()
+        import_ozon_har_mod.import_har(conn, har_path)
 
 
 @app.command("lookup-vendors")

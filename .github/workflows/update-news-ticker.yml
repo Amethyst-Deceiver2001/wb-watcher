@@ -1,0 +1,46 @@
+name: Update news ticker
+
+# Refreshes the "Wildberries/Tatyana Kim in the press" ticker on the docs
+# site — a lightweight RSS pull against a fixed set of mainstream outlets
+# (see wb_watch/pipeline/news_scan.py), not a marketplace/Telegram crawl, so
+# this is safe to run on a schedule rather than by hand each time.
+#
+# Runs against a fresh, throwaway DB every time (data/*.db is gitignored,
+# never committed) — news_scan.py re-fetches each outlet's current RSS feed
+# and re-matches on every run, so no state needs to persist between runs.
+
+on:
+  schedule:
+    - cron: "17 6 * * *"  # daily, ~06:17 UTC
+  workflow_dispatch: {}    # manual "Run workflow" button in the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update-ticker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install wb-watch
+        run: pip install -e .
+
+      - name: Refresh ticker (RSS scan + splice into docs/index.html)
+        run: wb-watch update-news-ticker
+
+      - name: Commit and push if docs/index.html changed
+        run: |
+          if git diff --quiet -- docs/index.html; then
+            echo "No new headlines — nothing to commit."
+            exit 0
+          fi
+          git config user.name "wb-watch-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/index.html
+          git commit -m "Auto-update news ticker"
+          git push

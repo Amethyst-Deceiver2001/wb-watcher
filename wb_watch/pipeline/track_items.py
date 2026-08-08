@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import re
 import sqlite3
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from rich.console import Console
@@ -161,6 +162,23 @@ def track_all(conn: sqlite3.Connection) -> list[dict[str, Any]]:
     return out
 
 
+# How long a confirmed-zero-photos result (images_checked_at) is trusted
+# before re-checking — WB does occasionally add photos to a previously bare
+# size/color variant, but rarely enough that re-fetching its card every
+# single scan-images run (the prior behavior) was pure waste: one run found
+# 7,324 "processed" items added only 11 real image sets, because item_images
+# never gets a row (and so never trips the existing-count skip below) when
+# a card genuinely has pics=0.
+_ZERO_PHOTOS_RECHECK_DAYS = 14
+
+
+def _is_stale(ts: str | None) -> bool:
+    if not ts:
+        return True
+    checked = datetime.fromisoformat(ts)
+    return datetime.now(timezone.utc) - checked > timedelta(days=_ZERO_PHOTOS_RECHECK_DAYS)
+
+
 def scan_images(conn: sqlite3.Connection, limit: int | None = None) -> dict[str, int]:
     """Backfill image OCR over already-tracked items that don't have it yet,
     or that were scanned under the old max_images=6 cap and have more
@@ -180,6 +198,9 @@ def scan_images(conn: sqlite3.Connection, limit: int | None = None) -> dict[str,
         if existing >= images.DEFAULT_MAX_IMAGES:
             skipped += 1
             continue
+        if existing == 0 and not _is_stale(db.images_checked_at(conn, nm_id)):
+            skipped += 1
+            continue
         try:
             c = card.fetch_card(nm_id)
         except RuntimeError as exc:
@@ -192,6 +213,8 @@ def scan_images(conn: sqlite3.Connection, limit: int | None = None) -> dict[str,
             skipped += 1
             continue
         signals += analyze_item_images(conn, nm_id, pics)
+        if pics <= 0:
+            db.mark_images_checked(conn, nm_id)
         processed += 1
         if processed % 50 == 0:
             console.print(f"[cyan]scan-images:[/] {processed} processed so far")

@@ -20,6 +20,12 @@ dependencies = [
     "pillow>=10.0",
 ]
 
+[project.optional-dependencies]
+# Only needed for `wb-watch crawl-ozon` (ozon/crawl.py) — a real Chromium
+# session recording its own traffic as a HAR, since Ozon's bot wall blocks
+# plain HTTP clients outright (see ozon/resolve.py, ozon/har_parse.py).
+ozon-crawl = ["playwright>=1.45"]
+
 [project.scripts]
 wb-watch = "wb_watch.cli:app"
 

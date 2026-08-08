@@ -195,6 +195,25 @@ CREATE TABLE IF NOT EXISTS ozon_items (
 );
 CREATE INDEX IF NOT EXISTS idx_ozon_items_category ON ozon_items(category);
 
+-- Reviews parsed from a user-captured HAR of a product's .../reviews/pdp-part
+-- XHR (see ozon/har_parse.py::parse_reviews). Same field_use_signal approach
+-- as the WB `reviews` table (analysis/signals.py), kept as a separate table
+-- rather than reusing `reviews` since Ozon product_id/review uuid aren't in
+-- the same id space as WB's nm_id/feedback id.
+CREATE TABLE IF NOT EXISTS ozon_reviews (
+    uuid              TEXT PRIMARY KEY,
+    product_id        TEXT,
+    author_name       TEXT,
+    text              TEXT,
+    score             INTEGER,
+    created_at        TEXT,
+    photo_urls        TEXT,
+    field_use_signal  INTEGER,
+    field_use_phrase  TEXT,
+    first_seen        TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_ozon_reviews_product ON ozon_reviews(product_id);
+
 -- Vendor registry enrichment (director/founders/registration) resolved from a
 -- public company registry aggregator. See vendors/lookup.py. Legal entities only
 -- (ООО/АО/etc.); sole proprietors' name field already names the individual.
@@ -328,6 +347,31 @@ _MIGRATIONS: list[tuple[str, str, str]] = [
     # few clauses relevant to this project are checked.
     ("items", "wb_policy_clause", "TEXT"),
     ("items", "wb_policy_reason", "TEXT"),
+    # Richer product data, only obtainable from a user-captured HAR (see
+    # ozon/har_parse.py) since Ozon's live product/composer APIs are bot-walled
+    # for plain HTTP clients — ozon_items previously stored only what a
+    # short-link redirect revealed (product id + slug), no price/seller/specs.
+    ("ozon_items", "price_rub", "REAL"),
+    ("ozon_items", "price_original_rub", "REAL"),
+    ("ozon_items", "rating", "REAL"),
+    ("ozon_items", "review_count", "INTEGER"),
+    ("ozon_items", "seller_name", "TEXT"),
+    ("ozon_items", "seller_reg_number", "TEXT"),
+    ("ozon_items", "characteristics", "TEXT"),
+    ("ozon_items", "description_text", "TEXT"),
+    ("ozon_items", "description_signal", "INTEGER"),
+    ("ozon_items", "description_phrase", "TEXT"),
+    ("ozon_items", "military_class", "TEXT"),
+    ("ozon_items", "military_reason", "TEXT"),
+    ("ozon_items", "name", "TEXT"),
+    ("ozon_items", "image_urls", "TEXT"),
+    ("ozon_items", "har_source", "TEXT"),
+    # Stamped when scan_images() fetches an item's card and finds zero
+    # gallery photos (pics<=0) — without this, every future scan-images run
+    # re-fetches the card for the same ~7,850 zero-photo items from scratch
+    # forever, since item_images (the existing skip check) only ever gets a
+    # row when there's something to store. See track_items.py::scan_images.
+    ("items", "images_checked_at", "TEXT"),
 ]
 
 
@@ -672,6 +716,24 @@ def image_analysis_count(conn: sqlite3.Connection, nm_id: int) -> int:
     ).fetchone()[0]
 
 
+def images_checked_at(conn: sqlite3.Connection, nm_id: int) -> str | None:
+    row = conn.execute(
+        "SELECT images_checked_at FROM items WHERE nm_id=?", (nm_id,)
+    ).fetchone()
+    return row["images_checked_at"] if row else None
+
+
+@retry_on_lock
+def mark_images_checked(conn: sqlite3.Connection, nm_id: int) -> None:
+    """Stamp an item as checked-and-confirmed-zero-photos (see scan_images).
+    Separate from mark_delisted — a live item can legitimately have pics=0
+    on a given size/color variant without being delisted."""
+    conn.execute(
+        "UPDATE items SET images_checked_at=? WHERE nm_id=?", (now(), nm_id)
+    )
+    conn.commit()
+
+
 # --- telegram ------------------------------------------------------------
 
 @retry_on_lock
@@ -844,6 +906,189 @@ def upsert_ozon_item(conn: sqlite3.Connection, item: dict[str, Any]) -> None:
     conn.execute(
         "UPDATE item_mentions SET ozon_product_id=? WHERE marketplace='ozon' AND external_id=?",
         (item["product_id"], item["short_code"]),
+    )
+    conn.commit()
+
+
+# --- ozon (HAR-derived: see ozon/har_parse.py, pipeline/import_ozon_har.py) ---
+# All of the below is offline parsing of a user-captured HAR — no network
+# calls happen here, so unlike resolve_ozon.py this is not a "crawling job"
+# under CLAUDE.md and callers may run it directly.
+
+@retry_on_lock
+def upsert_ozon_listing_item(
+    conn: sqlite3.Connection, item: dict[str, Any], har_source: str
+) -> None:
+    """From a category/search/brand/seller listing tile (har_parse.parse_listing_grid).
+    Cheaper than a full product-page parse, so it's fine to call for every tile
+    seen even though most fields may already exist from a richer detail parse —
+    COALESCE keeps whichever detail fields are already populated."""
+    ts = now()
+    category = categorize_item(item.get("name"))
+    mil = classify_military(item.get("name"), None)
+    exists = conn.execute(
+        "SELECT 1 FROM ozon_items WHERE product_id=?", (item["product_id"],)
+    ).fetchone()
+    payload = {
+        "product_id": item["product_id"],
+        "name": item.get("name"),
+        "full_url": item.get("link"),
+        "price_rub": item.get("price_rub"),
+        "price_original_rub": item.get("price_original_rub"),
+        "rating": item.get("rating"),
+        "review_count": item.get("review_count"),
+        "image_urls": ", ".join(item.get("image_urls") or []) or None,
+        "category": category,
+        "military_class": mil.get("military_class"),
+        "military_reason": mil.get("military_reason"),
+        "har_source": har_source,
+        "last_seen": ts,
+        "first_seen": ts,
+    }
+    if exists:
+        conn.execute(
+            """UPDATE ozon_items SET
+                 name=COALESCE(:name, name),
+                 full_url=COALESCE(:full_url, full_url),
+                 price_rub=COALESCE(:price_rub, price_rub),
+                 price_original_rub=COALESCE(:price_original_rub, price_original_rub),
+                 rating=COALESCE(:rating, rating),
+                 review_count=COALESCE(:review_count, review_count),
+                 image_urls=COALESCE(:image_urls, image_urls),
+                 category=COALESCE(:category, category),
+                 military_class=COALESCE(:military_class, military_class),
+                 military_reason=COALESCE(:military_reason, military_reason),
+                 har_source=:har_source, last_seen=:last_seen
+               WHERE product_id=:product_id""",
+            payload,
+        )
+    else:
+        conn.execute(
+            """INSERT INTO ozon_items
+               (product_id, name, full_url, price_rub, price_original_rub,
+                rating, review_count, image_urls, category, military_class,
+                military_reason, har_source, first_seen, last_seen)
+               VALUES (:product_id, :name, :full_url, :price_rub, :price_original_rub,
+                       :rating, :review_count, :image_urls, :category, :military_class,
+                       :military_reason, :har_source, :first_seen, :last_seen)""",
+            payload,
+        )
+    conn.commit()
+
+
+@retry_on_lock
+def upsert_ozon_item_detail(
+    conn: sqlite3.Connection, product_id: str, detail: dict[str, Any], har_source: str
+) -> None:
+    """From a full product-page parse (har_parse.parse_product_page +
+    parse_characteristics_and_description) — the richer fields a listing tile
+    doesn't carry: seller identity, full characteristics, description text."""
+    ts = now()
+    name = detail.get("title")
+    description = detail.get("description_text")
+    desc_signal_phrase = detect_field_use(description) if description else None
+    # Skip when name is absent (e.g. a characteristics/description-only call
+    # from the entrypoint-api JSON pass) — classify_military(None, None)
+    # would return a real "other"/"uncertain" value from empty text, which
+    # COALESCE below would then wrongly clobber an existing title-based
+    # classification with.
+    mil = classify_military(name, None) if name else {}
+    exists = conn.execute(
+        "SELECT 1 FROM ozon_items WHERE product_id=?", (product_id,)
+    ).fetchone()
+    payload = {
+        "product_id": product_id,
+        "name": name,
+        "full_url": detail.get("og_url"),
+        "price_rub": detail.get("price_rub"),
+        "price_original_rub": detail.get("price_original_rub"),
+        "seller_name": detail.get("seller_name"),
+        "seller_reg_number": detail.get("seller_reg_number"),
+        "characteristics": json.dumps(detail.get("characteristics"), ensure_ascii=False)
+        if detail.get("characteristics")
+        else None,
+        "description_text": description,
+        "description_signal": 1 if desc_signal_phrase else 0,
+        "description_phrase": desc_signal_phrase,
+        "category": categorize_item(name) if name else None,
+        "military_class": mil.get("military_class"),
+        "military_reason": mil.get("military_reason"),
+        "har_source": har_source,
+        "last_seen": ts,
+        "first_seen": ts,
+    }
+    if exists:
+        conn.execute(
+            """UPDATE ozon_items SET
+                 name=COALESCE(:name, name),
+                 full_url=COALESCE(:full_url, full_url),
+                 price_rub=COALESCE(:price_rub, price_rub),
+                 price_original_rub=COALESCE(:price_original_rub, price_original_rub),
+                 seller_name=COALESCE(:seller_name, seller_name),
+                 seller_reg_number=COALESCE(:seller_reg_number, seller_reg_number),
+                 characteristics=COALESCE(:characteristics, characteristics),
+                 description_text=COALESCE(:description_text, description_text),
+                 description_signal=COALESCE(:description_signal, description_signal),
+                 description_phrase=COALESCE(:description_phrase, description_phrase),
+                 category=COALESCE(:category, category),
+                 military_class=COALESCE(:military_class, military_class),
+                 military_reason=COALESCE(:military_reason, military_reason),
+                 har_source=:har_source, last_seen=:last_seen
+               WHERE product_id=:product_id""",
+            payload,
+        )
+    else:
+        conn.execute(
+            """INSERT INTO ozon_items
+               (product_id, name, full_url, price_rub, price_original_rub,
+                seller_name, seller_reg_number, characteristics, description_text,
+                description_signal, description_phrase, category, military_class,
+                military_reason, har_source, first_seen, last_seen)
+               VALUES (:product_id, :name, :full_url, :price_rub, :price_original_rub,
+                       :seller_name, :seller_reg_number, :characteristics, :description_text,
+                       :description_signal, :description_phrase, :category, :military_class,
+                       :military_reason, :har_source, :first_seen, :last_seen)""",
+            payload,
+        )
+    conn.commit()
+
+
+@retry_on_lock
+def add_ozon_review(conn: sqlite3.Connection, review: dict[str, Any]) -> None:
+    """INSERT OR REPLACE by review uuid — idempotent, safe to re-import the
+    same HAR (e.g. after capturing more pages of the same product's reviews)."""
+    if not review.get("uuid"):
+        return
+    text = review.get("text")
+    phrase = detect_field_use(text) if text else None
+    created_at = None
+    if review.get("created_at_unix"):
+        created_at = datetime.fromtimestamp(
+            review["created_at_unix"], tz=timezone.utc
+        ).isoformat()
+    conn.execute(
+        """INSERT INTO ozon_reviews
+           (uuid, product_id, author_name, text, score, created_at, photo_urls,
+            field_use_signal, field_use_phrase, first_seen)
+           VALUES (:uuid, :product_id, :author_name, :text, :score, :created_at,
+                   :photo_urls, :field_use_signal, :field_use_phrase, :first_seen)
+           ON CONFLICT(uuid) DO UPDATE SET
+               text=excluded.text, score=excluded.score,
+               photo_urls=excluded.photo_urls,
+               field_use_signal=excluded.field_use_signal,
+               field_use_phrase=excluded.field_use_phrase""",
+        {
+            "uuid": review["uuid"],
+            "product_id": review.get("product_id"),
+            "author_name": review.get("author_name"),
+            "text": text,
+            "score": review.get("score"),
+            "created_at": created_at,
+            "photo_urls": ", ".join(review.get("photo_urls") or []) or None,
+            "field_use_signal": 1 if phrase else 0,
+            "field_use_phrase": phrase,
+            "first_seen": now(),
+        },
     )
     conn.commit()
 

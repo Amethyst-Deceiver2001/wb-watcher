@@ -20,8 +20,13 @@ from ..pipeline import news_scan
 
 INDEX_HTML = Path(__file__).resolve().parents[2] / "docs" / "index.html"
 
+# class list matched loosely ([^"]*) rather than a fixed string: the live
+# markup is currently `newsbox newsbox-big ui` (drifted from an earlier
+# `newsbox ui` during a styling pass), and a literal-string regex silently
+# fails to match at all if that class list changes again — found live when
+# this script raised "block not found" against the actual current file.
 _BLOCK_RE = re.compile(
-    r'  <div class="newsbox ui">.*?\n  </div>', re.DOTALL
+    r'    <div class="newsbox[^"]*">.*?\n    </div>', re.DOTALL
 )
 
 _MONTHS = ["янв", "февр", "марта", "апр", "мая", "июня", "июля",
@@ -58,19 +63,22 @@ def _render_from_rows(rows: list) -> str:
         url = _html.escape(r["url"])
         title = _html.escape(r["title"])
         items.append(
-            f'      <li><span class="news-outlet">{outlet}</span> '
+            f'        <li><span class="news-outlet">{outlet}</span> '
             f'<a href="{url}" target="_blank" rel="noopener">{title}</a> '
             f'<span class="news-date">{date_str}</span></li>'
         )
     rows_html = "\n".join(items)
+    # Indentation/class list/label text kept identical to the file's own
+    # current markup (see _BLOCK_RE) so a diff only ever shows the <li> rows
+    # changing, not incidental reformatting.
     return (
-        '  <div class="newsbox ui">\n'
-        '    <div class="newsbox-label">Wildberries и Татьяна Ким в прессе '
-        '— по времени публикации</div>\n'
-        '    <ul class="newsbox-list">\n'
+        '    <div class="newsbox newsbox-big ui">\n'
+        '      <div class="newsbox-label">Wildberries и Татьяна Ким в прессе '
+        '— прямо сейчас</div>\n'
+        '      <ul class="newsbox-list">\n'
         f'{rows_html}\n'
-        '    </ul>\n'
-        '  </div>'
+        '      </ul>\n'
+        '    </div>'
     )
 
 
@@ -78,6 +86,7 @@ def run(top: int = 6, do_scan: bool = True) -> dict:
     added = news_scan.run() if do_scan else 0
 
     conn = db.connect()
+    db.init_db(conn)  # in case do_scan=False was passed against a fresh DB
     rows = db.recent_news_items(conn, limit=max(top * 4, 24))
     picked = _pick_diverse(rows, top)
     fragment = _render_from_rows(picked)

@@ -9,6 +9,10 @@ Exports both raw tables and analyst-friendly joined views:
   - field_use_reviews : reviews with an explicit front-line/combat-use confirmation
   - seller_concentration : sellers ranked by how many tracked items they're behind,
     with entity type (legal/sole-trader/Chinese cross-border) and INN
+  - image_signal_concentration : suppliers ranked by how many of their items carry
+    an OCR'd combat-context image signal — surfaces cases where a large count is
+    really one seller's templated marketing graphic reused across their catalog,
+    not independent confirmations (see e.g. supplier 125595 / "окопной гарантии")
   - category_summary : demand (Telegram mentions/channels) vs supply (WB listings/
     sellers/reviews) cross-cut by item category
 """
@@ -145,6 +149,25 @@ QUERIES: dict[str, str] = {
           AND i.military_class IN ('strict_military', 'dual_use_demand')
         GROUP BY i.brand
         ORDER BY n_strict_military DESC, n_seller_accounts DESC, n_items DESC
+    """,
+    # Distinct-nm_id count per supplier of items with >=1 OCR image signal hit.
+    # Companion to seller_concentration/brand_concentration, but scoped to the
+    # image-OCR evidence specifically: a supplier with a high n_signal_items
+    # here usually means one reused marketing/warranty graphic across their
+    # catalog (verify against sample_phrase), not N independent confirmations.
+    "image_signal_concentration": """
+        SELECT s.supplier_id, s.name, s.full_name, s.inn, s.ogrnip,
+               s.entity_type, s.origin,
+               COUNT(DISTINCT ii.nm_id) AS n_signal_items,
+               MIN(ii.field_use_phrase) AS sample_phrase,
+               GROUP_CONCAT(DISTINCT i.category) AS categories,
+               GROUP_CONCAT(DISTINCT i.military_class) AS military_classes
+        FROM item_images ii
+        JOIN items i ON i.nm_id = ii.nm_id
+        LEFT JOIN sellers s ON s.supplier_id = i.supplier_id
+        WHERE ii.field_use_signal = 1
+        GROUP BY i.supplier_id
+        ORDER BY n_signal_items DESC
     """,
     "category_summary": """
         SELECT

@@ -76,6 +76,8 @@ def _fetch_feed(url: str) -> list[dict[str, str | None]]:
 def run() -> int:
     """Fetch all configured feeds, filter for WB/Kim relevance, store new
     matches. Returns count of newly stored headlines."""
+    conn = db.connect()
+    db.init_db(conn)  # news_items may not exist yet on a fresh DB (e.g. CI)
     added = 0
     for outlet, feed_url in _FEEDS.items():
         try:
@@ -88,6 +90,5 @@ def run() -> int:
             for e in entries if _matches(e["title"], e["summary"] or "")
         ]
         if matched:
-            conn = db.connect()
             added += db.add_news_items(conn, matched)
     return added
