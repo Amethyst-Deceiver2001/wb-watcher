@@ -372,6 +372,10 @@ _MIGRATIONS: list[tuple[str, str, str]] = [
     # forever, since item_images (the existing skip check) only ever gets a
     # row when there's something to store. See track_items.py::scan_images.
     ("items", "images_checked_at", "TEXT"),
+    # 'ru' | 'en' — which page's ticker a headline belongs to (docs/index.html
+    # vs docs/en/index.html pull from different, language-scoped outlet
+    # lists; see pipeline/news_scan.py's _FEEDS_RU/_FEEDS_EN).
+    ("news_items", "lang", "TEXT"),
 ]
 
 
@@ -1148,14 +1152,15 @@ def upsert_vendor_details(conn: sqlite3.Connection, data: dict[str, Any]) -> Non
 # --- news ticker ------------------------------------------------------------
 
 def add_news_items(conn: sqlite3.Connection, items: Iterable[dict[str, Any]]) -> int:
-    """Insert news headlines we haven't seen (by URL). Returns count added."""
+    """Insert news headlines we haven't seen (by URL). Returns count added.
+    Each item must include 'lang' ('ru' or 'en') — see news_scan.py."""
     ts = now()
     added = 0
     for it in items:
         cur = conn.execute(
             """INSERT OR IGNORE INTO news_items
-               (url, outlet, title, published, first_seen)
-               VALUES (:url, :outlet, :title, :published, :first_seen)""",
+               (url, outlet, title, published, lang, first_seen)
+               VALUES (:url, :outlet, :title, :published, :lang, :first_seen)""",
             {**it, "first_seen": ts},
         )
         added += cur.rowcount
@@ -1163,9 +1168,14 @@ def add_news_items(conn: sqlite3.Connection, items: Iterable[dict[str, Any]]) ->
     return added
 
 
-def recent_news_items(conn: sqlite3.Connection, limit: int = 8) -> list[sqlite3.Row]:
+def recent_news_items(
+    conn: sqlite3.Connection, limit: int = 8, lang: str = "ru"
+) -> list[sqlite3.Row]:
+    # lang IS NULL treated as 'ru': every row stored before the lang column
+    # existed came from the (at the time, only) Russian-outlet scan.
     return conn.execute(
         "SELECT outlet, title, url, published FROM news_items "
+        "WHERE COALESCE(lang, 'ru') = ? "
         "ORDER BY COALESCE(published, first_seen) DESC LIMIT ?",
-        (limit,),
+        (lang, limit),
     ).fetchall()

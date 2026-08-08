@@ -170,14 +170,16 @@ def update_news_ticker_cmd(
     top: int = typer.Option(6, help="How many headlines to show in the ticker"),
     scan: bool = typer.Option(True, help="Run news-scan first to fetch fresh headlines"),
 ):
-    """One-shot refresh: scan RSS feeds, then splice the ticker fragment
-    straight into docs/index.html (replaces the <div class="newsbox ui">
-    block in place)."""
+    """One-shot refresh: scan RU + EN RSS feeds, then splice each ticker
+    fragment into place — docs/index.html (Russian outlets) and
+    docs/en/index.html (English outlets)."""
     res = update_news_ticker.run(top=top, do_scan=scan)
-    console.print(
-        f"[green]update-news-ticker:[/] {res['scanned_new']} new headlines "
-        f"scanned, {res['ticker_items']} shown, docs/index.html updated"
-    )
+    for lang, path in (("ru", "docs/index.html"), ("en", "docs/en/index.html")):
+        p = res["pages"][lang]
+        console.print(
+            f"[green]update-news-ticker ({lang}):[/] {p['scanned_new']} new "
+            f"headlines scanned, {p['ticker_items']} shown, {path} updated"
+        )
 
 
 @app.command("resolve-ozon")
